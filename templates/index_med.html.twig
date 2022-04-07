@@ -1,0 +1,112 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador
+{% endblock %}
+
+{% block services %}
+
+    <section id="services" class="services">
+        <div class="container">
+            {% if is_granted('ROLE_SUPERADMIN') %}
+
+                <div class="section-title">
+                    <h2></h2>
+                    <p>
+                        &nbsp;&nbsp;&nbsp;
+                    </p>
+                </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 d-flex  mt-4 mt-md-0">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-book"> </i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_program_create') }}">Crear Programa</a></h4>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex  mt-4 mt-md-0">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-list fa-list-radio"></i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_program_search') }}">Lista Programas</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-hospital-user"></i></div>
+                        <h4><a href="">Revisar Planes</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-dna"></i></div>
+                        <h4><a href="">Reportes</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-wheelchair"></i></div>
+                        <h4><a href="">Mantenimientos</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-notes-medical"></i></div>
+                        <h4><a href="">Otros</a></h4>
+
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {% if is_granted('ROLE_COORDINADOR') %}
+            <div class="row">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_programh') }}">Archivo de programas</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-pills"></i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_program') }}">Crear programa</a></h4>
+
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {% if is_granted('ROLE_PROFESOR') %}
+            <div class="row">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_programh') }}">Archivo de programas</a></h4>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="icon-box w-75">
+                        <div class="icon"><i class="fas fa-pills"></i></div>
+                        <h4><a href="{{ path('_expediente_sysadmin_program') }}">Crear programa</a></h4>
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+        </div>
+    </section><!-- End Services Section -->
+{% endblock %}

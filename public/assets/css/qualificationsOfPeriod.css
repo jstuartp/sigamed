@@ -1,0 +1,32 @@
+@media screen {
+    .noPrint {/*display:block !important;*/}
+}
+
+/* Print Only */
+@media print {
+    .noPrint {display:none !important;}
+}
+
+#wrap {min-width: 960px;}
+.tableQualifications {border: 1px;}
+.tableQualifications table, th, td { border: 1px solid black; font-size: 11px; color: #000;}
+
+.tableQualifications .rowNotas { height: 30px; font-size: 14px; font-weight: bold; color: #000;}
+
+.tableQualifications table tr td {color: #000;}
+
+.tableQualifications table tr.even, table tr.alt, table tr:nth-of-type(even) {background: #f9f9f9;}
+.tableQualifications table thead, table tfoot { background: whitesmoke; font-weight: bold; }
+
+.tableQualifications td { width: 45px; text-align: center; color: #000;}
+.tableQualifications .bold {font-weight: bold;}
+.itemEstudiante{ background-color: #A4D2FD; }
+.qualificationTable .itemNota{ background-color: #A4D2FD; }
+.qualificationTable .textField {font-weight: bold; color: #000; /*position: absolute; */text-align: center; float: left; width: 44px; height: 24px; line-height: 11px;
+    vertical-align: middle; border: none; font-size: 12px; padding: 0px; margin: 0px; background-color: #A4D2FD;}
+.qualificationTable {width: 950px}
+/*#contentBody {width: auto; overflow-x:scroll; margin-left:0px; }*/
+.headcolcarne { height: 30px; border: 1px solid black; position:absolute; left:0; line-height: 30px; }
+.headcolnombre { height: 30px; border: 1px solid black; position:absolute; left:75px; line-height: 30px; }
+
+.verticalText{text-align: center; vertical-align: middle; font-weight: bold; width: 20px; margin: 0px; padding: 0px; padding-left: 3px; padding-right: 3px; padding-top: 10px; white-space: nowrap; font-size: 11px; -webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);}

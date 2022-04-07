@@ -1,0 +1,301 @@
+html, body {height: 100%;}
+
+body {background: #fff url(../images/bg-body.jpg) 50% 0 repeat;}
+
+#wrap {min-height: 100%; width: 1200px;
+margin-left: auto;
+margin-right: auto;
+width: 960px;
+background-color: #fdfdfd;
+}
+
+#main {overflow:auto;
+	padding-bottom: 25px;}  /* must be same height as the footer */
+#header {height: 80px; background-image:url('../images/banner1.jpg');}
+#footer {position: relative; margin-top: -25px; /* negative value of footer height */
+    height: 25px; line-height: 25px; vertical-align: middle; clear:both;	background-color: #005da4;
+	margin-left: auto;margin-right: auto;width: 960px; color: white; font-size: 12px; padding-left: 15px; padding-right: 15px;}
+#footer .powered{ float: right;}
+#footer a { color: white; font-weight: bold;}
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
+}
+
+.titleRow{height: 56px; vertical-align: middle; line-height: 44px;}
+.services{ width:178px; height:210px; background:url(../images/bg-body2.jpg) 0 0 repeat;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease; margin:5px 9px 5px 5px; float:left;}
+.services.first{margin:5px 9px 5px 0px;}
+.services.last{margin:5px 0px 5px 8px;}
+.services a{ display:block; padding:30px 0 0 0; height:100%; position:relative;}
+.services a span{ display:block; font-family:'Arimo', sans-serif; font-weight:400;line-height:1.3em;color:#e4e0dd;font-size:24px; padding:7px 0 0 0;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease; text-align:center;}
+.services a span strong{ display:block; margin-top:-11px; font-weight:normal;}
+.services a em{ margin-left:48px; display:inline-block; position:relative;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;}
+.services a img{-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;}
+.services a img.image-hover{ position:absolute; top:0; left:0; opacity:0;}
+.services a:hover,.services:hover a{ text-decoration:none;}
+.services:hover a span{color:#fff;}
+.services:hover a img{ opacity:0;}
+.services:hover a img.image-hover{ opacity:1;}
+
+.lineH{ background:url(../images/lineH.png) 0 0 repeat; height:5px; width:100%;}
+
+
+.row{display:block; padding:0px 25px; background-color:#fff; height: 26px; line-height: 26px; font-size: 0.750em; color: #2c3e50; text-align: left;}
+.tableHeader{height: 32px; line-height: 32px; font-size: 0.875em; color: #2c3e50; text-align: left;
+    background: transparent; border-color: #ddd; background-color:#E0E0E0;
+    background: -webkit-linear-gradient(top, white, #E0E0E0);
+    background:    -moz-linear-gradient(top, white, #E0E0E0);
+    background:     -ms-linear-gradient(top, white, #E0E0E0);
+    background:      -o-linear-gradient(top, white, #E0E0E0);
+    background:      linear-gradient(top, white, #E0E0E0);
+    -pie-background:      linear-gradient(top, white, #E0E0E0);
+    box-shadow:         0 1px 2px rgba(0,0,0,0.25), inset 0 0 3px #fff;
+}
+.tableRow{border-bottom: 1px solid #DDD;}
+.tableRowOdd{border-bottom: 1px solid #FBF9F9; background: #CFCFD0;}
+.row:hover{background-color: palegoldenrod;}
+.row a{ margin-right:0px}
+.option_width{height:18px;}
+
+.table {border: solid 2px #ecf0f1;}
+
+/***   BUTTONS   ***/
+.button.add span {display: inline-block; background: url(../images/icons/icons-dark.png) -900px -36px; margin: 0 7px 0 0;}
+.button span { width: 16px; height: 16px;}
+.imageButton { width: 26px; height: 24px; margin-right: 5px;}
+.imageButton:hover { cursor: pointer;}
+.viewButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -144px -438px;}
+.deleteButton {background: url(../images/icons/icons-dark.png) -1728px -36px; height: 16px;}
+.editButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -220px -42px;}
+.questionsButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -78px -42px;}
+.checkButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -74px -184px;}
+.pdfButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -144px -366px;}
+.nopdfButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -144px -366px;}
+.adminButton {background: url(../images/icons/setup.png) no-repeat left 0px;}
+.studentsButton {background: url(../images/icons/token_dark_full.png) no-repeat left 0px; background-position: -38px -258px;}
+.psicoButton {background: url(../images/icons/psico.jpg) no-repeat left 0px;margin-right: 0px; margin-top: 2px; width: 18px;}
+.religionButton {background: url(../images/icons/religion.png) no-repeat left 0px;margin-right: 0px; margin-top: 2px; width: 18px;}
+.emergencyButton {background: url(../images/icons/emergency.png) no-repeat left 0px;margin-right: 0px; margin-top: 2px; width: 18px;}
+.infoButton {background: url(../images/icons/faqicon.png) no-repeat left 0px;margin-right: 0px; margin-top: 2px; width: 18px;}
+.logButton {background: url(../images/icons/log.png) no-repeat left 0px;margin-right: 0px; margin-top: 2px; width: 18px;}
+
+/*KPaginator Style*/
+.pagination {
+    display: block;
+    height: 1.5em;
+    margin-left: -0.3125em;
+}
+
+.pagination span {
+    display: block;
+    float: left;
+    color: #222222;
+    font-size: 0.875em;
+    margin-left: 0.625em;
+
+    width: 24px;
+    height: 24px;
+
+    text-align: center;
+    vertical-align: middle;
+    line-height: 23px;
+}
+
+.pagination span.current {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    border-radius: 1000px;
+}
+.pagination .current:hover {
+    background: #3498db;}
+
+.pagination span.page a, .pagination span.previous a, .pagination span.next a, .pagination span.last a, .pagination span.first a{
+    color: #999999;
+}
+.pagination span.page:hover, .pagination span.previous:hover, .pagination span.next:hover, .pagination span.last:hover,  .pagination span.first:hover{
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #fff64d;
+    -webkit-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+    -moz-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+    -o-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+    transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+    border-radius: 1000px;
+}
+
+.pagination span.page:hover a, .pagination span.previous:hover a, .pagination span.next:hover a, .pagination span.last:hover a, .pagination span.first:hover a {
+    color: #fff;
+}
+
+/**** FORMS ***/
+.formRow {width: auto;
+margin-left: -0.9375em;
+margin-right: -0.9375em;
+margin-top: 0;
+margin-bottom: 0;
+max-width: none;
+min-height: 25px;}
+
+.formRow label{display: inline-block; width: 150px;}
+
+.formRow .buttonsPanel{margin-top: 15px;}
+
+.formRow .error {height: 15px;
+    width: 400px;
+    margin-left: 180px;}
+
+#showContainer label {
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block; width: 150px;
+}
+
+#showContainer span {
+    font-size: 12px;
+}
+
+.selectList {
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    color: #2c3e50;
+    text-rendering: optimizeLegibility;
+}
+
+/**/
+a.sortable {line-height: 32px; font-size: 15px; float: left; text-align: right; color: #949494; padding-left: 20px; background: url(../images/icons/sort_none.gif) center left no-repeat;}
+a.asc {line-height: 32px; font-size: 15px; float: left; text-align: right; padding-left: 20px; color: #949494; background: url(../images/icons/sort_asc.gif) center left no-repeat;}
+a.desc {line-height: 32px; font-size: 15px; float: left; text-align: right; color: #949494; padding-left: 20px; background: url(../images/icons/sort_desc.gif) center left no-repeat;}
+span.sortable {line-height: 32px; font-size: 15px; float: left; text-align: right; color: #949494; padding-left: 20px; background: url(../images/icons/sort_none.gif) center left no-repeat;}
+span.asc {line-height: 32px; font-size: 15px; float: left; text-align: right; padding-left: 20px; color: #949494; background: url(../images/icons/sort_asc.gif) center left no-repeat;}
+span.desc {line-height: 32px; font-size: 15px; float: left; text-align: right; color: #949494; padding-left: 20px; background: url(../images/icons/sort_desc.gif) center left no-repeat;}
+
+/* SEARCH FORM */
+#searchform { font-size:14px; }
+#searchform div { }
+#searchform div input { font-size:12px; padding:0px; }
+#suggestions{ position: relative; left:48px; width:300px; display:none; }
+
+/* SEARCHRESULTS */
+#searchresults { border-width:1px; border-color:#919191; border-style:solid; width:300px; background-color:#a0a0a0; font-size:10px; line-height:14px; }
+#searchresults a { display:block; background-color:#e4e4e4; clear:left; height:32px; width: 300px; text-decoration:none; }
+#searchresults a:hover { background-color:#b7b7b7; color:#ffffff; }
+#searchresults a span.searchheading { display:block; font-weight:bold; padding-top:0px; color:#191919; }
+#searchresults a:hover span.searchheading { color:#ffffff; }
+#searchresults a span { color:#555555; }
+#searchresults a:hover span { color:#f1f1f1; }
+#searchresults span.category { font-size:11px; margin:0px; display:block; color:#ffffff; }
+
+.filter-search {
+    background-color: #fff;
+}
+
+.filter-search .internal {
+    padding: 5px 0px 0px 25px;
+    background-color: #fff;
+}
+
+.filter-search .internal .filter-row {
+    line-height: 28px;
+    height: 28px;
+    display: block;
+    padding: 8px 25px;
+    background-color: #F9F9F9;
+}
+
+.filter-search .internal #searchForm .field {
+    float: left;
+    width: 50%;
+}
+.filter-search .internal #searchForm label {
+    display: inline-block; width: 125px;
+}
+.filter-search .internal #searchForm input, .filter-search .internal #searchForm select {width: 293px;}
+.filter-search .internal #searchForm input[type="checkbox"] {width: 25px;}
+.filter-search .internal #searchForm input[type="radio"] {width: 25px;}
+
+/***     REPORTS    ***/
+.clear{clear:both;line-height:0;font-size:0;overflow:hidden;height:0;width:100%;}
+.right {float: right;}
+.left {float: left;}
+
+#report {background-color: #fff; padding: 15px;}
+#report .header_row{border-bottom: thin solid #000; height: 23px; line-height: 23px; vertical-align: bottom; margin-bottom: 15px;}
+#report .header_row .field{font-weight: bold; font-size: 16px; color: #000;}
+#report .fields_row .field_value {font-size: 16px; color: #000;}
+#report .titles{font-size: 18px; color: #000;}
+#report .footer{font-size: 16px; margin-bottom: 15px; margin-top: 15px; font-weight: bold; color: #000;}
+#report .route{font-weight: bold; font-size: 13px; color: #000; margin-top: 25px;}
+#report .student_title{border-bottom: thin solid #000; font-size: 11px; color: #000; font-weight: bold; line-height: 16px; height: 14px; margin-bottom: 15px; margin-top: 15px;}
+#report .student_row{font-size: 11px; height: 14px; line-height: 16px; color: #000;}
+#report .student_footer{font-size: 10px; color: #000; font-weight: bold;}
+#report .area_title{font-weight: bold; margin-top: 25px; text-decoration: underline; color: #000;}
+
+.pageBreak { display: block; page-break-before: always; }
+
+/****   loginPanel   ***/
+.loginPanel{margin: auto; background-color: #fff; width: 450px; padding: 15px;}
+.loginPanel label {display: inline-block; width: 135px;}
+
+/* Relative Contact Information */
+.contactInfo{ background-color: #fff;}
+.contactInfo .fieldRow{font-size: 12px; height: 26px; line-height: 26px; vertical-align: middle; color: #000;}
+.contactInfo .fieldRow label {display: inline; width: 100px; font-weight: bold;}
+.contactInfo .fieldRow span {display: inline; width: 100%;}
+
+.reportContentHeader {margin-bottom: 15px; line-height: 25px; font-size: 14px; color: #000;}
+.reportContentHeader .reportContentLabel { font-weight: bold; width: 150px;}
+.reportContentHeader .reportContentText {}
+
+.courseTable table { page-break-inside:auto }
+.courseTable .courseTableRow   { page-break-inside:avoid; page-break-after:auto }
+.courseTable thead { display:table-header-group }
+.courseTable tfoot { display:table-footer-group }
+
+.notaHonor{font-family: 'Verdana, Geneva, sans-serif'; font-size: 20px; color: #000; font-weight: bold;}
+
+#pendientes {font-weight: bold; width: 195px; font-size: 10px; text-align: center; color: #56F36F; padding-left: 2px; background: url(../images/waitingBar.gif) center left no-repeat; display: none;}
+
+.form-type-9{width: 100%;}
+
+.sort_header {cursor: pointer;}
+.paginationButton {cursor: pointer;}
+.pagination .page, .pagination .next, .pagination .last, .pagination .first, .pagination .previous {color: #999999;}
+.pagination .pagination-msg {font-size: 10px; line-height: 24px;}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal-waiting {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba(210, 209, 209, 0.8)
+    url('../images/ajax-loader.gif')
+    50% 50%
+    no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal-waiting {
+    display: block;
+}

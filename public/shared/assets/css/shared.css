@@ -1,0 +1,11 @@
+.tableQualificationsSpecial {width: 840px;}
+.tableQualificationsSpecial td {vertical-align: top; padding: 1px 2px 1px 2px; color: black; border: none;}
+.student-special-form {vertical-align: top; border: solid 2px;}
+.student-special-form .header{background-color: #b94a00;}
+.student-special-form .header td{text-align: center;}
+.student-special-form td{color: #000000;}
+
+.institutions-list {margin: 15px 0px; font-size: 12px; color: #000;}
+.institutions-list p {font-size: 12px; color: #000;}
+
+.select2-container{z-index:9999;}

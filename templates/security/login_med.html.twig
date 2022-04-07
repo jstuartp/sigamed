@@ -1,0 +1,73 @@
+{% extends 'base_med.html.twig' %}
+
+{% block topbar %} {% endblock %}
+{% block header %} {% endblock %}
+{% block whyus %} {% endblock %}
+{% block about %} {% endblock %}
+{% block counts %} {% endblock %}
+{% block services %} {% endblock %}
+{% block contact %} {% endblock %}
+{% block hero %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container">
+
+      <!--
+      <h1>Welcome to Medilab</h1>
+      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+    -->
+      <div class="row g-2">
+        <div class="col">
+          <div class="loginPanel">
+            <h1>LOGO</h1>
+            <!--<h2>{%trans%}label.loginTitle{%endtrans%}</h2>-->
+            {% if error %}
+              <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+
+            <form action="{{ path('login') }}" method="post">
+
+              <div class="container">
+                <div class="row g-2 row-cols-3">
+                  <div class="col">
+                    <label for="username">Usuario:</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                  </div>
+                  <div class="col">
+                  </div>
+                </div>
+
+                <div class="row g-2 row-cols-3">
+                  <div class="col">
+                    <label for="password">Contraseña:</label>
+                  </div>
+                  <div class="col">
+                    <input type="password" id="password" name="_password" />
+                  </div>
+                  <div class="col">
+                  </div>
+                </div>
+                <button type="submit">login</button>
+              </div>
+              {#
+              If you want to control the URL the user
+              is redirected to on success (more details below)
+              <input type="hidden" name="_target_path" value="/account" />
+              #}
+            </form>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero -->
+{% endblock %}
+{% block footer1 %} {% endblock %}
+

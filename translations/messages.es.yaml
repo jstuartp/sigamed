@@ -1,0 +1,605 @@
+#System
+system.title: SIGA 2.0
+system.description: Programa_de_cursos
+system.tags: programa, electronico
+
+#Labels
+label.my.account: Mi cuenta
+label.loginTitle: Ingrese su usuario y contraseña
+label.name: Nombre
+label.firstname: Nombre
+label.lastname: Apellidos
+label.username: Username
+label.password: Password
+label.password.reenter: Reingrese el Password
+label.active: Activo
+label.email: Email
+label.status: Estado
+label.logout: Logout
+label.home: Inicio
+label.back.list: Volver a la lista
+label.add: Agregar
+label.cancelar: Cancelar
+label.save: Guardar
+label.view: Ver
+label.psico: Perfil Psicologico
+label.log.label: Bitácora Psicológica
+label.volver: Volver
+label.edit: Editar
+label.delete: Eliminar
+label.send.email: Enviar Correo
+label.content: Contenido
+#label.subject: Asunto
+label.eliminar: Eliminar
+label.usuarios: Usuarios
+label.level: Nivel
+label.emails: Correos Electrónicos
+label.actualizar: Actualizar
+label.routes: Rutas
+label.route: Ruta
+label.licensePlate: Placa
+label.color: Color
+label.driver: Conductor
+label.capacity: Capacidad
+label.general: General
+label.riteve: R.T.V.
+label.permission: Permiso
+label.ins: I.N.S.
+label.coordinator: Coordinador
+label.day: Día
+label.timeI: Time I
+label.timeO: Time O
+label.search: Buscar
+label.filter: Filtrar
+label.print: Imprimir
+label.new: Nuevo
+label.date: Fecha
+label.justify: Justificada
+label.injustify: Injustificada
+label.all: Todos
+label.number: N&uacute;mero
+label.type: Tipo
+label.users: Usuarios
+label.access: Permisos
+label.questionnaires.config: Config Cuestionarios
+label.questionnaires.list: Lista de Cuestionarios
+label.attachment: Archivo adjunto
+label.creator: Creado por
+label.visit.people: Personas Presentes
+
+label.teacher.default: Profesor Asignado
+label.teachers: Profesores
+label.teacher: Profesores
+label.include: Incluir
+
+label.period.listar: Lista de Periodos
+label.period.new: Nuevo Periodo
+messages.confirmation.period.delete: Esta seguro que desea eliminar el periodo?
+label.period.show: Detalle del Periodo
+label.isactual: Actual?
+label.iseditable: Editable?
+
+label.grade.listar: Lista de Grados
+label.grade.new: Nuevo Grado
+messages.confirmation.grade.delete: Esta seguro que desea eliminar el grado?
+label.grade.show: Detalle del Grado
+
+label.course.listar: Lista de Cursos
+label.course.new: Nueva Curso
+messages.confirmation.course.delete: Esta seguro que desea eliminar la materia?
+label.course.show: Detalle de la Curso
+
+label.absenceTypes.listar: Lista de Tipos de Ausencia
+label.absenceTypes.new: Nuevo Tipo de Ausencia
+messages.confirmation.absenceTypes.delete: Esta seguro que desea eliminar el tipo de ausencia?
+label.absenceTypes.show: Detalle del Tipo de Ausencia
+label.points: Puntos
+label.absenceTypes.points.by.institution: Puntos por Instituci&oacute;n
+
+messages.confirmation.absence.delete: Esta seguro que desea eliminar esta ausencia?
+message.ticket.confirm.delete: Esta seguro que desea eliminar esta boleta?
+label.period.admin: Administraci&oacute;n de Periodo
+label.admin: Administrar
+label.groups: Grupos
+label.courses: Cursos
+label.teacher.guide: Profesor Gu&iacute;a
+label.year: A&ntilde;o
+label.mantenimientos: Mantenimientos
+label.period: Periodo
+label.absenceTypes: Tipos de Ausencia
+label.grade: Grado
+label.course: Curso
+label.bus: Buseta
+label.buses: Busetas
+label.transport: Transporte
+label.estudiantado: Estudiantado
+label.clubs: Clubes
+label.students: Estudiantes
+label.tickets: Boletas de Salida
+label.reports: Reportes
+label.absences: Ausencias
+label.commets: Comentarios
+label.code: Codigo
+label.description: Descripcion
+label.enter.by.rubro: Ingresar notas por rubro
+label.enter.convocatorias: Ingresar Convocatorias
+label.students.emergency: Reporte para emergencias
+label.close: Cerrar
+
+label.password.cambiar: Cambiar Password
+label.usuarios.admin: Administradores
+label.usuarios.coordinador: Coordinadores
+label.usuarios.profesor: Profesor
+
+label.usuarios.admin.new: Crear nuevo administrador
+label.usuarios.coordinador.new: Crear nuevo Coordinador
+label.usuarios.profesor.new: Crear nuevo Profesor
+
+label.usuarios.admin.show: Información de Administrador
+label.usuarios.coordinador.show: Información de Coordinador
+label.usuarios.profesor.show: Información de Profesor
+
+label.usuarios.admin.listar: Lista de Usuarios Administradores
+label.usuarios.coordinador.listar: Lista de Coordinadores
+label.usuarios.profesor.listar: Lista de Profesores
+
+label.student.new: Ingresar nuevo Estudiante
+label.student.show: Información de Estudiante
+label.student.listar: Lista de Estudiantes
+messages.confirmation.student.delete: ¿Está seguro que desea eliminar el estudiante?
+
+label.route.new: Crear nueva Ruta
+label.route.show: Información de Ruta
+label.route.edit: Edición de Ruta
+label.route.listar: Lista de Ruta
+messages.confirmation.route.delete: ¿Está seguro que desea eliminar la ruta?
+
+label.bus.new: Crear nueva Buseta
+label.bus.show: Información de Buseta
+label.bus.listar: Lista de Busetas
+messages.confirmation.bus.delete: ¿Está seguro que desea eliminar la buseta?
+
+label.club.new: Crear nuevo Club
+label.club.show: Información de Club
+label.club.listar: Lista de Clubes
+messages.confirmation.club.delete: ¿Está seguro que desea eliminar el club?
+label.mail: Correo
+label.phone: Teléfono
+
+label.students.in.club: Estudiantes Asociados
+club.include.students: Incluir estudiantes a este club
+club.include.help: Ingrese el nombre y seleccione el estudiante de la lista de sugeridos.
+
+group.include.students: Incluir estudiantes a este grupo
+route.include.students: Incluir estudiantes a esta ruta
+
+label.contacts: Contactos
+label.contacts.list: Lista de Contactos
+label.relatives.in.student: Personas Autorizadas
+student.include.contact: Incluir contacto autorizado
+student.include.help: Ingrese el nombre y seleccione el contacto de la lista de sugeridos.
+
+label.absences.title: Administracion de Ausencias
+label.absences.message: Puede filtrar la informacion y consultar las ausencias deseadas.
+label.absences.by.group.title: Ingreso de Ausencias por Grupo
+label.absences.by.group: Ausencias por Grupo
+
+label.convocatorias.by.group.title: Definici&oacute;n de Convocatorias por Grupo
+label.convocatorias.by.group.help: Marque las convocatorias por estudiante e ingresa la nota obtenida
+label.convocatoria: Convocatoria
+
+label.get: Obtener
+label.copy: Copiar
+#label.schedule: Horario
+label.gender: Sexo
+label.age: Edad
+label.group: Grupo
+label.generate: Generar
+label.generate.by: Generar por
+label.report.students.title: Reporte de Estudiantes
+label.report.students.subtitle: Imprimir listado de estudiantes por grupo, nivel o Instituci&oacute;n
+label.report.clubs.title: Reporte de Clubes
+label.report.clubs.subtitle: Imprimir listado de clubes con informacion de estudiantes si es deseado.
+label.report.clubs.include.students: Incluir lista de estudiantes
+
+label.new.password: Nuevo Password
+label.confirm.password: Confirmar password
+button.label.login: LOGIN
+
+label.accesos.usuarios.title: Definicion de Permisos de Usuario
+label.accesos.usuarios.subtitle: Seleccione un usuario de la lista y asigne los permisos que desea otorgar
+
+label.asociate: Asociar
+student.create.new.contact: Ingrese la información de la persona autorizada
+label.identification: Identificación
+
+label.ticket.today.list: Boletas de Hoy
+label.ticket.new: Ingresar nueva boleta
+tickets.not.found: No se han registrado boletas hoy.
+label.student: Estudiante
+label.relative: Familiar
+label.time: Hora
+label.comments: Comentarios
+label.tickets.title: Boletas de salida registradas
+label.tickets.message: Buscar boletas en el sistema
+
+label.kinship: Relación
+label.father: Padre
+label.mother: Madre
+label.brother: Hermano
+label.sister: Hermana
+label.other: Otro
+label.students.quantity: Cantidad
+
+label.carne: Carne
+label.section: Seccion
+label.student.name: Nombre de Estudiante
+label.address: Direccion
+label.pickUp: Recogen
+label.leaveTime: Dejan
+#label.schedule: Horario
+label.zone: Zona
+label.institution: Instituci&oacute;n
+label.telephone: Telefono
+label.motherPhone: Telefono de la madre
+label.fatherPhone: Telefono del padre
+label.fatherPhoneShort: Tel. Padre
+label.motherPhoneShort: Tel. Madre
+label.female: Mujer
+label.male: Hombre
+label.laterality: Lateralidad
+label.zurdo: Zurdo
+label.diestro: Diestro
+
+label.observation: Observaciones
+label.admission: Admision
+label.birthday: Nacimiento
+
+label.phonec: Tel. Celular
+label.phonew: Tel. Trabajo
+label.phoneh: Tel. Casa
+label.workplace: Lugar de trabajo
+label.adress: Direccion
+#label.restriction: Restriccion
+label.emergency: En caso de emergencia
+
+label.nationality: Nacionalidad
+label.degree: Grado Académico
+label.sector: Sector
+label.m_status: Estado Civil
+label.religion: Religion
+label.restriction: Restriccion
+label.profession: Profesion
+label.occupation: Puesto
+
+label.routes.by.zone: Rutas por Zona
+label.students.by.route: Estudiantes por Ruta
+label.students.absences.by.route: Est. Ausentes por Ruta
+label.students.daily.by.route: Reporte Diario por Ruta
+label.students.absences: Estudiantes Ausentes
+label.students.precenses: Estudiantes Presentes
+label.routes.club: Rutas Club
+label.students.by.route.club: Estudiantes por Ruta Clubes
+label.student.route: Transporte
+label.report.grades.by.group.course: Notas de Grupo por Materia
+label.students.route.by.group: Estudiantes en Ruta por Grupo
+
+label.penalties: Sanciones
+label.penalties.title: Administracion de Sanciones
+#label.penalties.message: Puede filtrar la informacion y consultar las sanciones deseadas.
+label.penalty.type: "Tipo de falta:"
+label.penalty.show: Mostrar Sancion
+
+label.extrapoints: Ajuste de notas
+label.extrap.title: Punto adicionales
+label.penalties.message: Puede filtrar la asignación de puntos por estudiante
+label.extrap.type: Seleccione el tipo de puntos a sumar
+label.extrap.course: Seleccione el curso
+
+label.reports.routes.by.zone: Reporte de Rutas por Zona
+label.reports.students.by.route: Reporte de Estudiantes por Ruta
+label.reports.absences.by.route: Reporte de Estudiantes Ausentes por Ruta
+label.students.by.route.club.level: Reporte Estudiantes en rutas de club por dia
+label.students.by.route.club.route: Reporte Estudiantes rutas club por dia
+label.students.by.club.level: Reporte Estudiantes en club por dia
+
+label.reports.routes.club: Reporte de rutas de Clubes
+label.routeIn: Ruta Altarnativa
+label.routeType: Tipo Ruta
+
+label.reports.bus: Reporte de Busetas
+label.reports.bus.message: Ingrese las opciones de filtrado deseadas y presione el boton de filtrar.
+
+label.reports.routes: Reporte de rutas
+label.include.in.report: Incluir en el reporte
+label.reports.routes_zones: Reporte de rutas
+label.reports.routes_zones.message:
+
+label.qualifications: Calificaciones
+label.observations: Observaciones
+menu.observations.report: Reporte Observaciones
+label.special.qualifications: Calificaciones Especiales
+
+label.absence.show: Informacion de Ausencia
+label.enter.by.group: Ingresar por grupo
+label.entries.by.course: Rubros por Materia
+label.percentage: Porcentaje
+label.max_value: Valor Maximo
+label.order: Order
+label.parent: Padre
+label.maxEntry: Nota Maxima
+
+label.route.type.1: Normal
+label.route.type.2: Club
+
+label.editable: Editable
+label.current.period: Periodo Actual
+label.courseEntryCode: C&oacute;digo de Rubro
+
+menu.qualifications.report: Notas de Periodo
+menu.qualifications.of.group.by.rubro: Calificaciones de Grupo por Rubro
+menu.detail.student.qualifications: Notas detalladas de Estudiante
+menu.averages.report: Mejores Promedios
+menu.mep.report: MEP Notas Presentación
+menu.absences.report: Ausencias por grupo
+
+results.not.found: No se han encontrado resultados.
+
+messages.confirmation.remove.relative: Esta seguro que desea desasociar este contacto?
+
+usuarios.estado.1: Activo
+usuarios.estado.2: Inactivo
+
+label.yes: Si
+label.no: No
+
+messages.confirmation.password.change: El password ha sido actualizado correctamente.
+messages.confirmation.user.delete: ¿Está seguro que desea eliminar el usuario?
+messages.confirmation.club.remove.student: ¿Está seguro que desea desasociar el estudiante?
+messages.empty.fields: Debe completar todos los campos
+messages.confirm.relative: Se ha asociado el autorizado correctamente.
+message.relative.not.selected: No puede ingresar una boleta sin seleccionar una persona asociada.
+message.student.not.selected: No ha seleccionado un estudiante.
+message.relative.not.exists: Este estudiante no tiene personas autorizadas para salir.
+
+error.entity.not.found: El objeto no se ha encontrado.
+error.passwords.dont.match: Los passwords no coinciden.
+error.password.emtpy: El password no puede estar en blanco.
+error.paramateres.missing: Parametros incorrectos.
+
+tutor.visit.create: Registrar nueva visita
+tutor.visit.edit: Editar visita
+tutor.visit.view: Ver información de visita
+
+#USER ROLES
+user.roles.1: Administrador del Sistema
+user.roles.2: Administrador
+user.roles.3: Profesor
+
+#Days
+monday: Lunes
+tuesday: Martes
+wednesday: Miercoles
+thrusday: Jueves
+friday: Viernes
+saturday: Sabado
+sunday: Domingo
+
+label.ticket1: El alumno
+label.ticket2: Fue retirado de la institución por
+label.ticket3: Fecha
+label.ticket4: Boleta de Salida
+label.ticket5a: ______________________________
+label.ticket5: Firma
+label.ticket6: Firma del Encargado
+label.ticket7: Firma Docente
+label.ticketnota: Importante  Que sea de su conocimiento que se impartirá materia nueva durante el transcurso de los exámenes, por ende es responsabilidad tanto del estudiante como del padre de familia en ponerse al día con dicha materia.
+
+#################     TEACHER     #################
+label.usuarios.courseEntry: Rubros
+title.course.entries.by.group: Definicion de Rubros por Grupo
+title.qualifications.by.group: Ingreso de calificaciones por grupo
+label.subentries.by.course: Subrubros
+label.usuarios.observations: Observaciones
+label.usuarios.special.qualifications: Especiales
+
+######Inventary#######
+label.inventary: Inventario
+label.items: Articulos
+label.categoryitems: Categorias
+label.item.listar: Listado de Inventario
+label.category_item.listar: Categorias de Articulos
+label.category_item.new: Nueva categoria
+label.item.new: Nuevo articulo
+label.item.show: Mostrar articulo
+label.category.show: Mostrar categoria
+label.category: Categoria
+label.user: Encargado
+
+
+##Religion
+label.rbautizado: Bautizo
+label.rtomo: Tomo
+label.rfolio: Folio
+label.rasiento: Asiento
+label.rpromesasfecha: "Promesas Bautismales Fecha:"
+label.rpromesaslugar: "Lugar:"
+label.rconfesionfecha: "Confesión Fecha:"
+label.rconfesionlugar: "Lugar:"
+label.rcomunionfecha: "Primera Comunión Fecha:"
+label.rcomunionlugar: "Lugar:"
+
+##Emergencias
+label.emergencyout: "Viaja Solo:"
+label.emergencyoutinst: "Institucion Salida:"
+label.brethren: "Tiene hermanos:"
+label.familiars: "Hermanos:"
+label.emergencyinfo: "En caso de emergencia:"
+
+##psicologia
+label.psicologiaescuela: Psicologia Esc.
+select.group: Seleccione el Grupo
+
+label.enableForTeacher: Habilitado Profesores
+label.enableInstitutions: Instituciones
+
+label.new.relative: Nuevo Familiar
+
+#email and attachment
+email.send.success: El correo electrónico se ha enviado a la lista seleccionada correctamente
+email.send.error.file.type: El archivo adjunto no es de un tipo permitido [jpg,jpeg,bpm,png,pdf,doc,docx,xls,xlsx]
+email.send.error.size: El archivo adjunto supera el tamaño máximo permitido de 5MB
+email.send.error.invalid: El archivo adjunto es inválido
+extra.emails: Correos adicionales separados por ;
+
+excel.file.load.success: "El archivo ha sido cargado correctamente con los siguientes detalles:"
+excel.file.invalid.file: El archivo cargado no corresponde al grupo y materia seleccionado, el archivo fue generado desde el Sistema?
+
+#Validation
+not.blank.name: Probando proband.
+not:
+  blank:
+    name: El nombre no puede estar en blanco.
+    last_name: last name can not be blank!
+    email: E-mail can not be blank!
+    username: Username field can not be blank!
+    password: Password field can not be blank!
+
+
+#Labels Programas UCR
+label.programs: Programas
+label.listProgram: Lista de Programas
+label.listProgramh: Programas Anteriores
+label.createProgram: Crear Programa
+label.detail: Titulo de programa
+label.program.new: Programa nuevo
+label.teacherprogram: Profesor
+label.edit.program: Editar programa
+label.check.program: Revisar programa
+label.programs.list: Lista de programas
+label.programs.list.previous: Lista de programas anteriores
+label.program.show: Editar programa
+label.info: Mostrar ayuda
+
+
+label.requisit: Requisitos
+label.corequisite: Co Requisitos
+label.credit: Créditos
+label.area: Área a la que pertenece
+label.schedule: Horario de curso
+label.classroom: Aula
+label.groupnumber: Grupo
+
+
+#Labels Curriculum UCR
+label.curriculum: Currículum
+label.mycurriculum: Mi Curriculum
+label.reportscurriculum: Ver Curriculums
+
+label.degreetittle: Títulos
+label.place: Lugar
+label.yeardate: Fecha
+label.titledate: Año de graduación
+label.title: Título
+
+label.publicationtittle: Publicaciones de los últimos 5 años
+label.subject: Tema
+
+label.performance: Resultado desempeño de docente
+
+label.apresentationtittle: Ponencias académicas
+label.aexperiencetittle: Experiencia laboral académica
+label.oexperiencetittle: Experiencia laboral administrativa
+label.wexperiencetittle: Experiencia laboral relacionada a disciplina
+
+label.site: Sitio
+label.position: Puesto
+label.job: Funciones
+label.show: Mostrar
+label.descriptors: Descriptores
+label.validity: Vigencia
+label.investigationtittle: Investigaciones y proyectos
+label.investigationtab: Investigaciones y proyectos
+label.authorship: Autoría
+label.improvetittle: Actualización continua
+label.improvetab: Actualización continua
+
+label.eedition: Edición electrónica
+label.inprogress: Cursando
+label.equated: El título es equiparado
+label.equatedtx: Equiparado con
+label.country: País
+
+label.pension: Régimen de pensión
+
+label.degreetab: Títulos
+label.publicationtab: Publicaciones
+label.apresentationtab: Ponencias académicas
+label.aexperiencetab: Experiencia académica
+label.wexperiencetab: Experiencia laboral
+
+label.reg: Régimen
+label.regtx: Tipo de régimen
+label.room: Cupo
+label.academic: Horario de Cursos
+label.report.academic: Horario de cursos
+label.report.academic.subtitle: Imprmir la lista de cursos por seccion
+label.charges: Cargas Académicas
+
+label.assigned.cordinators: Asignar coordinadores
+label.assigned.courses: Asignar Cursos
+label.assigned.teachers: Asignar en programas
+
+label.commission.listar: Lista de comisiones
+label.commission: Comisiones
+label.assigned.commission: Asignar comisiones
+label.assigned.projects: Asignar proyectos
+label.assigned.others: Asignar otros
+
+label.others: Otros
+label.otro: Otro
+label.projects: Proyectos
+label.project: Proyecto
+label.weight: "Cargas:"
+
+label.charge.listar: Lista de Cargas Académicas
+label.detailin: Detalles
+
+label.mycharge: Carga Académicas
+label.documents: Documentos
+
+label.record: Asambleas
+label.record.listar: Lista de Asambleas
+label.summary: Resumen
+
+label.equipment: Equipo
+label.ticketl: Boleta de préstamo de equipo
+label.requestequipment: Solicitar equipo
+label.request: Solicitar
+label.ticket.list: Lista de préstamos
+label.ticketllist: Lista de préstamos de equipo
+label.ticketlhistory: Historial de préstamos
+label.information: Adicional
+label.computer: Computadora
+label.computertx: Cantidad
+label.videobeam: Videobeam
+label.videobeamtx: Cantidad
+label.camara: Cámara
+label.camaratx: Cantidad
+label.control: Control Proyector
+label.presenter: Pasador
+label.hdmi: Cable HDMI
+label.cable: Cable Red
+label.recorder: Grabador
+label.speaker: Parlantes
+label.outlet: Regleta
+label.tripod: Trípode
+label.categorylist: Categorias
+label.itemlist: Items
+label.category.listar: Lista de Categorias
+label.action.ticket: Realizar
+label.send: Enviar
+label.authorized: En caso excepcional, se autoriza a
+label.authorized2: , para recoger el equipo.
+label.hour: Hora
+label.includeSave: Incluir y Enviar Solicitud
