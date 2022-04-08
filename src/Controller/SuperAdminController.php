@@ -103,7 +103,9 @@ class SuperAdminController extends AbstractController
     }
 
 
-
+    /**
+     * @Route("/user/createUser/", name="_expediente_sysadmin_create_user")
+     */
     public function createUserAction(){ //2020-03-03
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -814,11 +816,12 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/profesor", name="_expediente_sysadmin_profesor")
      */
-    public function profesorListAction($rowsPerPage = 10)
+    public function profesorListAction(EntityManagerInterface  $em, $rowsPerPage = 10)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $dql = "SELECT users FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR'";
-        $query = $em->createQuery($dql);
+      //  $em = $this->getDoctrine()->getEntityManager();
+        $dql = "SELECT u.id, u.username, u.firstname, u.lastname, u.email, u.is_active, user_id FROM tek_users u Join user_role r ON u.id=r.user_id where r.role_id = 4";
+        $stmt = $em->getConnection()->prepare($dql);
+        $profesor = $stmt->executeQuery();
 
         //$param = $this->get('request')->query->get('rowsPerPage');
         $param = 10;
@@ -827,22 +830,24 @@ class SuperAdminController extends AbstractController
 
         $request = $this->get('request_stack')->getCurrentRequest();
 
-        $dql2 = "SELECT count(users) FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR'";
-        $page = $this->getPaginationPage($dql2, $request->query->get('page'), $rowsPerPage);
+        //$dql2 = "SELECT count(users) FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR'";
+       // $page = $this->getPaginationPage($dql2, $request->query->get('page'), $rowsPerPage);
         //$page = 1;
-
+/*
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $page/*page number*/,
-            $rowsPerPage/*limit per page*/
-        );
+            $page
+            $rowsPerPage
+        );*/
 
         return $this->render('SuperAdmin/Profesor/list.html.twig', array(
-            'pagination' => $pagination, 'isTeacher' => true, 'rowsPerPage' => $rowsPerPage
+            'pagination' => $profesor->fetchAllAssociative(), 'isTeacher' => true, 'rowsPerPage' => $rowsPerPage
         ));
     }
-
+    /**
+     * @Route("/profesor/create", name="_expediente_sysadmin_profesor_create")
+     */
     public function profesorCreateAction()
     {
         $entity = new User();
@@ -855,7 +860,9 @@ class SuperAdminController extends AbstractController
         return $this->render('SuperAdmin/Profesor/new.html.twig', array('entity' => $entity,
             'form'   => $form->createView()));
     }
-
+    /**
+     * @Route("/profesor/show", name="_expediente_sysadmin_profesor_show_simple")
+     */
     public function profesorShowAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();

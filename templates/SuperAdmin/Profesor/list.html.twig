@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?w=2.0.6') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?w=2.0.6') }}"></script>
 <script type="text/javascript">
     Tecnotek.UI.urls["api"] = "";
     Tecnotek.UI.translates["btnDone"] = "";
@@ -23,10 +23,10 @@
 
     <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
-    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
 
-    <div class="container_24">
-    <div class="grid_24">
+    <div class="container">
+    <div class="grid">
         <div class="titleRow">
             <div class="left"><h3>{% trans %}label.usuarios.profesor.listar{% endtrans %}</h3></div>
             <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_profesor_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
@@ -34,32 +34,40 @@
             <div class="right"><a id="openUserCreate" class="modalbox button success-darker tiny" href="#userFormContainerCreate">{% trans %}label.add{% endtrans %}</a> </div>
             <div class="clear"></div>
         </div>
-        <div class="table">
-            <div class="row tableHeader">
-                <div class="option_width" style="float: left; width: 200px;">{% trans %}label.name{% endtrans %}</div>
-                <div class="option_width" style="float: left; width: 200px;">{% trans %}label.username{% endtrans %}</div>
-                <div class="option_width" style="float: left; width: 250px;">{% trans %}label.email{% endtrans %}</div>
-                <div class="option_width" style="float: left; width: 150px;">{% trans %}label.status{% endtrans %}</div>
-            </div>
 
-            {% set counter = 0 %}
+        <!-- TABLA DE STUART CON DATATABLES-->
+        <div class="bs-example" data-example-id="contextual-table">
+            <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+                <thead>
+                <tr>
+                    <th  hidden>id</th>
+                    <th>Nombre</th>
 
-            {% for entity in pagination %}
-                <div class="row userRow {% if counter%2 == 0 %}tableRowOdd{%else%}tableRow{% endif %}" rel="{{ entity.id }}">
-                    <div class="option_width" style="float: left; width: 200px;">{{ entity.firstname }} {{ entity.lastname }}</div>
-                    <div class="option_width" style="float: left; width: 200px;">{{ entity.username }}</div>
-                    <div class="option_width" style="float: left; width: 250px;">{{ entity.email }}</div>
-                    <div class="option_width" style="float: left; width: 150px;">{% if entity.active %}{% trans %}usuarios.estado.1{% endtrans %}{% else %} {% trans %}usuarios.estado.2{% endtrans %} {% endif %}</div>
-                    <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="{{ entity.id }}"></div>
-                </div>
-                {% set counter = counter + 1 %}
-            {% endfor %}
+                    <th>Correo electrónico</th>
+                    <th>Estatus</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in pagination %}
+                    <tr class="info">
+                        <td hidden>{{ entity.id }}</td>
+                        <td>{{ entity.firstname }} {{ entity.lastname }}</td>
+                        <td>{{ entity.email }}</td>
+                        <td>{% if entity.is_active %}{% trans %}usuarios.estado.1{% endtrans %}{% else %} {% trans %}usuarios.estado.2{% endtrans %} {% endif %}</td>
+                        <!-- Columna para poner los botones en la tabla -->
+                        <td class="nowrap">
+                            <div class="icon viewButton" rel="{{ entity.id }}"><i class="fas fa-eye" title="Ver"></i></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <br/>
-    
-        <div style="margin-bottom:75px;">
-            {{ knp_pagination_render(pagination)|raw }}
-        </div>    
+        <!-- FIN DE TABLA DE STUART -->
+
+
+
         <div class="clear"></div>
     </div>
     <div class="clear"></div>

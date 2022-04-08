@@ -125,7 +125,7 @@ class ProgramController extends AbstractController
                 foreach ($periods as $period) {
                     $currentPeriod = $period->getId();
                 }
-                $currentPeriod = 4;
+               // $currentPeriod = 4;
 
                 //Codigo agregado por STUART para pintar el search en lugar del list
                 $courses = $em->getRepository("App:Course")->findBy(array(), array('code' => 'ASC', 'groupnumber' => 'ASC', ));
