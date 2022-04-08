@@ -3055,7 +3055,6 @@ Tecnotek.programEdit = {
 
     submitForm: function($formName) {
         var form = $("#" + $formName);
-        //alert($("#programId").val());
         Tecnotek.ajaxCall(Tecnotek.UI.urls["saveProgramFormUrl"],
             form.serialize(),
             function(data){
