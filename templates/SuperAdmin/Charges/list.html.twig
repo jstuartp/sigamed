@@ -1,0 +1,227 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Curso
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?a=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.module = "chargeList";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+
+        Tecnotek.UI.urls["searchCharges"] = "{{ path('_expediente_sysadmin_charge_search')}}";
+
+
+        Tecnotek.UI.urls["createChargeURL"] = "{{ path("_expediente_sysadmin_create_charge") }}";
+        Tecnotek.UI.urls["createSendChargeURL"] = "{{ path("_expediente_sysadmin_create_send_charge") }}";
+        Tecnotek.UI.urls["updateChargeURL"] = "{{ path("_expediente_sysadmin_update_charge") }}";
+
+        Tecnotek.UI.urls["getInfoChargeFullURL"] = "{{ path("_expediente_sysadmin_get_info_charge_full") }}";
+        Tecnotek.UI.urls["getInfoChargeURL"] = "{{ path("_expediente_sysadmin_get_info_charge_detail") }}";
+
+        Tecnotek.UI.urls["sendEmailChargeUrl"] = "{{ path("_expediente_sysadmin_send_email_charge") }}";
+        Tecnotek.UI.urls["sendEmailCloseChargeUrl"] = "{{ path("_expediente_sysadmin_send_email_close_charge") }}";
+
+
+
+        Tecnotek.UI.urls["getInfoChargeTeacherFullURL"] = "{{ path("_expediente_sysadmin_get_info_charge_teacher_full") }}";
+
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="grid">
+            <div class="titleRow">
+                <div class="left"><h3>{% trans %}label.charge.listar{% endtrans %}</h3></div>
+                <div class="right"><a id="openChargeForm" class="modalbox button success-darker tiny" href="#chargeFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+                <div class="clear"></div>
+            </div>
+
+            <!-- TABLA DE STUART CON DATATABLES-->
+            <div class="bs-example" data-example-id="contextual-table">
+                <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+                    <thead>
+                    <tr>
+                        <th  hidden>id</th>
+                        <th>Profesores</th>
+                        <th>Dedicación</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arregloDato in charges %}
+                        <tr class="info">
+                            <td hidden>{{ arregloDato.id }}</td>
+                            <td>{{ arregloDato.user }}</td>
+                            <td>{{ arregloDato.detailin }}</td>
+                            <td>{% if arregloDato.status == 1 %}  Creado {% endif %}
+                                {% if arregloDato.status == 2 %} Modificado {% endif %}
+                                {% if arregloDato.status == 3 %} Modificado en espera de Revisión {% endif %}
+                                {% if arregloDato.status == 4 %} Revisado correcciones pendientes {% endif %}
+                                {% if arregloDato.status == 5 %} Revisado y Aprobado {% endif %}
+                                {% if arregloDato.status == 6 %} Finalizado {% endif %}
+
+                            </td>
+                            <!-- Columna para poner los botones en la tabla -->
+                            <td class="nowrap">
+                                {% if role != 4 %}
+                                    <div class="button checkButton" title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID">
+                                        <a href=""> <div class="icon"><i class="fas fa-file" title="Archivo"></i></div></a></div>
+                                    &nbsp;&nbsp;&nbsp;
+                                {% endif %}
+
+
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- FIN DE TABLA DE STUART -->
+
+            <div class="table">
+                <div class="row tableHeader">
+                    <div class="option_width sort_header" style="float: left; width: 200px; margin-left: -6px;"
+                         field-name="user_id" order="asc">
+                        <span class="header-title asc" title="Code">{% trans %}label.teacher{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 350px; margin-left: -6px;"
+                         field-name="detailin" order="asc">
+                        <span class="header-title sortable" title="Name">{% trans %}label.detailin{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
+                         field-name="status" order="asc">
+                        <span class="header-title sortable" title="Type">{% trans %}label.status{% endtrans %}</span>
+                    </div>
+                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
+                    <div class="right" style="width: 5px; height: 26px"></div>
+                    <div class="option_width right">
+                        <input id="searchText" name="searchText" value="{{ text }}">
+                    </div>
+                </div>
+
+                <div id="students-container">
+                </div>
+
+                <div id="exstudents-container">
+                </div>
+            </div>
+
+            <div style="margin-bottom:75px;" id="pagination-container">
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+
+        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="CHARGE_ID" style="display: none;">
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">CHARGE_USER</div>
+            <div class="option_width" style="float: left; width: 350px; margin-left: -6px;">CHARGE_DETAILIN</div>
+            <div class="option_width" style="float: left; width: 150px; margin-left: -6px;">CHARGE_STATUS</div>
+
+            <!--<div class="right imageButton pdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>
+        <div class="right imageButton nopdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>-->
+
+            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="CHARGE_ID"></div>
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="CHARGE_ID"></div>
+            <div class="clear"></div>
+        </div>
+
+
+        <br/>
+
+        <div style="display: none;">
+            <a id="openChargeView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+            <a id="openChargeEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#chargeFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
+        </div>
+        <!-- hidden showContactInfoLink form -->
+        <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n del curso</h3>
+            <div id="chargeContainerView" name="chargeContainerView" class="contactInfo">
+
+            </div>
+        </div>
+
+
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="chargeFormContainer" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Agregar Carga</h3>
+
+            <form class="customForm" id="chargeForm" name="chargeForm">
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.detailin{% endtrans %}</label>
+                    <input type="text" id="detailinCharge" name="detailinCharge" style="width: 250px">
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.teacher{% endtrans %}</label>
+                    <select id="teacherChargeAdd" name="teacherChargeAdd" style="width: 120px;">
+                        <option value="0"></option>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>  <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="CHARGE_ID"></div>
+                        {% endfor %}
+                    </select>
+
+                    <div id="showTeacherContactInfoLink" style="width: 650px; height: 500px">
+
+                        <h3>Informaci&oacute;n del profesor</h3>
+                        <div id="chargeTeacherContainerView" name="chargeTeacherContainerView" class="contactInfo">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="btnchargeCancel" id="btnchargeCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="button" name="btnsaveSend" id="btnsaveSend" value="{% trans %}label.includeSave{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="chargeFormContainerEdit" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Editar Carga</h3>
+
+            <form class="customForm" id="chargeFormEdit" name="chargeFormEdit">
+
+                <div style="margin-bottom: 5px; display: none;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                    <input type="text" id="idChargeEdit" name="idChargeEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.detailin{% endtrans %}</label>
+                    <input type="text" id="detailinChargeEdit" name="detailinChargeEdit" style="width: 250px">
+                </div>
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="chargeCancel" id="chargeCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+        <div style="display: none;">
+            <input style="height: 80px;" id="teacherId" name="teacherId" value="0">
+        </div>
+    </div>
+{% endblock %}

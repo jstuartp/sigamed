@@ -1,0 +1,890 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Programas
+{% endblock %}
+
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/tek_exp_curriculum.js?o=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?y=2.0.6') }}"></script>
+
+    <script type="text/javascript">
+        Tecnotek.module = "curriculumList";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+
+        Tecnotek.UI.urls["loadCurriculumdataURL"] = "{{ path("_expediente_sysadmin_load_curriculumdata") }}";
+        Tecnotek.UI.urls["loadCurriculumdataFormURL"] = "{{ path("_expediente_sysadmin_load_curriculumdata_form") }}";
+        Tecnotek.UI.urls["loadCurriculumdataFormSaveURL"] = "{{ path("_expediente_sysadmin_load_curriculumdata_save") }}";
+
+        Tecnotek.UI.urls["createDegreeURL"] = "{{ path("_expediente_sysadmin_create_degree") }}";
+        Tecnotek.UI.urls["deleteDegreeURL"] = "{{ path("_expediente_sysadmin_degree_remove") }}";
+        Tecnotek.UI.urls["loadDegreeByTeacherURL"] = "{{ path("_expediente_sysadmin_load_degree_by_teacher") }}";
+        Tecnotek.UI.urls["loadDegreesFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_degree_full_by_teacher") }}";
+        Tecnotek.UI.urls["getInfoDegreeURL"] = "{{ path("_expediente_sysadmin_get_info_degree_detail") }}";
+        Tecnotek.UI.urls["updateDegreeURL"] = "{{ path("_expediente_sysadmin_update_degree") }}";
+
+        Tecnotek.UI.urls["createWexperienceURL"] = "{{ path("_expediente_sysadmin_create_wexperience") }}";
+        Tecnotek.UI.urls["deleteWexperienceURL"] = "{{ path("_expediente_sysadmin_wexperience_remove") }}";
+        Tecnotek.UI.urls["loadWexperiencesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_wexperience_by_teacher") }}";
+        Tecnotek.UI.urls["loadWexperiencesFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_wexperience_full_by_teacher") }}";
+
+        Tecnotek.UI.urls["createAexperienceURL"] = "{{ path("_expediente_sysadmin_create_aexperience") }}";
+        Tecnotek.UI.urls["deleteAexperienceURL"] = "{{ path("_expediente_sysadmin_aexperience_remove") }}";
+        Tecnotek.UI.urls["loadAexperiencesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_aexperience_by_teacher") }}";
+        Tecnotek.UI.urls["loadAexperiencesFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_aexperience_full_by_teacher") }}";
+
+        Tecnotek.UI.urls["createOexperienceURL"] = "{{ path("_expediente_sysadmin_create_oexperience") }}";
+        Tecnotek.UI.urls["deleteOexperienceURL"] = "{{ path("_expediente_sysadmin_oexperience_remove") }}";
+        Tecnotek.UI.urls["loadOexperiencesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_oexperience_by_teacher") }}";
+        Tecnotek.UI.urls["loadOexperiencesFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_oexperience_full_by_teacher") }}";
+        Tecnotek.UI.urls["savePublicationURL"] = "{{ path("_expediente_sysadmin_load_publication_save") }}";
+        Tecnotek.UI.urls["loadPublicationFormURL"] = "{{ path("_expediente_sysadmin_load_publication_form") }}";
+
+        Tecnotek.UI.urls["createPublicationURL"] = "{{ path("_expediente_sysadmin_create_publication") }}";
+        Tecnotek.UI.urls["deletePublicationURL"] = "{{ path("_expediente_sysadmin_publication_remove") }}";
+        Tecnotek.UI.urls["loadPublicationByTeacherURL"] = "{{ path("_expediente_sysadmin_load_publication_by_teacher") }}";
+        Tecnotek.UI.urls["loadPublicationsFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_publication_full_by_teacher") }}";
+
+        Tecnotek.UI.urls["createApresentationURL"] = "{{ path("_expediente_sysadmin_create_apresentation") }}";
+        Tecnotek.UI.urls["deleteApresentationURL"] = "{{ path("_expediente_sysadmin_apresentation_remove") }}";
+        Tecnotek.UI.urls["loadApresentationsByTeacherURL"] = "{{ path("_expediente_sysadmin_load_apresentation_by_teacher") }}";
+        Tecnotek.UI.urls["loadApresentationsFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_apresentation_full_by_teacher") }}";
+
+        Tecnotek.UI.urls["createInvestigationURL"] = "{{ path("_expediente_sysadmin_create_investigation") }}";
+        Tecnotek.UI.urls["deleteInvestigationURL"] = "{{ path("_expediente_sysadmin_investigation_remove") }}";
+        Tecnotek.UI.urls["loadInvestigationsByTeacherURL"] = "{{ path("_expediente_sysadmin_load_investigation_by_teacher") }}";
+        Tecnotek.UI.urls["loadInvestigationsFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_investigation_full_by_teacher") }}";
+
+        Tecnotek.UI.urls["createImproveURL"] = "{{ path("_expediente_sysadmin_create_improve") }}";
+        Tecnotek.UI.urls["deleteImproveURL"] = "{{ path("_expediente_sysadmin_improve_remove") }}";
+        Tecnotek.UI.urls["loadImprovesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_improve_by_teacher") }}";
+        Tecnotek.UI.urls["loadImprovesFullByTeacherURL"] = "{{ path("_expediente_sysadmin_load_improve_full_by_teacher") }}";
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24">
+            <div>
+                <div class="left"><h3>{% trans %}label.mycurriculum{% endtrans %}: {{ entity.lastname }}&nbsp;{{ entity.firstname }}</h3></div>
+                <hr>
+
+                <div id="curriculumdataContainer" name="curriculumdataContainer" style="width: 650px; height: 150px">
+
+
+                </div>
+
+                <!-- hidden teacherAssignedFormContainer form -->
+                <div id="curriculumdataFormContainer" style="display: none;">
+                    <h3 style="margin-bottom: 0px;">Modificar información</h3>
+
+                    <form class="customForm" id="curriculumdataForm" name="curriculumdataForm">
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.pension{% endtrans %}</label>
+
+                            <select id="curriculumdataPension" name="curriculumdataPension" style="width: 120px;">
+                                <option value=""></option>
+                                <option value="Magisterio">Magisterio</option>
+                                <option value="CCSS">CCSS</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.degree{% endtrans %}</label>
+                            <select id="curriculumdataDegree" name="curriculumdataDegree" style="width: 120px;">
+                                <option value="0"></option>
+                                <option value="1">Bachiller</option>
+                                <option value="2">Licenciatura</option>
+                                <option value="3">Maestría académica</option>
+                                <option value="3">Maestría profesional</option>
+                                <option value="4">Doctorado</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.gender{% endtrans %}</label>
+                            <select id="curriculumdataGender" name="curriculumdataGender" style="width: 120px;">
+                                <option value="0"></option>
+                                <option value="1">Hombre</option>
+                                <option value="2">Mujer</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.phone{% endtrans %}</label>
+                            <input type="text" id="curriculumdataPhone" name="curriculumdataPhone" style="width: 250px">
+
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.email{% endtrans %}</label>
+                            <input type="text" id="curriculumdataEmail" name="curriculumdataEmail" style="width: 250px">
+
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.birthday{% endtrans %}</label>
+                            <input type="text" id="curriculumdataBirthday" name="curriculumdataBirthday" style="width: 250px">
+
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.reg{% endtrans %}</label>
+                            <select id="curriculumdataReg" name="curriculumdataReg" style="width: 120px;">
+                                <option value="1">No</option>
+                                <option value="2">Si</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.regtx{% endtrans %}</label>
+                            <select id="curriculumdataRegTx" name="curriculumdataRegTx" style="width: 120px;">
+                                <option value="Visitante">Visitante</option>
+                                <option value="Ad honorem">Ad honorem</option>
+                                <option value="Adjunto">Adjunto</option>
+                                <option value="Invitado">Invitado</option>
+                                <option value="Propietario">Propietario</option>
+                                <option value="Interino">Interino</option>
+                                <option value="Interino con pasos académicos">Interino con pasos académicos</option>
+                            </select>
+                        </div>
+
+
+                        <input type="text"  hidden id="curriculumdataIdform" name="curriculumdataIdform" style="width: 250px">
+
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="curriculumdataCancel" id="curriculumdataCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="centeredDiv">
+                <div class="formContainer" style="width: 920px; height: 650px;">
+                    <div id="showContainer">
+                        <div style="margin-bottom: 10px;">
+
+                            <div class="clear"></div>
+
+
+                        </div>
+                        <!-- Tabs -->
+                        <div class="section-container auto" data-section>
+
+
+                            <section class="section">
+                                <p class="title" id="degreeTab"><a href="#panel2">{%trans%}label.degreetab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+                                    <h3>{% trans %}label.degreetittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.name{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.place{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.titledate{% endtrans %}</div>
+                                            <a id="openDegreeForm" class="modalbox button success-darker tiny" href="#degreeFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openDegreefullForm" class="modalbox button success-darker tiny" href="#degreefullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="degreeRows" name="degreeRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="degreeFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Título</h3>
+
+                                        <form class="customForm" id="degreeForm" name="degreeForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                                                <input type="text" id="nameDegree" name="nameDegree" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeDegree" name="placeDegree" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.titledate{% endtrans %}</label>
+                                                <input type="text" id="yearDegree" name="yearDegree" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.eedition{% endtrans %}</label>
+                                                    <select id="eeditionDegree" name="eeditionDegree" style="width: 120px;">
+                                                    <option value="1">Presencial</option>
+                                                    <option value="2">No Presencial</option>
+                                                    <option value="3">Virtual</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.country{% endtrans %}</label>
+                                                <input type="text" id="countryDegree" name="countryDegree" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.inprogress{% endtrans %}</label>
+                                                    <select id="inprogressDegree" name="inprogressDegree" style="width: 120px;">
+                                                    <option value="1">No</option>
+                                                    <option value="2">Si</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.equated{% endtrans %}</label>
+                                                <select id="equatedDegree" name="equatedDegree" style="width: 120px;">
+                                                    <option value="1">No</option>
+                                                    <option value="2">Si</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.equatedtx{% endtrans %}</label>
+                                                <input disabled type="text" id="equatedtxDegree" name="equatedtxDegree" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="degreeCancel" id="degreeCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+                                    <div style="display: none;">
+                                        <a id="openDegreeEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#degreeFormContainerEdit">{% trans %}label.edit{% endtrans %}</a>
+                                    </div>
+                                    <div id="degreeFormContainerEdit" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Título</h3>
+
+                                        <form class="customForm" id="degreeFormEdit" name="degreeFormEdit">
+
+                                            <div style="margin-bottom: 5px; display: none;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                                                <input type="text" id="idDegreeEdit" name="idDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                                                <input type="text" id="nameDegreeEdit" name="nameDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeDegreeEdit" name="placeDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.titledate{% endtrans %}</label>
+                                                <input type="text" id="yearDegreeEdit" name="yearDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.eedition{% endtrans %}</label>
+                                                <select id="eeditionDegreeEdit" name="eeditionDegreeEdit" style="width: 120px;">
+                                                    <option value="1">Presencial</option>
+                                                    <option value="2">No Presencial</option>
+                                                    <option value="3">Virtual</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.country{% endtrans %}</label>
+                                                <input type="text" id="countryDegreeEdit" name="countryDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.inprogress{% endtrans %}</label>
+                                                <select id="inprogressDegreeEdit" name="inprogressDegreeEdit" style="width: 120px;">
+                                                    <option value="1">No</option>
+                                                    <option value="2">Si</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.equated{% endtrans %}</label>
+                                                <select id="equatedDegreeEdit" name="equatedDegreeEdit" style="width: 120px;">
+                                                    <option value="1">No</option>
+                                                    <option value="2">Si</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.equatedtx{% endtrans %}</label>
+                                                <input disabled type="text" id="equatedtxDegreeEdit" name="equatedtxDegreeEdit" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="degreeCancelEdit" id="degreeCancelEdit" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.edit{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="degreefullFormContainer" name="degreefullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                            <section class="section">
+                                <p class="title" id="wexperienceTab"><a href="#panel2">{%trans%}label.wexperiencetab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+
+                                    <h3>{% trans %}label.wexperiencetittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.position{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.place{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.yeardate{% endtrans %}</div>
+                                            <a id="openWexperienceForm" class="modalbox button success-darker tiny" href="#wexperienceFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openWexperiencefullForm" class="modalbox button success-darker tiny" href="#wexperiencefullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="wexperienceRows" name="wexperienceRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="wexperienceFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir experiencia laboral</h3>
+
+                                        <form class="customForm" id="wexperienceForm" name="wexperienceForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.job{% endtrans %}</label>
+                                                <input type="text" id="jobWexperience" name="jobWexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.position{% endtrans %}</label>
+                                                <input type="text" id="positionWexperience" name="positionWexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeWexperience" name="placeWexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.yeardate{% endtrans %}</label>
+                                                <input type="text" id="yearWexperience" name="yearWexperience" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="wexperienceCancel" id="wexperienceCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveWexperience" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="wexperiencefullFormContainer" name="wexperiencefullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+                                    <h3>{% trans %}label.aexperiencetittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.course{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.place{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.period{% endtrans %}</div>
+                                            <a id="openAexperienceForm" class="modalbox button success-darker tiny" href="#aexperienceFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openAexperiencefullForm" class="modalbox button success-darker tiny" href="#aexperiencefullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="aexperienceRows" name="aexperienceRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="aexperienceFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Experiencia Académica</h3>
+
+                                        <form class="customForm" id="aexperienceForm" name="aexperienceForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.course{% endtrans %}</label>
+                                                <input type="text" id="subjectAexperience" name="subjectAexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeAexperience" name="placeAexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.period{% endtrans %}</label>
+                                                <input type="text" id="yearAexperience" name="yearAexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.performance{% endtrans %}</label>
+                                                <input type="text" id="performanceAexperience" name="performanceAexperience" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="aexperienceCancel" id="aexperienceCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveAexperience" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="aexperiencefullFormContainer" name="aexperiencefullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+
+                                    <h3>{% trans %}label.oexperiencetittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.position{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.place{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.period{% endtrans %}</div>
+                                            <a id="openOexperienceForm" class="modalbox button success-darker tiny" href="#oexperienceFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openOexperiencefullForm" class="modalbox button success-darker tiny" href="#oexperiencefullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="oexperienceRows" name="oexperienceRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="oexperienceFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Experiencia Académica</h3>
+
+                                        <form class="customForm" id="oexperienceForm" name="oexperienceForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.course{% endtrans %}</label>
+                                                <input type="text" id="subjectOexperience" name="subjectOexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeOexperience" name="placeOexperience" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.period{% endtrans %}</label>
+                                                <input type="text" id="yearOexperience" name="yearOexperience" style="width: 250px">
+                                            </div>
+
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="oexperienceCancel" id="oexperienceCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveOexperience" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="oexperiencefullFormContainer" name="oexperiencefullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+
+
+
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                            <section class="section">
+                                <p class="title" id="investigationTab"><a href="#panel2">{%trans%}label.investigationtab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+
+                                    <h3>{% trans %}label.investigationtittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 340px;">{% trans %}label.title{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.type{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.validity{% endtrans %}</div>
+                                            <a id="openInvestigationForm" class="modalbox button success-darker tiny" href="#investigationFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openInvestigationfullForm" class="modalbox button success-darker tiny" href="#investigationfullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="investigationRows" name="investigationRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="investigationFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Investigación registrada</h3>
+
+                                        <form class="customForm" id="investigationForm" name="investigationForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.title{% endtrans %}</label>
+                                                <input type="text" id="nameInvestigation" name="nameInvestigation" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
+
+                                                <select id="typeInvestigation" name="typeInvestigation" style="width: 120px;">
+                                                    <option value="1">Basica</option>
+                                                    <option value="2">Aplicada</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeInvestigation" name="placeInvestigation" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.status{% endtrans %}</label>
+                                                <select id="statusInvestigation" name="statusInvestigation" style="width: 120px;">
+                                                    <option value="1">Finalizada</option>
+                                                    <option value="2">Vigente</option>
+                                                    <option value="3">Suspendida</option>
+                                                </select>
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.validity{% endtrans %}</label>
+                                                <input type="text" id="validityInvestigation" name="validityInvestigation" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.descriptors{% endtrans %}</label>
+                                                <input type="text" id="descriptorsInvestigation" name="descriptorsInvestigation" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="investigationCancel" id="investigationCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveInvestigation" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="investigationfullFormContainer" name="investigationfullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                            <section class="section">
+                                <p class="title" id="publicationTab"><a href="#panel2">{%trans%}label.publicationtab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+
+                                    <h3>{% trans %}label.publicationtittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.title{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.site{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.yeardate{% endtrans %}</div>
+                                            <a id="openPublicationForm" class="modalbox button success-darker tiny" href="#publicationFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openPublicationfullForm" class="modalbox button success-darker tiny" href="#publicationfullFormContainer">{% trans %}label.show{% endtrans %}</a>
+
+                                        </div>
+                                        <div id="publicationRows" name="publicationRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <div id="publicationHiddenContainer" style="display: none;">
+                                        <a id="openPublicationFormEdit" class="modalbox button success-darker tiny" href="#publicationFormEditContainer">{% trans %}label.edit{% endtrans %}</a>
+
+                                        </div>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="publicationFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Publicación</h3>
+
+                                        <form class="customForm" id="publicationForm" name="publicationForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.title{% endtrans %}</label>
+                                                <input type="text" id="subjectPublication" name="subjectPublication" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.site{% endtrans %}</label>
+                                                <input type="text" id="placePublication" name="placePublication" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.yeardate{% endtrans %}</label>
+                                                <input type="text" id="yearPublication" name="yearPublication" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.authorship{% endtrans %}</label>
+                                                <select id="authorshipPublication" name="authorshipPublication" style="width: 120px;">
+                                                    <option value="1">Personal</option>
+                                                    <option value="2">Compartida</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="publicationCancel" id="publicationCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="savePublication" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="publicationFormEditContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Publicación</h3>
+
+                                        <form class="customForm" id="publicationFormEdit" name="publicationFormEdit">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.title{% endtrans %}</label>
+                                                <input type="text" id="subjectPublicationEdit" name="subjectPublicationEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.site{% endtrans %}</label>
+                                                <input type="text" id="placePublicationEdit" name="placePublicationEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.yeardate{% endtrans %}</label>
+                                                <input type="text" id="yearPublicationEdit" name="yearPublicationEdit" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.authorship{% endtrans %}</label>
+                                                <select id="authorshipPublicationEdit" name="authorshipPublicationEdit" style="width: 120px;">
+                                                    <option value="1">Personal</option>
+                                                    <option value="2">Compartida</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="publicationCancel" id="publicationCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="savePublicationEdit" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden publicationfullFormContainer form -->
+                                    <div id="publicationfullFormContainer" name="publicationfullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                            <section class="section">
+                                <p class="title" id="apresentationTab"><a href="#panel2">{%trans%}label.apresentationtab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+
+                                    <h3>{% trans %}label.apresentationtittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.title{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.place{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.year{% endtrans %}</div>
+                                            <a id="openApresentationForm" class="modalbox button success-darker tiny" href="#apresentationFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openApresentationfullForm" class="modalbox button success-darker tiny" href="#apresentationfullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="apresentationRows" name="apresentationRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="apresentationFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir Ponencia Académica</h3>
+
+                                        <form class="customForm" id="apresentationForm" name="apresentationForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.title{% endtrans %}</label>
+                                                <input type="text" id="subjectApresentation" name="subjectApresentation" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeApresentation" name="placeApresentation" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.year{% endtrans %}</label>
+                                                <input type="text" id="yearApresentation" name="yearApresentation" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="apresentationCancel" id="apresentationCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveApresentation" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="apresentationfullFormContainer" name="apresentationfullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                            <section class="section">
+                                <p class="title" id="improveTab"><a href="#panel2">{%trans%}label.improvetab{%endtrans%}</a></p>
+                                <div class="content">
+
+
+
+
+                                    <!-- Content of Tab #2 -->
+
+
+                                    <h3>{% trans %}label.improvetittle{% endtrans %}</h3>
+                                    <div class="left table">
+                                        <div class="row tableHeader" style="width: 800px">
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.name{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 240px;">{% trans %}label.type{% endtrans %}</div>
+                                            <div class="option_width" style="float: left; width: 140px;">{% trans %}label.validity{% endtrans %}</div>
+                                            <a id="openImproveForm" class="modalbox button success-darker tiny" href="#improveFormContainer">{% trans %}label.add{% endtrans %}</a>
+                                            <a id="openImprovefullForm" class="modalbox button success-darker tiny" href="#improvefullFormContainer">{% trans %}label.show{% endtrans %}</a>
+                                        </div>
+                                        <div id="improveRows" name="improveRows">
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <br/>
+
+                                    <!-- hidden teacherAssignedFormContainer form -->
+                                    <div id="improveFormContainer" style="display: none;">
+                                        <h3 style="margin-bottom: 0px;">Incluir experiencia laboral</h3>
+
+                                        <form class="customForm" id="improveForm" name="improveForm">
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                                                <input type="text" id="nameImprove" name="nameImprove" style="width: 250px">
+                                            </div>
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.place{% endtrans %}</label>
+                                                <input type="text" id="placeImprove" name="placeImprove" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.year{% endtrans %}</label>
+                                                <input type="text" id="yearImprove" name="yearImprove" style="width: 250px">
+                                            </div>
+
+                                            <div style="margin-bottom: 5px;">
+                                                <label style="display: inline-block; width: 165px">{% trans %}label.subject{% endtrans %}</label>
+                                                <input type="text" id="subjectImprove" name="subjectImprove" style="width: 250px">
+                                            </div>
+
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="improveCancel" id="improveCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                                            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveImprove" value="{% trans %}label.include{% endtrans %}"/></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </div>
+
+                                    <!-- hidden wexperiencefullFormContainer form -->
+                                    <div id="improvefullFormContainer" name="improvefullFormContainer" style="display: none; width: 650px; height: 500px">
+
+
+
+                                    </div>
+
+
+
+                                    <div class="clear"></div>
+                                    <!-- End Content of Tab #2 -->
+                                </div>
+                            </section>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+{% endblock %}

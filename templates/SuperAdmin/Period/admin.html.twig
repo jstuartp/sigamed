@@ -1,0 +1,512 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Periodo
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/tek_exp_period_admin.js?j=1') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.UI.urls["deleteURL"] = "{{ path("_delete_period", {id: entity.id}) }}";
+        Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.period.delete{% endtrans %}";
+
+        Tecnotek.UI.urls["createEntryURL"] = "{{ path("_expediente_sysadmin_create_entry") }}";
+        Tecnotek.UI.urls["associateCourseURL"] = "{{ path("_expediente_sysadmin_associate_course") }}";
+        Tecnotek.UI.urls["loadAvailableCoursesForGradeURL"] = "{{ path("_expediente_sysadmin_load_courses_by_grade") }}";
+        Tecnotek.UI.urls["deleteGroupURL"] = "{{ path("_expediente_sysadmin_group_remove") }}";
+        Tecnotek.UI.urls["deleteEntryURL"] = "{{ path("_expediente_sysadmin_entry_remove") }}";
+        Tecnotek.UI.urls["deleteCourseAssociationURL"] = "{{ path("_expediente_sysadmin_course_association_remove") }}";
+        Tecnotek.UI.urls["loadPeriodInfoByGradeURL"] = "{{ path("_expediente_sysadmin_load_period_info") }}";
+        Tecnotek.UI.urls["loadEntriesByCourseURL"] = "{{ path("_expediente_sysadmin_load_entries_by_course") }}";
+        Tecnotek.UI.urls["saveGroupURL"] = "{{ path("_expediente_sysadmin_group_save") }}";
+        Tecnotek.module = "adminPeriod";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+        Tecnotek.UI.vars["periodId"] = {{ entity.id }};
+        Tecnotek.UI.vars["groupId"] = 0;
+
+        Tecnotek.UI.urls["getInfoChargeTeacherFullURL"] = "{{ path("_expediente_sysadmin_get_info_charge_teacher_full") }}";
+
+        Tecnotek.UI.urls["loadCoursesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_courses_groups_by_teacher") }}";
+        Tecnotek.UI.urls["loadAvailableCoursesForTeacher"] = "{{ path("_expediente_sysadmin_load_courses_by_teacher_group") }}";
+        Tecnotek.UI.urls["deleteTeacherAssignedURL"] = "{{ path("_expediente_sysadmin_teacher_assigned_remove") }}";
+        Tecnotek.UI.urls["loadCoursesClassForGroupURL"] = "{{ path("_expediente_sysadmin_load_course_class_by_group") }}";
+        Tecnotek.UI.urls["createTeacherAssignedURL"] = "{{ path("_expediente_sysadmin_create_teacher_assigned") }}";
+
+        Tecnotek.UI.urls["loadCoursesToAssignedByTeacherURL"] = "{{ path("_expediente_sysadmin_load_courses_assigned_by_teacher") }}";
+        Tecnotek.UI.urls["createCourseAssignedURL"] = "{{ path("_expediente_sysadmin_create_course_assigned") }}";
+        Tecnotek.UI.urls["deleteCourseAssignedURL"] = "{{ path("_expediente_sysadmin_course_assigned_remove") }}";
+
+        Tecnotek.UI.urls["loadCommissionsToAssignedByTeacherURL"] = "{{ path("_expediente_sysadmin_load_commissions_assigned_by_teacher") }}";
+        Tecnotek.UI.urls["createCommissionAssignedURL"] = "{{ path("_expediente_sysadmin_create_commission_assigned") }}";
+        Tecnotek.UI.urls["deleteCommissionAssignedURL"] = "{{ path("_expediente_sysadmin_commission_assigned_remove") }}";
+
+        Tecnotek.UI.urls["loadProjectsToAssignedByTeacherURL"] = "{{ path("_expediente_sysadmin_load_projects_assigned_by_teacher") }}";
+        Tecnotek.UI.urls["createProjectAssignedURL"] = "{{ path("_expediente_sysadmin_create_project_assigned") }}";
+        Tecnotek.UI.urls["deleteProjectAssignedURL"] = "{{ path("_expediente_sysadmin_project_assigned_remove") }}";
+
+        Tecnotek.UI.urls["loadOthersToAssignedByTeacherURL"] = "{{ path("_expediente_sysadmin_load_others_assigned_by_teacher") }}";
+        Tecnotek.UI.urls["createOtherAssignedURL"] = "{{ path("_expediente_sysadmin_create_other_assigned") }}";
+        Tecnotek.UI.urls["deleteOtherAssignedURL"] = "{{ path("_expediente_sysadmin_other_assigned_remove") }}";
+
+
+        Tecnotek.UI.urls["getStudentsURL"] = "{{ path("_expediente_get_students_list_for_group") }}";
+        Tecnotek.UI.urls["setStudentToGroup"] = "{{ path("_expediente_set_student_to_group") }}";
+        Tecnotek.UI.urls["getGroupStudentsURL"] = "{{ path("_expediente_get_students_list_of_group") }}";
+        Tecnotek.UI.urls["removeStudentFromGroupURL"] = "{{ path("_expediente_remove_student_from_group") }}";
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+    <div class="grid_24">
+    <div>
+        <div class="left"><h3>{% trans %}label.period.admin{% endtrans %}: {{ entity }}</h3></div>
+        <div class="right"><a href="{{ path('_expediente_sysadmin_period') }}" class="button success-darker tiny"><span></span>{% trans %}label.back.list{% endtrans %}</a></div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="centeredDiv">
+    <div class="formContainer" style="width: 920px; height: 650px;">
+    <div id="showContainer">
+    <div style="margin-bottom: 10px;">
+        <div  style="display: none;"><div class="left" style="width: 150px; font-weight: bold;">{%trans%}label.grade{%endtrans%}</div>
+        <div id="labelName" class="left">
+            <select id="grade" name="grade">
+                {% for grade in grades %}
+                    <option value="{{ grade.id }}">{{grade}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        </div>
+
+        <div id="coursesContainer" class="right" style="margin-left: 50px; display: none;">
+            <div class="left" style="width: 150px; font-weight: bold;">{%trans%}label.courses{%endtrans%}</div>
+            <div class="left">
+                <select id="periodCourses" name="periodCourses">
+                </select>
+            </div>
+        </div>
+
+        <div id="teacherContainer" class="right" style="margin-left: 50px; display: none;">
+            <div class="left" style="width: 150px; font-weight: bold;">{%trans%}label.teachers{%endtrans%}</div>
+            <div class="left">
+                <select id="teachers" name="teachers">
+                    <option value="0"></option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>
+                    {% endfor %}
+                </select>
+                <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="CHARGE_ID"></div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+    <!-- Tabs -->
+    <div class="section-container auto" data-section>
+    <section class="section">
+        <p class="title" id="groupTab"><a href="#panel1">{%trans%}label.groups{%endtrans%}</a></p>
+        <div class="content">
+            <!-- Content of Tab #1 -->
+            <div class="left">
+                <div class="row tableHeader">
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.name{% endtrans %}</div>
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.teacher.guide{% endtrans %}</div>
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.institution{% endtrans %}</div>
+                    <a id="openGroupForm" class="modalbox right button success-darker tiny" style="margin: 5px 0px 0px 0px;" href="#groupFormContainer">{% trans %}label.new{% endtrans %}</a>
+                </div>
+                <div id="groupRows" name="groupRows">
+
+                </div>
+            </div>
+            <div class="clear"></div>
+            <br/>
+
+            <!-- hidden groupForm form -->
+            <div id="groupFormContainer" style="display: none;">
+                <h3 style="margin-bottom: 0px;">Crear nuevo grupo</h3>
+
+                <form class="customForm" id="groupForm" name="groupForm">
+                    <div class="formErrors"></div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 120px">{% trans %}label.name{% endtrans %}</label>
+                        <input id="groupFormName" name="groupFormName" style="width: 250px">
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 120px">{% trans %}label.teacher.guide{% endtrans %}</label>
+                        <select id="groupFormTeacher" name="groupFormTeacher" style="width: 250px;">
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 120px">{% trans %}label.institution{% endtrans %}</label>
+                        <select id="groupFormInstitution" name="groupFormInstitution" style="width: 250px;">
+                            {% for institution in institutions %}
+                                <option value="{{ institution.id }}">{{ institution.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="left "><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="groupFormCancel" id="groupFormCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                    <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+                    <div class="clear"></div>
+                </form>
+            </div>
+
+            <!-- hidden studentsToGroup form -->
+            <div id="studentsToGroupContainer" style="display: none; width: 700px;">
+                <div>
+                    <h3 style="margin-bottom: 0px;" class="left">Estudiantes en el grupo: &nbsp;<span id="groupNameOfList" name="groupNameOfList"></span></h3>
+                    <a id="openStudentsToGroup" class="modalbox left" href="#studentsToGroupContainer">&nbsp;</a>
+                    <div class="right"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="studentsToGroupCancel" id="studentsToGroupCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="left table">
+                    <div class="row tableHeader">
+                        <div class="option_width" style="float: left; width: 300px;">{% trans %}label.name{% endtrans %}</div>
+                    </div>
+                    <div class="left" id="studentsList" style="height: 250px; overflow: scroll;">
+
+                    </div>
+                </div>
+
+                <div class="left" style="width: 275px; margin-left: 20px;">
+                    <form id="searchform">
+                        <div>
+                            <div>{% trans %}group.include.students{%endtrans%}</div>
+                            <div style="font-size: 10px;">{% trans %}club.include.help{%endtrans%}</div>
+
+                            <input type="text" size="30" value="" id="searchBox"/>
+                        </div>
+                        <div id="suggestions"></div>
+                    </form>
+                </div>
+                <div class="clear"></div>
+
+            </div>
+            <!-- End Content of Tab #1-->
+        </div>
+    </section>
+    <section class="section">
+        <p class="title" id="courseTab"><a href="#panel2">{%trans%}label.assigned.cordinators{%endtrans%}</a></p>
+        <div class="content">
+            <!-- Content of Tab #2 -->
+            <div class="left table">
+                <div class="row tableHeader">
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.name{% endtrans %}</div>
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.teacher.default{% endtrans %}</div>
+                    <a id="openCourseForm" class="modalbox button success-darker tiny" href="#courseFormContainer">{% trans %}label.include{% endtrans %}</a>
+                </div>
+                <div id="courseRows" name="courseRows">
+
+                </div>
+            </div>
+            <div class="clear"></div>
+            <br/>
+
+            <!-- hidden courseFormContainer form -->
+            <div id="courseFormContainer" style="display: none;">
+                <h3 style="margin-bottom: 0px;">Incluir materia</h3>
+
+                <form class="customForm" id="courseForm" name="courseForm">
+
+                    <div style="display: none;">
+                        <input type="text" id="idPeriod" name="idPeriod" style="width: 250px" value="{{ entity.id }}">
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 165px">{% trans %}label.course{% endtrans %}</label>
+                        <select id="courseToAsociate" name="courseToAsociate" style="width: 250px;">
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 165px">{% trans %}label.teacher.default{% endtrans %}</label>
+                        <select id="courseFormTeacher" name="courseFormTeacher" style="width: 250px;">
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}">{{teacher.firstname ~ " " ~ teacher.lastname}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="groupFormCancel" id="courseFormCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                    <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                    <div class="clear"></div>
+                </form>
+            </div>
+
+            <div class="clear"></div>
+            <!-- End Content of Tab #2 -->
+        </div>
+    </section>
+    <section class="section">
+        <p class="title" id="teacherTab"><a href="#panel2">{%trans%}label.assigned.teachers{%endtrans%}</a></p>
+        <div class="content">
+            <!-- Content of Tab #2 -->
+            <div class="left table">
+                <div class="row tableHeader">
+                    <div class="option_width" style="float: left; width: 250px;">{% trans %}label.course{% endtrans %}</div>
+                    <div class="option_width" style="float: left; width: 50px;">{% trans %}label.group{% endtrans %}</div>
+                    <a id="openTeacherForm" class="modalbox button success-darker tiny" href="#teacherAssignedFormContainer">{% trans %}label.add{% endtrans %}</a>
+                </div>
+                <div id="courseTeacherRows" name="courseTeacherRows">
+                </div>
+            </div>
+            <div class="clear"></div>
+            <br/>
+
+            <!-- hidden teacherAssignedFormContainer form -->
+            <div id="teacherAssignedFormContainer" style="display: none;">
+                <h3 style="margin-bottom: 0px;">Incluir materia</h3>
+
+                <form class="customForm" id="teacherForm" name="teacherForm">
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 165px">{% trans %}label.group{% endtrans %}</label>
+                        <select id="groupToFormTeacher" name="groupToFormTeacher" style="width: 250px;">
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label style="display: inline-block; width: 165px">{% trans %}label.course{% endtrans %}</label>
+                        <select id="courseToAsociateFormTeacher" name="courseToAsociateFormTeacher" style="width: 250px;">
+                        </select>
+                    </div>
+
+                    <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="courseFormTeacherCancel" id="courseFormTeacherCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                    <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                    <div class="clear"></div>
+                </form>
+            </div>
+
+            <div class="clear"></div>
+            <!-- End Content of Tab #2 -->
+        </div>
+    </section>
+
+        <section class="section">
+            <p class="title" id="teacherAssignedTab"><a href="#panel2">{%trans%}label.assigned.courses{%endtrans%}</a></p>
+            <div class="content">
+                <!-- Content of Tab #2 -->
+                <div class="left table">
+                    <div class="row tableHeader">
+                        <div class="option_width" style="float: left; width: 300px;">{% trans %}label.course{% endtrans %}</div>
+
+                        <a id="openCourseTeacherForm" class="modalbox button success-darker tiny" href="#courseAssignedFormContainer">{% trans %}label.add{% endtrans %}</a>
+                    </div>
+                    <div id="courseAssginedRows" name="courseAssginedRows">
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <br/>
+
+                <!-- hidden teacherAssignedFormContainer form -->
+                <div id="courseAssignedFormContainer" style="display: none;">
+                    <h3 style="margin-bottom: 0px;">Incluir materia</h3>
+
+                    <form class="customForm" id="courseTeacherForm" name="courseTeacherForm">
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.course{% endtrans %}</label>
+                            <select id="courseToAsociateAssignedForm" name="courseToAsociateAssignedForm" style="width: 250px;">
+                            </select><br>
+                            <label style="display: inline-block; width: 165px">{% trans %}label.weight{% endtrans %}</label>
+                            <input type="text" id="weightCourse" name="weightCourse" style="width: 250px">
+                        </div>
+
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="courseFormAssignedCancel" id="courseFormAssignedCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+
+                <div class="clear"></div>
+                <!-- End Content of Tab #2 -->
+            </div>
+        </section>
+
+
+        <section class="section">
+            <p class="title" id="teacherAssignedCommissionTab"><a href="#panel2">{%trans%}label.assigned.commission{%endtrans%}</a></p>
+            <div class="content">
+                <!-- Content of Tab #2 -->
+                <div class="left table">
+                    <div class="row tableHeader">
+                        <div class="option_width" style="float: left; width: 300px;">{% trans %}label.commission{% endtrans %}</div>
+
+                        <a id="openCommissionTeacherForm" class="modalbox button success-darker tiny" href="#commissionAssignedFormContainer">{% trans %}label.add{% endtrans %}</a>
+                    </div>
+                    <div id="commissionAssginedRows" name="commissionAssginedRows">
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <br/>
+
+                <!-- hidden teacherAssignedFormContainer form -->
+                <div id="commissionAssignedFormContainer" style="display: none;">
+                    <h3 style="margin-bottom: 0px;">Incluir comision</h3>
+
+                    <form class="customForm" id="commissionTeacherForm" name="commissionTeacherForm">
+
+                        <div style="margin-bottom: 5px;">
+                            <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.commission{% endtrans %}</label>
+                            <select id="commissionToAsociateAssignedForm" name="commissionToAsociateAssignedForm" style="width: 250px;">
+                            </select>
+                            </div>
+                                <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
+                            <select id="typecommissionToAsociateAssignedForm" name="typecommissionToAsociateAssignedForm" style="width: 250px;">
+                                <option value="1">Coordinador</option>
+                                <option value="2">Miembro</option>
+                            </select><br>
+                                    <label style="display: inline-block; width: 165px">{% trans %}label.weight{% endtrans %}</label>
+                                    <input type="text" id="weightCommission" name="weightCommission" style="width: 250px">
+                                </div>
+                        </div>
+
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="commissionFormAssignedCancel" id="commissionFormAssignedCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+
+                <div class="clear"></div>
+                <!-- End Content of Tab #2 -->
+            </div>
+        </section>
+
+        <section class="section">
+            <p class="title" id="teacherAssignedProjectTab"><a href="#panel2">{%trans%}label.assigned.projects{%endtrans%}</a></p>
+            <div class="content">
+                <!-- Content of Tab #2 -->
+                <div class="left table">
+                    <div class="row tableHeader">
+                        <div class="option_width" style="float: left; width: 300px;">{% trans %}label.projects{% endtrans %}</div>
+
+                        <a id="openProjectTeacherForm" class="modalbox button success-darker tiny" href="#projectAssignedFormContainer">{% trans %}label.add{% endtrans %}</a>
+                    </div>
+                    <div id="projectAssginedRows" name="projectAssginedRows">
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <br/>
+
+                <!-- hidden teacherAssignedFormContainer form -->
+                <div id="projectAssignedFormContainer" style="display: none;">
+                    <h3 style="margin-bottom: 0px;">Incluir proyecto</h3>
+
+                    <form class="customForm" id="projectTeacherForm" name="projectTeacherForm">
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.project{% endtrans %}</label>
+                            <select id="projectToAsociateAssignedForm" name="projectToAsociateAssignedForm" style="width: 250px;">
+                            </select><br>
+                            <label style="display: inline-block; width: 165px">{% trans %}label.weight{% endtrans %}</label>
+                            <input type="text" id="weightProject" name="weightProject" style="width: 250px">
+                        </div>
+
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="projectFormAssignedCancel" id="projectFormAssignedCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+
+                <div class="clear"></div>
+                <!-- End Content of Tab #2 -->
+            </div>
+        </section>
+
+
+        <section class="section">
+            <p class="title" id="teacherAssignedOtherTab"><a href="#panel2">{%trans%}label.assigned.others{%endtrans%}</a></p>
+            <div class="content">
+                <!-- Content of Tab #6 -->
+                <div class="left table">
+                    <div class="row tableHeader">
+                        <div class="option_width" style="float: left; width: 300px;">{% trans %}label.others{% endtrans %}</div>
+
+                        <a id="openOtherTeacherForm" class="modalbox button success-darker tiny" href="#otherAssignedFormContainer">{% trans %}label.add{% endtrans %}</a>
+                    </div>
+                    <div id="otherAssginedRows" name="otherAssginedRows">
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <br/>
+
+                <!-- hidden teacherAssignedFormContainer form -->
+                <div id="otherAssignedFormContainer" style="display: none;">
+                    <h3 style="margin-bottom: 0px;">Incluir proyecto</h3>
+
+                    <form class="customForm" id="otherTeacherForm" name="otherTeacherForm">
+
+                        <div style="margin-bottom: 5px;">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.other{% endtrans %}</label>
+                            <input type="text" id="nameOther" name="nameOther" style="width: 250px">
+                            </select><br>
+                            <label style="display: inline-block; width: 165px">{% trans %}label.weight{% endtrans %}</label>
+                            <input type="text" id="weightOther" name="weightOther" style="width: 250px">
+                        </div>
+
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="otherFormAssignedCancel" id="otherFormAssignedCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+
+                <div class="clear"></div>
+                <!-- End Content of Tab #2 -->
+            </div>
+        </section>
+
+        <div style="display: none;">
+            <a id="openChargeView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+        </div>
+        <!-- hidden showContactInfoLink form -->
+        <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n del profesor</h3>
+            <div id="chargeContainerView" name="chargeContainerView" class="contactInfo">
+
+            </div>
+        </div>
+
+        <div id="showContactInfoDuplicateLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n del profesor</h3>
+            <div id="chargeContainerViewDuplicate" name="chargeContainerViewDuplicate" class="contactInfo">
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="wrapper">
+        <div class="grid_24 padline">
+            <div class="lineH"></div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

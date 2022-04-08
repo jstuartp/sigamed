@@ -1,0 +1,167 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Periodo
+{% endblock %}
+
+{% block extrajs %}
+
+<script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+
+<script type="text/javascript">
+    Tecnotek.module = "entityList";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+    Tecnotek.UI.urls["show"] = "{{ path('_expediente_sysadmin_period_show_simple')}}";
+    Tecnotek.UI.urls["edit"] = "{{ path('_expediente_sysadmin_period_edit_simple')}}";
+
+
+
+    Tecnotek.UI.urls["createPeriodURL"] = "{{ path("_expediente_sysadmin_create_period") }}";
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+<div class="container">
+    <div class="grid">
+        <div class="titleRow">
+            <div class="left"><h3>{% trans %}label.period.listar{% endtrans %}</h3></div>
+
+                <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_period_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
+                <div class="right"><a id="openPeriodForm" class="modalbox button success-darker tiny" href="#periodFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+            <div class="clear"></div>
+        </div>
+
+        <!-- TABLA DE STUART CON DATATABLES-->
+        <div class="bs-example" data-example-id="contextual-table">
+            <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+                <thead>
+                <tr>
+                    <th  hidden>id</th>
+                    <th>Nombre</th>
+                    <th>Año</th>
+                    <th>Periodo Actual</th>
+                    <th>Editable</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in pagination %}
+                    <tr class="info">
+                        <td hidden>{{ entity.id }}</td>
+                        <td>{{  entity.name  }}</td>
+                        <td>{{ entity.year }}</td>
+                        <td>{% if entity.actual %}{% trans %}label.yes{% endtrans %}{% else %} {% trans %}label.no{% endtrans %} {% endif %}</td>
+                        <td>{% if entity.editable %}{% trans %}label.yes{% endtrans %}{% else %} {% trans %}label.no{% endtrans %} {% endif %}</td>
+
+                        <!-- Columna para poner los botones en la tabla -->
+                        <td class="nowrap">
+                                <div class="icon adminButton" rel="{{ entity.id }}"><i class="fas fa-tools" title="Admin"></i></div>
+                        </td>
+                        <td class="nowrap">
+                                <div class="icon questionsButton" rel="{{ entity.id }}"><i class="fas fa-question" title="Editar"></i></div>
+                        </td>
+                        <td class="nowrap">
+                            <div class="icon viewButton" rel="{{ entity.id }}"><i class="fas fa-eye" title="Ver"></i></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- FIN DE TABLA DE STUART -->
+
+
+
+        <div class="clear"></div>
+
+
+        <div style="display: none;">
+            <a id="openPeriodEditForm" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#periodEditFormContainer">{% trans %}label.open{% endtrans %}</a>
+        </div>
+
+        <div id="periodFormContainer" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Agregar Periodo</h3>
+
+            <form class="customForm" id="periodForm" name="periodForm">
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                    <input type="text" id="namePeriod" name="namePeriod" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.year{% endtrans %}</label>
+                    <input type="text" id="yearPeriod" name="yearPeriod" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.order{% endtrans %}</label>
+                    <input type="text" id="orderInYearPeriod" name="orderInYearPeriod" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label><input type="checkbox" id="isActualPeriod" value="first_checkbox"> {% trans %}label.isactual{% endtrans %}</label><br>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label><input type="checkbox" id="isEditablePeriod" value="first_checkbox"> {% trans %}label.iseditable{% endtrans %} </label><br>
+                </div>
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="periodCancel" id="periodCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+
+        <div id="periodEditFormContainer" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Editar Periodo</h3>
+
+            <form class="customForm" id="periodFormEdit" name="periodFormEdit">
+
+
+                <div style="margin-bottom: 5px; display: none;">
+                    <input type="text" id="idPeriodEdit" name="idPeriodEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                    <input type="text" id="namePeriodEdit" name="namePeriodEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.year{% endtrans %}</label>
+                    <input type="text" id="yearPeriodEdit" name="yearPeriodEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.order{% endtrans %}</label>
+                    <input type="text" id="orderInYearPeriodEdit" name="orderInYearPeriodEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label><input type="checkbox" id="isActualPeriodEdit" value="first_checkbox"> {% trans %}label.isactual{% endtrans %}</label><br>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label><input type="checkbox" id="isEditablePeriodEdit" value="first_checkbox"> {% trans %}label.iseditable{% endtrans %} </label><br>
+                </div>
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="periodCancel" id="periodCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+{% endblock %}

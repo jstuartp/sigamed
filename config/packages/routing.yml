@@ -1,0 +1,1783 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+logout:
+    path: /logout
+
+homepage:
+    path:  /
+    defaults: { _controller: AppBundle:SuperAdmin:index }
+
+_expediente_my_account:
+    path: /myAccount
+    defaults: { _controller: AppBundle:Default:myAccount }
+
+_change_admin_password:
+    path: /changePassword
+    defaults: { _controller: AppBundle:SuperAdmin:changeUserPassword }
+
+#Super Administrador
+_expediente_sysadmin:
+    path:  /
+    defaults: { _controller: AppBundle:SuperAdmin:index }
+
+_expediente_sysadmin_administrador:
+    path:  /administrador
+    defaults: { _controller: AppBundle:SuperAdmin:administradorList }
+
+
+_delete_admin:
+    path:  /administrador/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:administradorDelete }
+
+_expediente_sysadmin_admin_create:
+    path:  /administrador/create
+    defaults: { _controller: AppBundle:SuperAdmin:administradorCreate }
+
+_expediente_sysadmin_admin_save:
+    path:  /administrador/save
+    defaults: { _controller: AppBundle:SuperAdmin:administradorSave }
+
+_expediente_sysadmin_admin_update:
+    path:  /administrador/update
+    defaults: { _controller: AppBundle:SuperAdmin:administradorUpdate }
+
+_expediente_sysadmin_admin_show:
+    path:  /administrador/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:administradorShow }
+
+_expediente_sysadmin_admin_show_simple:
+    path:  /administrador/show
+    defaults: { _controller: AppBundle:SuperAdmin:administradorShow }
+
+_expediente_sysadmin_create_user:
+    path:  /user/createUser/
+    defaults: { _controller: AppBundle:SuperAdmin:createUser }
+
+#CRUD de Coordinadores para SysAdmin
+_expediente_sysadmin_coordinador:
+    path:  /coordinador
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorList }
+
+_delete_coordinador:
+    path:  /coordinador/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorDelete }
+
+_expediente_sysadmin_coordinador_create:
+    path:  /coordinador/create
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorCreate }
+
+_expediente_sysadmin_coordinador_save:
+    path:  /coordinador/save
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorSave }
+
+_expediente_sysadmin_coordinador_update:
+    path:  /coordinador/update
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorUpdate }
+
+_expediente_sysadmin_coordinador_show:
+    path:  /coordinador/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorShow }
+
+_expediente_sysadmin_coordinador_show_simple:
+    path:  /coordinador/show
+    defaults: { _controller: AppBundle:SuperAdmin:coordinadorShow }
+#Fin de CRUD de Coordinadores para SysAdmin
+
+#CRUD de Profesores para SysAdmin
+_expediente_sysadmin_profesor:
+    path:  /profesor
+    defaults: { _controller: AppBundle:SuperAdmin:profesorList }
+
+_delete_profesor:
+    path:  /profesor/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:profesorDelete }
+
+_expediente_sysadmin_profesor_create:
+    path:  /profesor/create
+    defaults: { _controller: AppBundle:SuperAdmin:profesorCreate }
+
+_expediente_sysadmin_profesor_save:
+    path:  /profesor/save
+    defaults: { _controller: AppBundle:SuperAdmin:profesorSave }
+
+_expediente_sysadmin_profesor_update:
+    path:  /profesor/update
+    defaults: { _controller: AppBundle:SuperAdmin:profesorUpdate }
+
+_expediente_sysadmin_profesor_show:
+    path:  /profesor/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:profesorShow }
+
+_expediente_sysadmin_profesor_show_simple:
+    path:  /profesor/show
+    defaults: { _controller: AppBundle:SuperAdmin:profesorShow }
+#Fin de CRUD de Coordinadores para Profesor
+
+#CRUD de routes para SysAdmin
+_expediente_sysadmin_route:
+    path:  /route
+    defaults: { _controller: AppBundle:SuperAdmin:routeList }
+
+_delete_route:
+    path:  /route/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:routeDelete }
+
+_expediente_sysadmin_route_create:
+    path:  /route/create
+    defaults: { _controller: AppBundle:SuperAdmin:routeCreate }
+
+_expediente_sysadmin_route_save:
+    path:  /route/save
+    defaults: { _controller: AppBundle:SuperAdmin:routeSave }
+
+_expediente_sysadmin_route_update:
+    path:  /route/update
+    defaults: { _controller: AppBundle:SuperAdmin:routeUpdate }
+
+_expediente_sysadmin_route_show:
+    path:  /route/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:routeShow }
+
+_expediente_sysadmin_route_edit:
+    path:  /route/edit/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:routeEdit }
+
+_expediente_sysadmin_route_show_simple:
+    path:  /route/show
+    defaults: { _controller: AppBundle:SuperAdmin:routeShow }
+
+_expediente_sysadmin_route_edit_simple:
+    path:  /route/edit
+    defaults: { _controller: AppBundle:SuperAdmin:routeEdit }
+#Fin de CRUD de routes
+
+#CRUD de bus para SysAdmin
+_expediente_sysadmin_bus:
+    path:  /bus
+    defaults: { _controller: AppBundle:SuperAdmin:busList }
+
+_delete_bus:
+    path:  /bus/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:busDelete }
+
+_expediente_sysadmin_bus_create:
+    path:  /bus/create
+    defaults: { _controller: AppBundle:SuperAdmin:busCreate }
+
+_expediente_sysadmin_bus_save:
+    path:  /bus/save
+    defaults: { _controller: AppBundle:SuperAdmin:busSave }
+
+_expediente_sysadmin_bus_update:
+    path:  /bus/update
+    defaults: { _controller: AppBundle:SuperAdmin:busUpdate }
+
+_expediente_sysadmin_bus_show:
+    path:  /bus/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:busShow }
+
+_expediente_sysadmin_bus_edit:
+    path:  /bus/edit/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:busEdit }
+
+_expediente_sysadmin_bus_show_simple:
+    path:  /bus/show
+    defaults: { _controller: AppBundle:SuperAdmin:busShow }
+
+_expediente_sysadmin_bus_edit_simple:
+    path:  /bus/edit
+    defaults: { _controller: AppBundle:SuperAdmin:busEdit }
+#Fin de CRUD de bus
+
+#CRUD de Students para SysAdmin
+_expediente_sysadmin_student:
+    path:  /student
+    defaults: { _controller: AppBundle:Student:studentList }
+
+_expediente_sysadmin_student_search:
+    path:  /student/search
+    defaults: { _controller: AppBundle:Student:searchStudents }
+
+_expediente_sysadmin_contact_search:
+    path:  /contact/search
+    defaults: { _controller: AppBundle:Student:searchContacts }
+
+_expediente_sysadmin_student_psico_esc:
+    path:  /studentPsico
+    defaults: { _controller: AppBundle:Student:studentListPsicoEsc }
+
+_delete_student:
+    path:  /student/delete/{id}
+    defaults: { _controller: AppBundle:Student:studentDelete }
+
+_expediente_sysadmin_student_create:
+    path:  /student/create
+    defaults: { _controller: AppBundle:Student:studentCreate }
+
+_expediente_sysadmin_student_save:
+    path:  /student/save
+    defaults: { _controller: AppBundle:Student:studentSave }
+
+_expediente_sysadmin_student_update:
+    path:  /student/update
+    defaults: { _controller: AppBundle:Student:studentUpdate }
+
+_expediente_sysadmin_student_religion_update:
+    path:  /student/religionUpdate
+    defaults: { _controller: AppBundle:Student:studentReligionUpdate }
+
+_expediente_sysadmin_student_emergency_update:
+    path:  /student/emergencyUpdate
+    defaults: { _controller: AppBundle:Student:studentEmergencyUpdate }
+
+_expediente_sysadmin_student_show:
+    path:  /student/show/{id}
+    defaults: { _controller: AppBundle:Student:studentShow }
+
+_expediente_sysadmin_student_edit:
+    path:  /student/edit/{id}
+    defaults: { _controller: AppBundle:Student:studentEdit }
+
+_expediente_sysadmin_student_religion_edit:
+    path:  /student/religion/{id}
+    defaults: { _controller: AppBundle:Student:studentReligionEdit }
+
+_expediente_sysadmin_student_emergency_edit:
+    path:  /student/emergency/{id}
+    defaults: { _controller: AppBundle:Student:studentEmergencyEdit }
+
+_expediente_sysadmin_student_show_simple:
+    path:  /student/show
+    defaults: { _controller: AppBundle:Student:studentShow }
+
+_expediente_sysadmin_student_edit_simple:
+    path:  /student/edit
+    defaults: { _controller: AppBundle:Student:studentEdit }
+
+_expediente_sysadmin_student_religion_edit_simple:
+    path:  /student/religion
+    defaults: { _controller: AppBundle:Student:studentReligionEdit }
+
+_expediente_sysadmin_student_emergency_edit_simple:
+    path:  /student/emergency
+    defaults: { _controller: AppBundle:Student:studentEmergencyEdit }
+
+_expediente_sysadmin_student_psico_profile_simple:
+    path:  /student/psicoProfile
+    defaults: { _controller: AppBundle:Student:studentPsicoProfile }
+
+_expediente_sysadmin_student_psico_profile:
+    path:  /student/psicoProfile/{id}
+    defaults: { _controller: AppBundle:Student:studentPsicoProfile }
+
+_expediente_sysadmin_student_psico_log_simple:
+    path:  /student/psico/log
+    defaults: { _controller: AppBundle:Student:studentPsicoLog }
+
+_expediente_sysadmin_student_psico_log:
+    path:  /student/psico/log/{id}
+    defaults: { _controller: AppBundle:Student:studentPsicoLog }
+
+
+_expediente_sysadmin_student_psico_profile_group:
+    path:  /student/psicoProfile/{id}/{groupId}
+    defaults: { _controller: AppBundle:Student:studentPsicoProfileGroup }
+
+_expediente_sysadmin_save_student_psico_profile:
+    path:  /student/psicoProfileSave
+    defaults: { _controller: AppBundle:Student:savePsicoForm }
+
+_expediente_sysadmin_contact:
+    path:  /contact
+    defaults: { _controller: AppBundle:Student:contactList }
+
+#Fin de CRUD de Students
+
+#CRUD de Clubs para SysAdmin
+_expediente_sysadmin_club:
+    path:  /club
+    defaults: { _controller: AppBundle:Student:clubList }
+
+_delete_club:
+    path:  /club/delete/{id}
+    defaults: { _controller: AppBundle:Student:clubDelete }
+
+_expediente_sysadmin_club_create:
+    path:  /club/create
+    defaults: { _controller: AppBundle:Student:clubCreate }
+
+_expediente_sysadmin_club_save:
+    path:  /club/save
+    defaults: { _controller: AppBundle:Student:clubSave }
+
+_expediente_sysadmin_club_update:
+    path:  /club/update
+    defaults: { _controller: AppBundle:Student:clubUpdate }
+
+_expediente_sysadmin_club_show:
+    path:  /club/show/{id}
+    defaults: { _controller: AppBundle:Student:clubShow }
+
+_expediente_sysadmin_club_edit:
+    path:  /club/edit/{id}
+    defaults: { _controller: AppBundle:Student:clubEdit }
+
+_expediente_sysadmin_club_show_simple:
+    path:  /club/show
+    defaults: { _controller: AppBundle:Student:clubShow }
+
+_expediente_sysadmin_club_edit_simple:
+    path:  /club/edit
+    defaults: { _controller: AppBundle:Student:clubEdit }
+#Fin de CRUD de Clubs
+
+
+#CRUD de period para SysAdmin
+_expediente_sysadmin_period:
+    path:  /period
+    defaults: { _controller: AppBundle:SuperAdmin:periodList }
+
+_delete_period:
+    path:  /period/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:periodDelete }
+
+_expediente_sysadmin_period_create:
+    path:  /period/create
+    defaults: { _controller: AppBundle:SuperAdmin:periodCreate }
+
+_expediente_sysadmin_period_save:
+    path:  /period/save
+    defaults: { _controller: AppBundle:SuperAdmin:periodSave }
+
+_expediente_sysadmin_period_update:
+    path:  /period/update
+    defaults: { _controller: AppBundle:SuperAdmin:periodUpdate }
+
+_expediente_sysadmin_period_show:
+    path:  /period/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:periodShow }
+
+_expediente_sysadmin_period_edit:
+    path:  /period/edit/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:periodEdit }
+
+_expediente_sysadmin_period_show_simple:
+    path:  /period/show
+    defaults: { _controller: AppBundle:SuperAdmin:periodShow }
+
+_expediente_sysadmin_period_edit_simple:
+    path:  /period/edit
+    defaults: { _controller: AppBundle:SuperAdmin:periodEdit }
+
+_expediente_sysadmin_create_period:
+    path:  /period/createPeriod/
+    defaults: { _controller: AppBundle:SuperAdmin:createPeriod }
+
+#Fin de CRUD de periods
+
+#CRUD de grade para SysAdmin
+_expediente_sysadmin_grade:
+    path:  /grade
+    defaults: { _controller: AppBundle:SuperAdmin:gradeList }
+
+_expediente_sysadmin_grade_delete:
+    path:  /grade/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:gradeDelete }
+
+_expediente_sysadmin_grade_create:
+    path:  /grade/create
+    defaults: { _controller: AppBundle:SuperAdmin:gradeCreate }
+
+_expediente_sysadmin_grade_save:
+    path:  /grade/save
+    defaults: { _controller: AppBundle:SuperAdmin:gradeSave }
+
+_expediente_sysadmin_grade_update:
+    path:  /grade/update
+    defaults: { _controller: AppBundle:SuperAdmin:gradeUpdate }
+
+_expediente_sysadmin_grade_show:
+    path:  /grade/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:gradeShow }
+
+_expediente_sysadmin_grade_edit:
+    path:  /grade/edit/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:gradeEdit }
+
+_expediente_sysadmin_grade_show_simple:
+    path:  /grade/show
+    defaults: { _controller: AppBundle:SuperAdmin:gradeShow }
+
+_expediente_sysadmin_grade_edit_simple:
+    path:  /grade/edit
+    defaults: { _controller: AppBundle:SuperAdmin:gradeEdit }
+#Fin de CRUD de Grade
+
+#CRUD de Ticket - Items
+_expediente_sysadmin_ticket:
+    path:  /ticket
+    defaults: { _controller: AppBundle:SuperAdmin:ticketList }
+
+_expediente_sysadmin_ticket_search:
+    path:  /ticket/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchTicket }
+
+_expediente_sysadmin_create_ticket:
+    path:  /ticket/createTicket/
+    defaults: { _controller: AppBundle:SuperAdmin:createTicket }
+
+_expediente_sysadmin_save_ticket_message:
+    path:  /ticket/saveTicketMessage/
+    defaults: { _controller: AppBundle:SuperAdmin:saveTicketMessage }
+
+_expediente_sysadmin_update_ticket:
+    path:  /ticket/updateTicket/
+    defaults: { _controller: AppBundle:SuperAdmin:updateTicket }
+
+_expediente_sysadmin_get_info_ticket_detail:
+    path:  /ticket/getInfoTicketDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoTicketDetail}
+
+_expediente_sysadmin_get_info_ticket_full:
+    path:  /ticket/getInfoTicketFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoTicketFull}
+
+_expediente_sysadmin_get_info_ticket_realice:
+    path:  /ticket/getInfoTickeRealice
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoTicketRealice}
+
+_expediente_get_items_list_for_ticket:
+    path:  /ticket/listItems
+    defaults: { _controller: AppBundle:SuperAdmin:getListItemsForTicket }
+
+_expediente_get_items_list_of_ticket:
+    path:  /group/getItems
+    defaults: { _controller: AppBundle:SuperAdmin:getListItemsOfTicket }
+
+_expediente_set_item_to_ticket:
+    path:  /group/addItem
+    defaults: { _controller: AppBundle:SuperAdmin:addItemToTicket }
+
+_expediente_remove_item_from_ticket:
+    path:  /group/removeItem
+    defaults: { _controller: AppBundle:SuperAdmin:removeItemFromTicket }
+
+_expediente_sysadmin_item:
+    path:  /item
+    defaults: { _controller: AppBundle:SuperAdmin:itemList }
+
+_expediente_sysadmin_item_search:
+    path:  /item/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchItem }
+
+_expediente_sysadmin_create_item:
+    path:  /item/createItem/
+    defaults: { _controller: AppBundle:SuperAdmin:createItem }
+
+_expediente_sysadmin_update_item:
+    path:  /item/updateItem/
+    defaults: { _controller: AppBundle:SuperAdmin:updateItem }
+
+_expediente_sysadmin_get_info_item_detail:
+    path:  /item/getInfoItemDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoItemDetail}
+
+_expediente_sysadmin_get_info_item_full:
+    path:  /item/getInfoItemFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoItemFull}
+
+
+_expediente_sysadmin_category:
+    path:  /category
+    defaults: { _controller: AppBundle:SuperAdmin:categoryList }
+
+_expediente_sysadmin_category_search:
+    path:  /category/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchCategory }
+
+_expediente_sysadmin_create_category:
+    path:  /category/createCategory/
+    defaults: { _controller: AppBundle:SuperAdmin:createCategory }
+
+_expediente_sysadmin_update_category:
+    path:  /category/updateCategory/
+    defaults: { _controller: AppBundle:SuperAdmin:updateCategory }
+
+_expediente_sysadmin_get_info_category_detail:
+    path:  /category/getInfoCategoryDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCategoryDetail}
+
+_expediente_sysadmin_get_info_category_full:
+    path:  /category/getInfoCategoryFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCategoryFull}
+#Fin de CRUD de Ticket - Items
+
+#CRUD de Record
+_expediente_sysadmin_record:
+    path:  /record
+    defaults: { _controller: AppBundle:SuperAdmin:recordList }
+
+_expediente_sysadmin_record_search:
+    path:  /record/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchRecords }
+
+_expediente_sysadmin_get_info_record_full:
+    path:  /record/getInfoRecordFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoRecordFull}
+
+_expediente_sysadmin_create_record:
+    path:  /course/createRecord/
+    defaults: { _controller: AppBundle:SuperAdmin:createRecord }
+
+_expediente_sysadmin_get_info_record_detail:
+    path:  /course/getInfoRecordDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoRecordDetail}
+
+_expediente_sysadmin_update_record:
+   path:  /course/updateRecord/
+   defaults: { _controller: AppBundle:SuperAdmin:updateRecord }
+#Fin de CRUD de Record
+
+#CRUD de course para SysAdmin
+_expediente_sysadmin_course:
+    path:  /course
+    defaults: { _controller: AppBundle:SuperAdmin:courseList }
+
+_expediente_sysadmin_course_search:
+    path:  /course/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchCourses }
+
+_expediente_sysadmin_course_delete:
+    path:  /course/delete/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:courseDelete }
+
+_expediente_sysadmin_course_create:
+    path:  /course/create
+    defaults: { _controller: AppBundle:SuperAdmin:courseCreate }
+
+_expediente_sysadmin_course_save:
+    path:  /course/save
+    defaults: { _controller: AppBundle:SuperAdmin:courseSave }
+
+_expediente_sysadmin_course_update:
+    path:  /course/update
+    defaults: { _controller: AppBundle:SuperAdmin:courseUpdate }
+
+_expediente_sysadmin_course_show:
+    path:  /course/show/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:courseShow }
+
+_expediente_sysadmin_course_edit:
+    path:  /course/edit/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:courseEdit }
+
+_expediente_sysadmin_course_show_simple:
+    path:  /course/show
+    defaults: { _controller: AppBundle:SuperAdmin:courseShow }
+
+_expediente_sysadmin_course_edit_simple:
+    path:  /course/edit
+    defaults: { _controller: AppBundle:SuperAdmin:courseEdit }
+
+_expediente_sysadmin_create_course:
+    path:  /course/createCourse/
+    defaults: { _controller: AppBundle:SuperAdmin:createCourse }
+
+_expediente_sysadmin_update_course:
+    path:  /course/updateCourse/
+    defaults: { _controller: AppBundle:SuperAdmin:updateCourse }
+
+_expediente_sysadmin_get_info_course_full:
+    path:  /course/getInfoCourseFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCourseFull}
+
+_expediente_sysadmin_get_info_course_detail:
+    path:  /course/getInfoCourseDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCourseDetail}
+
+#Fin de CRUD de Course
+
+_expediente_sysadmin_charge:
+    path:  /charge
+    defaults: { _controller: AppBundle:SuperAdmin:chargeList }
+
+_expediente_sysadmin_charge_search:
+    path:  /charge/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchCharges }
+
+_expediente_sysadmin_get_info_charge_detail:
+    path:  /charge/getInfoChargeDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoChargeDetail}
+
+_expediente_sysadmin_get_info_charge_full:
+    path:  /charge/getInfoChargeFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoChargeFull}
+
+_expediente_sysadmin_get_info_charge_teacher_full:
+    path:  /charge/getInfoTeacherChargeFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoChargeTeacherFull}
+
+_expediente_sysadmin_get_info_charge_teacher_status:
+    path:  /charge/getInfoTeacherChargeStatus
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoChargeTeacherStatus}
+
+_expediente_sysadmin_update_charge:
+    path:  /charge/updateCharge/
+    defaults: { _controller: AppBundle:SuperAdmin:updateCharge }
+
+
+_expediente_sysadmin_create_charge:
+    path:  /charge/createCharge/
+    defaults: { _controller: AppBundle:SuperAdmin:createCharge }
+
+_expediente_sysadmin_create_send_charge:
+    path:  /charge/createSendCharge/
+    defaults: { _controller: AppBundle:SuperAdmin:createSendCharge }
+
+_expediente_sysadmin_send_email_charge:
+    path:  /charge/sendEmailCharge
+    defaults: { _controller: AppBundle:SuperAdmin:sendEmailCharge }
+
+_expediente_sysadmin_send_email_close_charge:
+    path:  /charge/sendEmailCloseCharge
+    defaults: { _controller: AppBundle:SuperAdmin:sendEmailCloseCharge }
+
+_expediente_sysadmin_send_email_charge_yes:
+    path:  /charge/sendEmailChargeYes
+    defaults: { _controller: AppBundle:SuperAdmin:sendEmailChargeYes }
+
+_expediente_sysadmin_send_email_charge_no:
+    path:  /charge/sendEmailChargeNo
+    defaults: { _controller: AppBundle:SuperAdmin:sendEmailChargeNo }
+
+_expediente_sysadmin_mycharge:
+    path:  /charge/mycharge
+    defaults: { _controller: AppBundle:SuperAdmin:userCharge }
+
+#Inicio de CRUD de Commission
+
+_expediente_sysadmin_commission:
+    path:  /commission
+    defaults: { _controller: AppBundle:SuperAdmin:commissionList }
+
+_expediente_sysadmin_commission_search:
+    path:  /commission/search
+    defaults: { _controller: AppBundle:SuperAdmin:searchCommissions }
+
+_expediente_sysadmin_create_commission:
+    path:  /commission/createCommission/
+    defaults: { _controller: AppBundle:SuperAdmin:createCommission }
+
+_expediente_sysadmin_update_commission:
+    path:  /commission/updateCommission/
+    defaults: { _controller: AppBundle:SuperAdmin:updateCommission }
+
+_expediente_sysadmin_get_info_commission_full:
+    path:  /commission/getInfoCommissionFull
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCommissionFull}
+
+_expediente_sysadmin_get_info_commission_detail:
+    path:  /commission/getInfoCommissionDetail
+    defaults: { _controller: AppBundle:SuperAdmin:getInfoCommissionDetail}
+
+#Fin de CRUD de Commission
+
+#Obtener lista de estudiantes
+_expediente_get_students_list:
+    path:  /students/list
+    defaults: { _controller: AppBundle:Student:getList }
+
+#Obtener lista de estudiantes para ruta
+_expediente_get_students_list_for_route:
+    path:  /students/listRoute
+    defaults: { _controller: AppBundle:Student:getListRoute }
+
+_expediente_associate_student:
+    path:  /students/associateToClub
+    defaults: { _controller: AppBundle:Student:associateStudentToClub }
+
+_expediente_associate_student_to_route:
+    path:  /students/associateToRoute
+    defaults: { _controller: AppBundle:Student:associateStudentToRoute }
+
+_expediente_remove_student_from_club:
+    path:  /students/removeStudentFromClub
+    defaults: { _controller: AppBundle:Student:removeStudentFromClub }
+
+_expediente_remove_student_from_route:
+    path:  /students/removeStudentFromRoute
+    defaults: { _controller: AppBundle:Student:removeStudentFromRoute }
+
+_expediente_change_student_route_in_info:
+    path:  /students/changeStudentRouteInInfo
+    defaults: { _controller: AppBundle:Student:changeRouteInInfo }
+
+_expediente_save_new_contact:
+    path:  /students/newContact
+    defaults: { _controller: AppBundle:Student:createContact }
+
+_expediente_associate_new_contact:
+    path:  /students/associateContact
+    defaults: { _controller: AppBundle:Student:associateContact }
+
+_expediente_remove_relative:
+    path:  /students/removeRelative
+    defaults: { _controller: AppBundle:Student:removeRelative}
+
+_expediente_sysadmin_get_relative_info:
+    path:  /students/getRelativeInfo
+    defaults: { _controller: AppBundle:Student:getRelativeInfo}
+
+_expediente_sysadmin_get_info_relatives:
+    path:  /students/getInfoRelatives
+    defaults: { _controller: AppBundle:Student:getInfoRelatives}
+
+_expediente_sysadmin_get_info_relatives_full:
+    path:  /students/getInfoRelativesFull
+    defaults: { _controller: AppBundle:Student:getInfoRelativesFull}
+
+_expediente_get_contacts_list:
+    path:  /students/contact/list
+    defaults: { _controller: AppBundle:Student:getContactList }
+
+_expediente_sysadmin_relatives_edit:
+    path:  /ap/student/editrelative/{id}
+    defaults: { _controller: AppBundle:Student:relativesEdit }
+
+_expediente_sysadmin_relatives_edit_simple:
+    path:  /ap/student/editrelative
+    defaults: { _controller: AppBundle:Student:relativesEdit }
+
+_expediente_sysadmin_relatives_update:
+    path:  /ap/student/updaterelative
+    defaults: { _controller: AppBundle:Student:relativesUpdate }
+
+_expediente_sysadmin_convocatorias:
+    path:  /ap/students/convocatorias
+    defaults: { _controller: AppBundle:Student:enterConvocatorias }
+
+_expediente_sysadmin_students_ajax_list_with_convocatorias:
+    path:  /ap/students/convocatorias/ajaxList
+    defaults: { _controller: AppBundle:Student:getStudentsListWithConvocatorias }
+
+_expediente_sysadmin_save_nota_convocatoria:
+    path:  /ap/students/convocatorias/save
+    defaults: { _controller: AppBundle:Student:saveConvocatoria }
+
+#Administrador
+_expediente_admin:
+    path:  /admin
+    defaults: { _controller: AppBundle:Default:index }
+
+#Profesor
+_expediente_profesor:
+    path:  /profesor
+    defaults: { _controller: AppBundle:Default:index }
+
+###########      REPORTS      ###########
+
+_expediente_sysadmin_academic:
+   path:  /reports/Courses/
+   defaults: { _controller: AppBundle:Report:reportCoursesAcademic }
+
+_expediente_sysadmin_charges:
+   path:  /reports/Academic/
+   defaults: { _controller: AppBundle:Report:reportCoursesCharges }
+
+_expediente_report_bus:
+    path:  /reports/bus/
+    defaults: { _controller: AppBundle:Report:reportBus }
+
+_expediente_report_routes:
+    path:  /reports/routes/
+    defaults: { _controller: AppBundle:Report:reportRoute }
+
+_expediente_report_routes_club:
+    path:  /reports/routes_club/
+    defaults: { _controller: AppBundle:Report:reportRouteClub }
+
+_expediente_report_bus_search:
+    path:  /reports/bus/search/
+    defaults: { _controller: AppBundle:Report:searchBus }
+
+_expediente_report_zones:
+    path:  /reports/zones/
+    defaults: { _controller: AppBundle:Report:reportZones }
+
+_expediente_report_students_by_route:
+    path:  /reports/studentsByRoute/
+    defaults: { _controller: AppBundle:Report:reportStudentByRoute }
+
+_expediente_report_students_route_by_group:
+    path:  /reports/studentsInRouteByGroup/
+    defaults: { _controller: AppBundle:Report:reportStudentInRouteByGroup }
+
+_expediente_report_students_by_route_club:
+    path:  /reports/studentsByRouteClub/
+    defaults: { _controller: AppBundle:Report:reportStudentByRouteClub }
+
+_expediente_report_students_by_route_club_level:
+    path:  /reports/studentsByRouteClubLevel/
+    defaults: { _controller: AppBundle:Report:reportStudentByRouteClubLevel }
+
+_expediente_report_students_by_club_level:
+    path:  /reports/studentsByClubLevel/
+    defaults: { _controller: AppBundle:Report:reportStudentByClubLevel }
+
+_expediente_report_students_by_route_club_route:
+    path:  /reports/studentsByRouteClubRoute/
+    defaults: { _controller: AppBundle:Report:reportStudentByRouteClubRoute }
+
+_expediente_report_students_routes:
+    path:  /reports/studentsRoutes/
+    defaults: { _controller: AppBundle:Report:reportStudentRoutes }
+
+_expediente_report_students_by_route_filter2:
+    path:  /reports/studentsByRouteFilter2/
+    defaults: { _controller: AppBundle:Report:reportStudentByRouteFilter2 }
+
+_expediente_report_absences_by_route_filter2:
+   path:  /reports/absencesByRouteFilter2/
+   defaults: { _controller: AppBundle:Report:reportStudentAbsencesByRouteFilter2 }
+
+_expediente_report_daily_by_route_filter2:
+   path:  /reports/dailyByRouteFilter2/
+   defaults: { _controller: AppBundle:Report:reportStudentDailyByRouteFilter2 }
+
+_expediente_report_course_by_group:
+    path:  /reports/groupByCourse/
+    defaults: { _controller: AppBundle:Report:groupByCourse }
+
+_expediente_report_quintos_mep:
+    path:  /reports/mep/quintos
+    defaults: { _controller: AppBundle:Report:quintosMep }
+
+_expediente_report_absences_by_route:
+   path:  /reports/absencesByRoute/
+   defaults: { _controller: AppBundle:Report:reportStudentAbsencesByRoute }
+
+_expediente_report_daily_by_route:
+   path:  /reports/dailyByRoute/
+   defaults: { _controller: AppBundle:Report:reportStudentDailyByRoute }
+
+_expediente_report_students:
+   path:  /reports/students/
+   defaults: { _controller: AppBundle:Report:reportStudents }
+
+_expediente_report_students_emergency:
+  path:  /reports/studentsEmergency/
+  defaults: { _controller: AppBundle:Report:reportEmergencyStudents }
+
+_expediente_report_clubs:
+   path:  /reports/clubs/
+   defaults: { _controller: AppBundle:Report:reportClubs }
+
+_expediente_report_period_notes_by_group:
+   path:  /reports/qualificationsOfPeriod/
+   defaults: { _controller: AppBundle:Report:qualificationsOfPeriod }
+
+_expediente_report_best_averages_by_group:
+   path:  /reports/averagesOfPeriod/
+   defaults: { _controller: AppBundle:Report:averagesOfPeriod }
+
+_expediente_report_best_averages_by_group_detail:
+   path:  /reports/averagesOfPeriod/load
+   defaults: { _controller: AppBundle:Report:averagesOfGroup }
+
+_expediente_report_best_absences_by_group:
+   path:  /reports/absencesOfPeriod/
+   defaults: { _controller: AppBundle:Report:absencesOfPeriod }
+
+_expediente_report_best_absences_by_group_detail:
+   path:  /reports/absencesOfPeriod/load
+   defaults: { _controller: AppBundle:Report:absencesOfGroup }
+
+_expediente_report_group_qualifications:
+   path:  /reports/groupQualifications/
+   defaults: { _controller: AppBundle:Report:loadGroupQualifications }
+
+_expediente_report_group_observations:
+   path:  /reports/groupObservations/
+   defaults: { _controller: AppBundle:Report:loadGroupObservations }
+
+_expediente_report_period_observations_by_group:
+   path:  /reports/observationsOfPeriod/
+   defaults: { _controller: AppBundle:Report:observationsOfPeriod }
+
+_expediente_report_group_qualifications_by_course:
+   path:  /reports/groupQualificationsByCourse/
+   defaults: { _controller: AppBundle:Report:loadGroupQualificationsByCourse }
+
+_expediente_report_group_qualifications_by_rubro:
+   path:  /reports/groupQualificationsByRubro/
+   defaults: { _controller: AppBundle:Report:groupQualificationsByRubro }
+
+_expediente_report_load_group_qualifications_by_rubro:
+   path:  /reports/loadGroupQualificationsByRubro/
+   defaults: { _controller: AppBundle:Report:loadGroupQualificationsByRubro }
+
+_expediente_report_student_qualifications:
+   path:  /reports/studentQualifications/
+   defaults: { _controller: AppBundle:Report:studentQualifications }
+
+_expediente_report_load_student_qualifications:
+   path:  /reports/loadStudentQualifications/
+   defaults: { _controller: AppBundle:Report:loadStudentQualifications }
+
+_expediente_report_penalty_students:
+   path:  /reports/penaltyStudentReport/
+   defaults: { _controller: AppBundle:Report:penaltiesOfPeriod }
+
+_expediente_report_load_student_penalties:
+   path:  /reports/loadStudentPenalties/
+   defaults: { _controller: AppBundle:Report:loadStudentPenalties }
+
+#########################################
+
+
+###########      PENALTIES      ###########
+_expediente_penalties:
+    path:  /ap/penalties/
+    defaults: { _controller: AppBundle:Student:penaltiesIndex }
+
+_expediente_penalties_search:
+    path:  /ap/penalties/search/
+    defaults: { _controller: AppBundle:Student:penaltiesSearch }
+
+_expediente_penalties_save:
+    path:  /ap/penalties/save
+    defaults: { _controller: AppBundle:Student:penaltiesSave }
+
+_delete_penalties:
+    path:  /penalties/delete/{id}
+    defaults: { _controller: AppBundle:Student:penaltyDelete }
+
+_delete_penalties_simple:
+    path:  /penalties/delete
+    defaults: { _controller: AppBundle:Student:penaltyDelete }
+
+_expediente_sysadmin_penalties_create:
+    path:  /ap/penalties/create
+    defaults: { _controller: AppBundle:Student:penaltiesCreate }
+
+_expediente_sysadmin_penalties_update:
+    path:  /ap/penalties/update
+    defaults: { _controller: AppBundle:Student:penaltiesUpdate }
+
+_expediente_sysadmin_penalties_show:
+    path:  /ap/penalties/show/{id}
+    defaults: { _controller: AppBundle:Student:penaltiesShow }
+
+_expediente_sysadmin_penalties_edit:
+    path:  /ap/penalties/edit/{id}
+    defaults: { _controller: AppBundle:Student:penaltiesEdit }
+
+_expediente_sysadmin_penalties_show_simple:
+    path:  /ap/penalties/show
+    defaults: { _controller: AppBundle:Student:penaltiesShow }
+
+_expediente_sysadmin_penalties_edit_simple:
+    path:  /ap/penalties/edit
+    defaults: { _controller: AppBundle:Student:penaltiesEdit }
+
+###########      Extra points      ###########
+_expediente_extrap:
+    path:  /ap/extrap/
+    defaults: { _controller: AppBundle:Student:extrapIndex }
+
+_expediente_extrap_search:
+    path:  /ap/extrap/search/
+    defaults: { _controller: AppBundle:Student:extrapSearch }
+
+_expediente_sysadmin_extrap_search:
+    path:  /extrap/searchUpdate
+    defaults: { _controller: AppBundle:Student:extrapSearchUpdate }
+
+_expediente_extrap_save:
+    path:  /ap/extrap/save
+    defaults: { _controller: AppBundle:Student:extrapSave }
+
+_delete_extrap:
+    path:  /extrap/delete/{id}
+    defaults: { _controller: AppBundle:Student:extrapDelete }
+
+_delete_extrap_simple:
+    path:  /extrap/delete
+    defaults: { _controller: AppBundle:Student:extrapDelete }
+
+_expediente_sysadmin_extrap_create:
+    path:  /ap/extrap/create
+    defaults: { _controller: AppBundle:Student:extrapCreate }
+
+_expediente_sysadmin_extrap_update:
+    path:  /ap/extrap/update
+    defaults: { _controller: AppBundle:Student:extrapUpdate }
+
+_expediente_sysadmin_extrap_show:
+    path:  /ap/extrap/show/{id}
+    defaults: { _controller: AppBundle:Student:extrapShow }
+
+_expediente_sysadmin_extrap_edit:
+    path:  /ap/extrap/edit/{id}
+    defaults: { _controller: AppBundle:Student:extrapEdit }
+
+_expediente_sysadmin_extrap_show_simple:
+    path:  /ap/extrap/show
+    defaults: { _controller: AppBundle:Student:extrapShow }
+
+_expediente_sysadmin_extrap_edit_simple:
+    path:  /ap/extrap/edit
+    defaults: { _controller: AppBundle:Student:extrapEdit }
+
+_expediente_sysadmin_load_courses_extra_points:
+  path: /period/CoursesExtraPoints/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCoursesExtraPoints }
+
+###########      REPORTS      ###########
+_expediente_absences:
+    path:  /absences/
+    defaults: { _controller: AppBundle:Student:absencesIndex }
+
+_expediente_absences_search:
+    path:  /absences/search/
+    defaults: { _controller: AppBundle:Student:absencesSearch }
+
+_expediente_absences_save:
+    path:  /absences/save
+    defaults: { _controller: AppBundle:Student:absenceSave }
+
+_expediente_student_tutor_visit_save:
+    path:  /tutor/visit/save
+    defaults: { _controller: AppBundle:Student:studentTutorVisitSave }
+
+_delete_absence:
+    path:  /absence/delete/{id}
+    defaults: { _controller: AppBundle:Student:absenceDelete }
+
+_delete_absence_simple:
+    path:  /absence/delete
+    defaults: { _controller: AppBundle:Student:absenceDelete }
+
+_expediente_sysadmin_absence_create:
+    path:  /absence/create
+    defaults: { _controller: AppBundle:Student:absenceCreate }
+
+_expediente_sysadmin_absence_update:
+    path:  /absence/update
+    defaults: { _controller: AppBundle:Student:absenceUpdate }
+
+_expediente_sysadmin_absence_show:
+    path:  /absence/show/{id}
+    defaults: { _controller: AppBundle:Student:absenceShow }
+
+_expediente_sysadmin_absence_edit:
+    path:  /absence/edit/{id}
+    defaults: { _controller: AppBundle:Student:absenceEdit }
+
+_expediente_sysadmin_absence_show_simple:
+    path:  /absence/show
+    defaults: { _controller: AppBundle:Student:absenceShow }
+
+_expediente_sysadmin_absence_edit_simple:
+    path:  /absence/edit
+    defaults: { _controller: AppBundle:Student:absenceEdit }
+
+_expediente_sysadmin_absence_enter_by_group:
+    path:  /absence/enterByGroup
+    defaults: { _controller: AppBundle:Student:enterAbsenceByGroup }
+
+_expediente_sysadmin_load_groups_of_period:
+  path: /absence/loadGroupsOfPeriod/
+  defaults: { _controller: AppBundle:Student:loadGroupsOfPeriod }
+
+_expediente_sysadmin_save_group_absences:
+  path: /absence/saveGroupAbsences/
+  defaults: { _controller: AppBundle:Student:saveGroupAbsences }
+#########################################
+
+_expediente_sysadmin_period_admin_simple:
+    path:  /period/admin
+    defaults: { _controller: AppBundle:SuperAdmin:adminPeriod }
+
+_expediente_sysadmin_period_admin:
+    path:  /period/admin/{id}
+    defaults: { _controller: AppBundle:SuperAdmin:adminPeriod }
+
+_expediente_sysadmin_group_save:
+    path:  /group/save/
+    defaults: { _controller: AppBundle:SuperAdmin:createEditGroup }
+
+_expediente_sysadmin_load_period_info:
+  path:  /period/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadPeriodInfo }
+
+_expediente_sysadmin_create_entry:
+  path:  /entry/create/
+  defaults: { _controller: AppBundle:SuperAdmin:createEntry }
+
+_expediente_sysadmin_load_entries_by_course:
+  path:  /period/entries/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadEntriesByCourse }
+
+_expediente_sysadmin_group_remove:
+    path:  /group/remove/
+    defaults: { _controller: AppBundle:SuperAdmin:removeGroup }
+
+_expediente_sysadmin_entry_remove:
+    path:  /entry/remove/
+    defaults: { _controller: AppBundle:SuperAdmin:removeEntry }
+
+_expediente_sysadmin_load_courses_by_grade:
+  path: /period/loadCoursesByGrade/
+  defaults: { _controller: AppBundle:SuperAdmin:loadAvailableCourses }
+
+_expediente_sysadmin_associate_course:
+  path: /period/associateCourse/
+  defaults: { _controller: AppBundle:SuperAdmin:associateCourse }
+
+_expediente_sysadmin_course_association_remove:
+  path:  /period/couseAssociationRemove/
+  defaults: { _controller: AppBundle:SuperAdmin:courseAssociationRemove }
+
+_expediente_sysadmin_load_courses_groups_by_teacher:
+  path:  /period/teachers/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCoursesByTeacher }
+
+_expediente_sysadmin_load_courses_assigned_by_teacher:
+  path:  /period/coursesassigned/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCoursesAssignedByTeacher }
+
+_expediente_sysadmin_load_commissions_assigned_by_teacher:
+  path:  /period/commissionsassigned/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCommissionsAssignedByTeacher }
+
+_expediente_sysadmin_load_projects_assigned_by_teacher:
+  path:  /period/projectsassigned/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadProjectsAssignedByTeacher }
+
+_expediente_sysadmin_load_others_assigned_by_teacher:
+  path:  /period/othersassigned/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadOthersAssignedByTeacher }
+
+_expediente_sysadmin_load_course_class_by_group:
+  path: /period/teachersCourses/load/
+  defaults: { _controller: AppBundle:SuperAdmin:loadAvailableCourseClass }
+
+_expediente_sysadmin_teacher_assigned_remove:
+    path:  /teachers/remove/
+    defaults: { _controller: AppBundle:SuperAdmin:removeTeacherAssigned }
+
+_expediente_sysadmin_course_assigned_remove:
+    path:  /courses/removeassigned/
+    defaults: { _controller: AppBundle:SuperAdmin:removeCourseAssigned }
+
+_expediente_sysadmin_commission_assigned_remove:
+    path:  /commissions/removeassigned/
+    defaults: { _controller: AppBundle:SuperAdmin:removeCommissionAssigned }
+
+_expediente_sysadmin_project_assigned_remove:
+    path:  /projects/removeassigned/
+    defaults: { _controller: AppBundle:SuperAdmin:removeProjectAssigned }
+
+_expediente_sysadmin_other_assigned_remove:
+    path:  /others/removeassigned/
+    defaults: { _controller: AppBundle:SuperAdmin:removeOtherAssigned }
+
+_expediente_sysadmin_load_courses_by_teacher_group:
+  path: /period/loadCoursesByTeacher/
+  defaults: { _controller: AppBundle:SuperAdmin:loadAvailableCoursesGroups }
+
+_expediente_sysadmin_create_teacher_assigned:
+  path:  /teachers/create/
+  defaults: { _controller: AppBundle:SuperAdmin:createTeacherAssigned }
+
+_expediente_sysadmin_create_course_assigned:
+  path:  /courses/createassigned/
+  defaults: { _controller: AppBundle:SuperAdmin:createCourseAssigned }
+
+_expediente_sysadmin_create_commission_assigned:
+  path:  /commissions/commissionassigned/
+  defaults: { _controller: AppBundle:SuperAdmin:createCommissionAssigned }
+
+_expediente_sysadmin_create_project_assigned:
+  path:  /projects/projectassigned/
+  defaults: { _controller: AppBundle:SuperAdmin:createProjectAssigned }
+
+_expediente_sysadmin_create_other_assigned:
+  path:  /others/otherassigned/
+  defaults: { _controller: AppBundle:SuperAdmin:createOtherAssigned }
+
+_expediente_sysadmin_qualifications:
+  path:  /qualifications/
+  defaults: { _controller: AppBundle:SuperAdmin:enterQualifications }
+
+_expediente_sysadmin_load_groups_of_period_q:
+  path: /qualifications/loadGroupsOfPeriod/
+  defaults: { _controller: AppBundle:SuperAdmin:loadGroupsOfPeriod }
+
+_expediente_sysadmin_load_groups_of_year:
+  path: /qualifications/loadGroupsOfYear/
+  defaults: { _controller: AppBundle:SuperAdmin:loadGroupsOfYear }
+
+_expediente_sysadmin_load_courses_of_group:
+  path: /qualifications/loadCoursesOfGroup/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCoursesOfGroup }
+
+_expediente_sysadmin_load_courses_of_group_by_teacher:
+  path: /qualifications/loadCourseOfGroupByTeacher/
+  defaults: { _controller: AppBundle:SuperAdmin:loadCourseOfGroupByTeacher }
+
+_expediente_sysadmin_load_group_qualifications:
+  path:  /qualifications/loadGroupQualifications
+  defaults: { _controller: AppBundle:SuperAdmin:loadGroupQualifications }
+
+_expediente_sysadmin_printable_group_qualifications:
+  path:  /qualifications/printable/loadGroupQualifications
+  defaults: { _controller: AppBundle:SuperAdmin:loadPrintableGroupQualifications }
+
+_expediente_sysadmin_save_student_qualification:
+    path:  /qualifications/save
+    defaults: { _controller: AppBundle:SuperAdmin:saveStudentQualification }
+
+_expediente_get_students_list_of_group:
+    path:  /group/getStudents
+    defaults: { _controller: AppBundle:Student:getListStudentsOfGroup }
+
+_expediente_get_students_list_for_group:
+    path:  /group/students/list
+    defaults: { _controller: AppBundle:Student:getListStudentsForGroup }
+
+_expediente_set_student_to_group:
+    path:  /group/addStudent
+    defaults: { _controller: AppBundle:Student:addStudentToGroup }
+
+_expediente_remove_student_from_group:
+    path:  /group/removeStudent
+    defaults: { _controller: AppBundle:Student:removeStudentFromGroup }
+
+##
+_expediente_access:
+    path:  /access/
+    defaults: { _controller: AppBundle:Secured:accessPage }
+
+_expediente_access_save:
+    path:  /access/save
+    defaults: { _controller: AppBundle:Secured:saveAccess }
+
+_expediente_load_privileges:
+    path:  /privileges/load
+    defaults: { _controller: AppBundle:Secured:loadPrivileges }
+
+_expediente_export_group:
+    path:  /sysadmin/export/generateFile
+    defaults: { _controller: AppBundle:SuperAdmin:generateExcel }
+
+
+#CRUD de Absences Type para SysAdmin
+_expediente_sysadmin_absenceType:
+    path:  /absenceType
+    defaults: { _controller: AppBundle:Absences:absencesTypeList }
+
+_expediente_sysadmin_absenceType_delete:
+    path:  /absenceType/delete/{id}
+    defaults: { _controller: AppBundle:Absences:absencesTypeDelete }
+
+_expediente_sysadmin_absenceType_create:
+    path:  /absenceType/create
+    defaults: { _controller: AppBundle:Absences:absencesTypeCreate }
+
+_expediente_sysadmin_absenceType_save:
+    path:  /absenceType/save
+    defaults: { _controller: AppBundle:Absences:absencesTypeSave }
+
+_expediente_sysadmin_absenceType_update:
+    path:  /absenceType/update
+    defaults: { _controller: AppBundle:Absences:absencesTypeUpdate }
+
+_expediente_sysadmin_absenceType_show:
+    path:  /absenceType/show/{id}
+    defaults: { _controller: AppBundle:Absences:absencesTypeShow }
+
+_expediente_sysadmin_absenceType_edit:
+    path:  /absenceType/edit/{id}
+    defaults: { _controller: AppBundle:Absences:absencesTypeEdit }
+
+_expediente_sysadmin_absenceType_show_simple:
+    path:  /absenceType/show
+    defaults: { _controller: AppBundle:Absences:absencesTypeShow }
+
+_expediente_sysadmin_absenceType_edit_simple:
+    path:  /absenceType/edit
+    defaults: { _controller: AppBundle:Absences:absencesTypeEdit }
+#Fin de CRUD de Absences Type
+
+######################    TEACHER    ######################
+_expediente_teacher_qualifications:
+  path:  /t/qualifications
+  defaults: { _controller: AppBundle:Teacher:qualifications }
+
+_expediente_teacher_course_entries:
+  path:  /t/courseEntries
+  defaults: { _controller: AppBundle:Teacher:courseEntries }
+
+_expediente_teacher_observations:
+  path:  /t/observations
+  defaults: { _controller: AppBundle:Teacher:observations }
+
+_expediente_teacher_students_psico_basic:
+  path:  /t/psico
+  defaults: { _controller: AppBundle:Teacher:psico }
+
+_expediente_teacher_students_psico:
+  path:  /t/psico/{id}
+  defaults: { _controller: AppBundle:Teacher:psico }
+
+_expediente_teacher_students_psico_type:
+  path:  /t/psico/{id}/{groupId}
+  defaults: { _controller: AppBundle:Teacher:psicoByGroup }
+
+_expediente_teacher_load_groups_of_period:
+  path: /t/loadGroupsOfPeriod/
+  defaults: { _controller: AppBundle:Teacher:loadGroupsOfPeriod }
+
+_expediente_teacher_load_entries_of_course:
+  path: /t/loadEntriesOfCourse/
+  defaults: { _controller: AppBundle:Teacher:loadEntriesOfCourse }
+
+_expediente_teacher_load_courses_of_group_by_teacher:
+  path: /t/loadCourseOfGroupByTeacher/
+  defaults: { _controller: AppBundle:Teacher:loadCourseOfGroupByTeacher }
+
+_expediente_teacher_load_entries_by_course:
+  path:  /t/loadEntriesByCourse
+  defaults: { _controller: AppBundle:Teacher:loadEntriesByCourse }
+
+_expediente_teacher_create_subentry:
+  path:  /t/createSubentry/
+  defaults: { _controller: AppBundle:Teacher:createSubEntry }
+
+_expediente_teacher_load_group_qualifications:
+  path:  /t/loadGroupQualifications
+  defaults: { _controller: AppBundle:Teacher:loadGroupQualifications }
+
+_expediente_teacher_generate_group_excel:
+  path:  /t/generateGroupExcel
+  defaults: { _controller: AppBundle:ExcelFileGenerator:generateGroupExcel }
+
+_expediente_teacher_generate_club_excel:
+  path:  /t/generateClubExcel
+  defaults: { _controller: AppBundle:ExcelFileGenerator:generateClubExcel }
+
+_expediente_teacher_load_group_excel:
+  path:  /t/loadGroupExcel
+  defaults: { _controller: AppBundle:ExcelFileGenerator:loadGroupExcel }
+
+_expediente_teacher_load_group_observations:
+  path:  /t/loadGroupObservations
+  defaults: { _controller: AppBundle:Teacher:loadGroupObservations }
+
+_expediente_teacher_subentry_remove:
+    path:  /t/subentry/remove/
+    defaults: { _controller: AppBundle:Teacher:removeSubEntry }
+
+_expediente_teacher_save_student_qualification:
+    path:  /t/student/qualification/save
+    defaults: { _controller: AppBundle:Teacher:saveStudentQualification }
+
+_expediente_teacher_save_student_observation:
+    path:  /t/student/observation/save
+    defaults: { _controller: AppBundle:Teacher:saveStudentObservation }
+
+_expediente_teacher_special_qualifications:
+  path:  /t/specialQualifications
+  defaults: { _controller: AppBundle:Teacher:specialQualifications }
+
+_expediente_teacher_load_teacher_groups_of_period:
+  path: /t/loadTeacherGroupsOfPeriodAction/
+  defaults: { _controller: AppBundle:Teacher:loadTeacherGroupsOfPeriod }
+
+_expediente_teacher_load_group_special_qualifications:
+  path:  /t/loadGroupSpecialQualifications
+  defaults: { _controller: AppBundle:Teacher:loadGroupSpecialQualifications }
+
+_expediente_teacher_load_student_special_qualifications:
+  path:  /t/loadStudentSpecialQualifications
+  defaults: { _controller: AppBundle:Teacher:loadStudentSpecialQualifications }
+
+_expediente_teacher_save_student_special_qualifications:
+  path:  /t/saveStudentSpecialQualifications
+  defaults: { _controller: AppBundle:Teacher:saveStudentSpecialQualifications }
+
+
+#CRUD de Items para SysAdmin
+_expediente_sysadmin_item:
+    path:  /item
+    defaults: { _controller: AppBundle:Item:itemList }
+
+_delete_item:
+    path:  /item/delete/{id}
+    defaults: { _controller: AppBundle:Item:itemDelete }
+
+_expediente_sysadmin_item_create:
+    path:  /item/create
+    defaults: { _controller: AppBundle:Item:itemCreate }
+
+_expediente_sysadmin_item_save:
+    path:  /item/save
+    defaults: { _controller: AppBundle:Item:itemSave }
+
+_expediente_sysadmin_item_update:
+    path:  /item/update
+    defaults: { _controller: AppBundle:Item:itemUpdate }
+
+_expediente_sysadmin_item_show:
+    path:  /item/show/{id}
+    defaults: { _controller: AppBundle:Item:itemShow }
+
+_expediente_sysadmin_item_edit:
+    path:  /item/edit/{id}
+    defaults: { _controller: AppBundle:Item:itemEdit }
+
+_expediente_sysadmin_item_show_simple:
+    path:  /item/show
+    defaults: { _controller: AppBundle:Item:itemShow }
+
+_expediente_sysadmin_item_edit_simple:
+    path:  /item/edit
+    defaults: { _controller: AppBundle:Item:itemEdit }
+#Fin de Items
+
+#CRUD de category_items para SysAdmin
+_expediente_sysadmin_category_item:
+    path:  /category_item
+    defaults: { _controller: AppBundle:Item:category_itemList }
+
+_delete_category_item:
+    path:  /category_item/delete/{id}
+    defaults: { _controller: AppBundle:Item:category_itemDelete }
+
+_expediente_sysadmin_category_item_create:
+    path:  /category_item/create
+    defaults: { _controller: AppBundle:Item:category_itemCreate }
+
+_expediente_sysadmin_category_item_save:
+    path:  /category_item/save
+    defaults: { _controller: AppBundle:Item:category_itemSave }
+
+_expediente_sysadmin_category_item_update:
+    path:  /category_item/update
+    defaults: { _controller: AppBundle:Item:category_itemUpdate }
+
+_expediente_sysadmin_category_item_show:
+    path:  /category_item/show/{id}
+    defaults: { _controller: AppBundle:Item:category_itemShow }
+
+_expediente_sysadmin_category_item_edit:
+    path:  /category_item/edit/{id}
+    defaults: { _controller: AppBundle:Item:category_itemEdit }
+
+_expediente_sysadmin_category_item_show_simple:
+    path:  /category_item/show
+    defaults: { _controller: AppBundle:Item:category_itemShow }
+
+_expediente_sysadmin_category_item_edit_simple:
+    path:  /category_item/edit
+    defaults: { _controller: AppBundle:Item:category_itemEdit }
+#Fin de Items
+
+_expediente_emails:
+    path:  /std/emails/
+    defaults: { _controller: AppBundle:Student:emails }
+
+_expediente_emails_load:
+    path:  /std/emails/load
+    defaults: { _controller: AppBundle:Student:emailsLoad }
+
+_expediente_emails_send:
+    path:  /std/emails/send
+    defaults: { _controller: AppBundle:Student:sendEmails }
+
+_expediente_sysadmin_load_period_levels:
+    path:  /levels/load
+    defaults: { _controller: AppBundle:SuperAdmin:loadLevelsOfPeriod }
+
+_expediente_sysadmin_load_period_level_groups:
+    path:  /groupsOfPeriodByLevel/load
+    defaults: { _controller: AppBundle:SuperAdmin:loadGroupsOfPeriodAndLevel }
+
+_expediente_sysadmin_questionnaires:
+    path:  /admin/questionnaires
+    defaults: { _controller: AppBundle:SuperAdmin:questionnaires }
+
+_expediente_sysadmin_save_questionnaires:
+    path:  /admin/saveQuestionnaireConfig
+    defaults: { _controller: AppBundle:SuperAdmin:saveQuestionnaireConfig }
+
+_expediente_sysadmin_student_tutor_visit_search:
+    path:  /student/tutor/visit/search
+    defaults: { _controller: AppBundle:Student:searchStudentTutorVisit }
+
+#Programas UCR
+_expediente_sysadmin_program_create:
+    path:  /program/create
+    defaults: { _controller: AppBundle:Program:programCreate }
+
+_expediente_sysadmin_create_program:
+    path:  /program/createProgram/
+    defaults: { _controller: AppBundle:Program:createProgram }
+
+_expediente_sysadmin_program_search:
+    path:  /program/search
+    defaults: { _controller: AppBundle:Program:searchPrograms }
+
+_expediente_sysadmin_program_hsearch:
+    path:  /program/hsearch
+    defaults: { _controller: AppBundle:Program:searchHPrograms }
+
+_expediente_sysadmin_program:
+    path:  /program
+    defaults: { _controller: AppBundle:Program:programList }
+
+_expediente_sysadmin_programh:
+    path:  /programH
+    defaults: { _controller: AppBundle:Program:programHList }
+
+_expediente_sysadmin_program_save:
+    path:  /program/save
+    defaults: { _controller: AppBundle:Program:programSave }
+
+_expediente_sysadmin_program_questions:
+    path:  /program/programQ/{id}
+    defaults: { _controller: AppBundle:Program:programQuestions }
+
+_expediente_sysadmin_program_questions_simple:
+    path:  /program/programQ
+    defaults: { _controller: AppBundle:Program:programQuestions }
+
+_expediente_sysadmin_save_program_data:
+    path:  /student/programDataSave
+    defaults: { _controller: AppBundle:Program:saveProgramForm }
+
+_expediente_sysadmin_program_questions_check:
+    path:  /program/programQCheck/{id}
+    defaults: { _controller: AppBundle:Program:programCheckQuestions }
+
+_expediente_sysadmin_program_questions_check_simple:
+    path:  /program/programQCheck
+    defaults: { _controller: AppBundle:Program:programCheckQuestions }
+
+_expediente_sysadmin_program_questions_pdf_check_simple:
+    path:  /program/programPDFCheck
+    defaults: { _controller: AppBundle:Program:programPdfCheckQuestions }
+
+_expediente_sysadmin_save_program_check_data:
+    path:  /student/programDataSaveCheck
+    defaults: { _controller: AppBundle:Program:saveProgramCheckForm }
+
+_expediente_sysadmin_send_check_program_data:
+    path:  /student/programSendCheck
+    defaults: { _controller: AppBundle:Program:sendCheckProgramForm }
+
+_expediente_sysadmin_send_recheck_program_data:
+    path:  /student/programSendReCheck
+    defaults: { _controller: AppBundle:Program:sendReCheckProgramForm }
+
+_expediente_sysadmin_send_pdfcheck_program_data:
+    path:  /student/programSendPdfCheck
+    defaults: { _controller: AppBundle:Program:sendCheckPdfProgramForm }
+
+_expediente_sysadmin_send_pdfcreatecheck_program_data:
+    path:  /student/programSendPdfCreateCheck
+    defaults: { _controller: AppBundle:Program:sendCheckPdfCreateProgramForm }
+
+_expediente_sysadmin_program_edit:
+    path:  /program/edit/{id}
+    defaults: { _controller: AppBundle:Program:programEdit }
+
+_expediente_sysadmin_program_edit_simple:
+    path:  /program/edit
+    defaults: { _controller: AppBundle:Program:programEdit }
+
+_expediente_sysadmin_program_update:
+    path:  /program/update
+    defaults: { _controller: AppBundle:Program:programUpdate }
+
+_expediente_sysadmin_get_info_program_full:
+    path:  /students/getInfoProgramFull
+    defaults: { _controller: AppBundle:Program:getInfoProgramFull}
+
+_expediente_sysadmin_get_info_questionnaire_full:
+    path:  /students/getInfoQuestionnaireFull
+    defaults: { _controller: AppBundle:Program:getInfoQuestionnaireFull}
+
+_expediente_sysadmin_update_program:
+    path:  /course/updateProgram/
+    defaults: { _controller: AppBundle:Program:updateProgram }
+
+
+_expediente_sysadmin_get_info_program_detail:
+    path:  /course/getInfoProgramDetail
+    defaults: { _controller: AppBundle:Program:getInfoProgramDetail}
+
+#Curriculums UCR
+_expediente_sysadmin_curriculum:
+    path:  /curriculum/adminGeneral
+    defaults: { _controller: AppBundle:Curriculum:adminCurriculum }
+
+_expediente_sysadmin_load_degree_by_teacher:
+    path:  /curriculum/degree/load/
+    defaults: { _controller: AppBundle:Curriculum:loadDegreesByTeacher }
+
+_expediente_sysadmin_load_degree_full_by_teacher:
+    path:  /curriculum/degreefull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadDegreesfullByTeacher }
+
+_expediente_sysadmin_degree_remove:
+    path:  /curriculum/removeDegree/
+    defaults: { _controller: AppBundle:Curriculum:removeDegree }
+
+_expediente_sysadmin_create_degree:
+    path:  /curriculum/createDegree/
+    defaults: { _controller: AppBundle:Curriculum:createDegree }
+
+_expediente_sysadmin_get_info_degree_detail:
+    path:  /curriculum/getInfoDegreeDetail
+    defaults: { _controller: AppBundle:Curriculum:getInfoDegreeDetail}
+
+_expediente_sysadmin_update_degree:
+    path:  /curriculum/updateDegree/
+    defaults: { _controller: AppBundle:Curriculum:updateDegree }
+
+_expediente_sysadmin_load_wexperience_by_teacher:
+    path:  /curriculum/wexperience/load/
+    defaults: { _controller: AppBundle:Curriculum:loadWexperiencesByTeacher }
+
+_expediente_sysadmin_load_wexperience_full_by_teacher:
+    path:  /curriculum/wexperiencefull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadWexperiencesfullByTeacher }
+
+_expediente_sysadmin_wexperience_remove:
+    path:  /curriculum/removeWexperience/
+    defaults: { _controller: AppBundle:Curriculum:removeWexperience }
+
+_expediente_sysadmin_create_wexperience:
+    path:  /curriculum/createWexperience/
+    defaults: { _controller: AppBundle:Curriculum:createWexperience }
+
+_expediente_sysadmin_load_aexperience_by_teacher:
+    path:  /curriculum/aexperience/load/
+    defaults: { _controller: AppBundle:Curriculum:loadAexperiencesByTeacher }
+
+_expediente_sysadmin_load_aexperience_full_by_teacher:
+    path:  /curriculum/aexperiencefull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadAexperiencesfullByTeacher }
+
+_expediente_sysadmin_aexperience_remove:
+    path:  /curriculum/removeAexperience/
+    defaults: { _controller: AppBundle:Curriculum:removeAexperience }
+
+_expediente_sysadmin_create_aexperience:
+    path:  /curriculum/createAexperience/
+    defaults: { _controller: AppBundle:Curriculum:createAexperience }
+
+_expediente_sysadmin_load_oexperience_by_teacher:
+    path:  /curriculum/oexperience/load/
+    defaults: { _controller: AppBundle:Curriculum:loadOexperiencesByTeacher }
+
+_expediente_sysadmin_load_oexperience_full_by_teacher:
+    path:  /curriculum/oexperiencefull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadOexperiencesfullByTeacher }
+
+_expediente_sysadmin_oexperience_remove:
+    path:  /curriculum/removeOexperience/
+    defaults: { _controller: AppBundle:Curriculum:removeOexperience }
+
+_expediente_sysadmin_create_oexperience:
+    path:  /curriculum/createOexperience/
+    defaults: { _controller: AppBundle:Curriculum:createOexperience }
+
+_expediente_sysadmin_load_publication_by_teacher:
+    path:  /curriculum/publication/load/
+    defaults: { _controller: AppBundle:Curriculum:loadPublicationsByTeacher }
+
+_expediente_sysadmin_load_publication_full_by_teacher:
+    path:  /curriculum/publicationfull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadPublicationsfullByTeacher }
+
+_expediente_sysadmin_publication_remove:
+    path:  /curriculum/removePublication/
+    defaults: { _controller: AppBundle:Curriculum:removePublication }
+
+_expediente_sysadmin_create_publication:
+    path:  /curriculum/createPublication/
+    defaults: { _controller: AppBundle:Curriculum:createPublication }
+
+_expediente_sysadmin_load_publication_form:
+    path:  /curriculum/publicationEdit/load/
+    defaults: { _controller: AppBundle:Curriculum:loadPublicationEdit }
+
+_expediente_sysadmin_load_publication_save:
+    path:  /curriculum/publicationSave/load/
+    defaults: { _controller: AppBundle:Curriculum:loadPublicationSave }
+
+_expediente_sysadmin_load_apresentation_by_teacher:
+    path:  /curriculum/apresentation/load/
+    defaults: { _controller: AppBundle:Curriculum:loadApresentationsByTeacher }
+
+_expediente_sysadmin_load_apresentation_full_by_teacher:
+    path:  /curriculum/apresentationfull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadApresentationsfullByTeacher }
+
+_expediente_sysadmin_apresentation_remove:
+    path:  /curriculum/removeApresentation/
+    defaults: { _controller: AppBundle:Curriculum:removeApresentation }
+
+_expediente_sysadmin_create_apresentation:
+    path:  /curriculum/createApresentation/
+    defaults: { _controller: AppBundle:Curriculum:createApresentation }
+
+_expediente_sysadmin_load_investigation_by_teacher:
+    path:  /curriculum/investigation/load/
+    defaults: { _controller: AppBundle:Curriculum:loadInvestigationsByTeacher }
+
+_expediente_sysadmin_load_investigation_full_by_teacher:
+    path:  /curriculum/investigationfull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadInvestigationsfullByTeacher }
+
+_expediente_sysadmin_investigation_remove:
+    path:  /curriculum/removeInvestigation/
+    defaults: { _controller: AppBundle:Curriculum:removeInvestigation }
+
+_expediente_sysadmin_create_investigation:
+    path:  /curriculum/createInvestigation/
+    defaults: { _controller: AppBundle:Curriculum:createInvestigation }
+
+_expediente_sysadmin_load_improve_by_teacher:
+    path:  /curriculum/improve/load/
+    defaults: { _controller: AppBundle:Curriculum:loadImprovesByTeacher }
+
+_expediente_sysadmin_load_improve_full_by_teacher:
+    path:  /curriculum/improvefull/load/
+    defaults: { _controller: AppBundle:Curriculum:loadImprovesfullByTeacher }
+
+_expediente_sysadmin_improve_remove:
+    path:  /curriculum/removeImprove/
+    defaults: { _controller: AppBundle:Curriculum:removeImprove }
+
+_expediente_sysadmin_create_improve:
+    path:  /curriculum/createImprove/
+    defaults: { _controller: AppBundle:Curriculum:createImprove }
+
+_expediente_sysadmin_load_curriculumdata:
+    path:  /curriculum/curriculumdata/load/
+    defaults: { _controller: AppBundle:Curriculum:loadCurriculumdata }
+
+_expediente_sysadmin_load_curriculumdata_form:
+    path:  /curriculum/curriculumdataform/load/
+    defaults: { _controller: AppBundle:Curriculum:loadCurriculumdataform }
+
+_expediente_sysadmin_load_curriculumdata_save:
+    path:  /curriculum/curriculumdataformsave/load/
+    defaults: { _controller: AppBundle:Curriculum:loadCurriculumdataformsave }

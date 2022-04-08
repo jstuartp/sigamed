@@ -1,0 +1,91 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Curso
+{% endblock %}
+
+{% block extracss %}
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    Tecnotek.UI.urls["deleteURL"] = "{{ path("_expediente_sysadmin_course_delete", {id: entity.id}) }}";
+    Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.course.delete{% endtrans %}";
+    Tecnotek.module = "showEntity";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container_24" style="width: 800px;">
+    <div class="grid_24" style="width: 100%;">
+        <div class="panelRow" id="doc-forms">
+            <div class="large-12 columns">
+                <div class="titleRow">
+                    <div class="left"><h3>{% trans %}label.course.show{% endtrans %}</h3></div>
+                    <div class="right"><a href="{{ path('_expediente_sysadmin_course') }}" class="button success-darker tiny"><span></span>{% trans %}label.back.list{% endtrans %}</a></div>
+                    <div class="clear"></div>
+                </div>
+                <!-- -->
+                <div id="showContainer">
+                    <div>
+                        <label>{%trans%}label.name{%endtrans%}</label>
+                        <span id="labelName">{{ entity.name }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.code{%endtrans%}</label>
+                        <span id="labelName">{{ entity.code }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.requisit{%endtrans%}</label>
+                        <span id="labelName">{{ entity.requisit }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.corequisite{%endtrans%}</label>
+                        <span id="labelName">{{ entity.corequisite }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.credit{%endtrans%}</label>
+                        <span id="labelName">{{ entity.credit }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.area{%endtrans%}</label>
+                        <span id="labelName">{{ entity.area }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.schedule{%endtrans%}</label>
+                        <span id="labelName">{{ entity.schedule }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.groupnumber{%endtrans%}</label>
+                        <span id="labelName">{{ entity.groupnumber }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.classroom{%endtrans%}</label>
+                        <span id="labelName">{{ entity.classroom }}</span>
+                    </div>
+
+                    <div>
+                        <label>{%trans%}label.type{%endtrans%}</label>
+                        <span id="labelName">{{ entity.type }}</span>
+                    </div>
+
+                    <div id="buttonsContainer" style="margin-top: 25px;">
+                        <a href="{{ path('_expediente_sysadmin_course_edit', {'id': entity.id}) }}" class="left button success-darker tiny"><span></span>{% trans %}label.edit{% endtrans %}</a>
+                        <div class="left button success-darker tiny" id="btnEliminar" style="margin-left: 25px;"><span></span>{% trans %}label.eliminar{% endtrans %}</div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

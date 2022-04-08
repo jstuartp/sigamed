@@ -1,0 +1,157 @@
+{% extends 'base_med.html.twig' %}
+
+{% block topbar %} {% endblock %}
+{% block header %} {# reescribirlo #}
+  <!-- ======= Header ======= -->
+  <header id="header" class="top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="{{ path('homepage') }}">NombreSistema</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <!-- Menu -->
+        {% if is_granted('ROLE_SUPERADMIN') %}
+        <ul>
+
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 3%} current{% endif %}"><a href="#">{% trans %}label.programs{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_program_create') }}">{% trans %}label.createProgram{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_program_search') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_program_hsearch') }}">{% trans %}label.listProgramh{% endtrans %}</a></li>
+          </ul>
+        </li>
+
+        <li class="divider"></li>
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 4%} current{% endif %}"><a href="#">{% trans %}label.documents{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.mycharge{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.record{% endtrans %}</a></li>
+          </ul>
+        </li>
+
+        <li class="divider"></li>
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.mantenimientos{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_course_search') }}">{% trans %}label.course{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_commission') }}">{% trans %}label.commission{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_period') }}">{% trans %}label.period{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.charges{% endtrans %}</a></li>
+            <li class="divider"></li>
+            <li class="dropdown{% if menuIndex is defined and menuIndex == 1%} current{% endif %}"><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios{% endtrans %}</a>
+              <ul class="dropdown">
+                <li><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios.admin{% endtrans %}</a></li>
+                <li><a href="{{ path('_expediente_sysadmin_coordinador') }}">{% trans %}label.usuarios.coordinador{% endtrans %}</a></li>
+                <li><a href="{{ path('_expediente_sysadmin_profesor') }}">{% trans %}label.usuarios.profesor{% endtrans %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{{ path('_expediente_access') }}">{% trans %}label.access{% endtrans %}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li><!--
+        <li class="divider"></li>
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.curriculum{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_curriculum') }}">{% trans %}label.mycurriculum{% endtrans %}</a></li>
+
+          </ul>
+        </li>-->
+        <li class="divider"></li>
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.equipment{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_ticket') }}">{% trans %}label.ticketllist{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_item') }}">{% trans %}label.itemlist{% endtrans %}</a></li>
+          </ul>
+        </li>
+        <li class="divider"></li>
+        <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.reports{% endtrans %}</a>
+          <ul class="dropdown">
+            <li><a href="{{ path('_expediente_sysadmin_academic') }}">{% trans %}label.academic{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_charges') }}">{% trans %}label.charges{% endtrans %}</a></li>
+
+          </ul>
+        </li>
+
+        </ul>
+        {% else %}
+          {% if is_granted('ROLE_PROFESOR') %}
+            <ul class="left">
+              <li class="divider"></li>
+              <li class="dropdown{% if menuIndex is defined and menuIndex == 3%} current{% endif %}"><a href="#">{% trans %}label.programs{% endtrans %}</a>
+                <ul class="dropdown">
+                  <li><a href="{{ path('_expediente_sysadmin_program_search') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
+                </ul>
+              </li>
+              <li class="divider"></li>
+              <li class="dropdown{% if menuIndex is defined and menuIndex == 4%} current{% endif %}"><a href="#">{% trans %}label.documents{% endtrans %}</a>
+                <ul class="dropdown">
+                  <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.mycharge{% endtrans %}</a></li>
+                  <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.record{% endtrans %}</a></li>
+                </ul>
+              </li>
+              <li class="divider"></li>
+              <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.curriculum{% endtrans %}</a>
+                <ul class="dropdown">
+                  <li><a href="{{ path('_expediente_sysadmin_curriculum') }}">{% trans %}label.mycurriculum{% endtrans %}</a></li>
+                </ul>
+              </li>
+
+
+            </ul>
+          {% else %}
+            {% if is_granted('ROLE_COORDINADOR') %}
+              <ul class="left">
+                <li class="divider"></li>
+                <li class="dropdown{% if menuIndex is defined and menuIndex == 3%} current{% endif %}"><a href="#">{% trans %}label.programs{% endtrans %}</a>
+                  <ul class="dropdown">
+                    <li><a href="{{ path('_expediente_sysadmin_program') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
+                  </ul>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown{% if menuIndex is defined and menuIndex == 4%} current{% endif %}"><a href="#">{% trans %}label.documents{% endtrans %}</a>
+                  <ul class="dropdown">
+                    <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.mycharge{% endtrans %}</a></li>
+                    <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.record{% endtrans %}</a></li>
+                  </ul>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.curriculum{% endtrans %}</a>
+                  <ul class="dropdown">
+                    <li><a href="{{ path('_expediente_sysadmin_curriculum') }}">{% trans %}label.mycurriculum{% endtrans %}</a></li>
+                  </ul>
+                </li>
+              </ul>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+        <!-- Final del Menu -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <!-- Right Nav Section -->
+        <ul class="left">
+          <li class="divider"></li>
+          <li class="dropdown"><a href=""> {{ app.user}}</span></a>
+            <ul class="dropdown">
+              <li><a href="{{ path('_expediente_my_account') }}">{% trans %}label.my.account{% endtrans %}</a></li>
+              <li class="divider"></li>
+              <li><a href="{{ path('_expediente_logout') }}">{% trans %}label.logout{% endtrans %}</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        {% endif %}
+        <!--<i class="bi bi-list mobile-nav-toggle"></i>-->
+      </nav><!-- .navbar -->
+
+      <!--<a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a>-->
+
+    </div>
+  </header><!-- End Header -->
+
+{% endblock %}
+{% block hero %} {% endblock %}
+{% block whyus %} {% endblock %}
+{% block about %} {% endblock %}
+{% block counts %} {% endblock %}
+{% block services %} {% endblock %}
+{% block contact %} {% endblock %}

@@ -1,0 +1,386 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Programas
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+    <style type="text/css">
+        @media all {
+            .questionnaireQuestion label{float: left; width: 350px; }
+            .questionnaireQuestion textarea { height: 80px; }
+            .questionnaireQuestion .short {max-width: 50px;}
+            .questionnaireQuestion span {margin-left: 10px; margin-right: 10px; font-family: Georgia, serif;
+                color: #646464; font-size: 1.2em;}
+            .questionnaireQuestion .questions-group { border: solid 1px; background-color: #9FEC9F; padding: 10px;
+                margin-bottom: 15px;}
+            .questionnaireQuestion .along-input { width: 415px; }
+            .form-title {display: none;}
+        }
+
+        @media only screen {
+
+            .btnSubmitForm, .btnPrintForm { margin: 10px; float: right;}
+            .form-title {display: none;}
+            .hiddenOnScreen {display: none;}
+        }
+
+        @media print {
+            .questionnaire-textarea {display: none; visibility: false;}
+            .hiddenOnScreen {display: block;}
+        }
+
+
+
+        .form-type-9{width: 100%; color: #000;}
+        .form-type-9 th{text-align: center; vertical-align: middle;}
+        .form-type-9 th:first-child{text-align: left;}
+        .form-type-9 tr{text-align: center; vertical-align: middle; line-height: 30px; height:30px;}
+        .form-type-9 tr td{color: #000;}
+        .form-type-9 tr td:first-child{text-align: left; padding-left: 5px;}
+
+        .section-container, .section-container.auto {
+            width: 100%;
+            display: block;
+            margin-bottom: 1.25em;
+            border: 2px solid #ecf0f1;
+            border-top: none;
+        }
+        .section-container section,
+        .section-container .section, .section-container.auto section,
+        .section-container.auto .section {
+            border-top: 2px solid #ecf0f1;
+            position: relative;
+        }
+        .section-container section .title,
+        .section-container .section .title, .section-container.auto section .title,
+        .section-container.auto .section .title {
+            top: 0;
+            cursor: pointer;
+            width: 100%;
+            margin: 0;
+            background-color: #efefef;
+        }
+        .section-container section .title a,
+        .section-container .section .title a, .section-container.auto section .title a,
+        .section-container.auto .section .title a {
+            padding: 0.9375em;
+            display: inline-block;
+            color: #333333;
+            font-size: 0.875em;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .section-container section .title:hover,
+        .section-container .section .title:hover, .section-container.auto section .title:hover,
+        .section-container.auto .section .title:hover {
+            background-color: #e2e2e2;
+        }
+        .section-container section .content,
+        .section-container .section .content, .section-container.auto section .content,
+        .section-container.auto .section .content {
+            display: none;
+            padding: 0.9375em;
+            background-color: white;
+        }
+        .section-container section .content > *:last-child,
+        .section-container .section .content > *:last-child, .section-container.auto section .content > *:last-child,
+        .section-container.auto .section .content > *:last-child {
+            margin-bottom: 0;
+        }
+        .section-container section .content > *:first-child,
+        .section-container .section .content > *:first-child, .section-container.auto section .content > *:first-child,
+        .section-container.auto .section .content > *:first-child {
+            padding-top: 0;
+        }
+        .section-container section .content > *:last-child,
+        .section-container .section .content > *:last-child, .section-container.auto section .content > *:last-child,
+        .section-container.auto .section .content > *:last-child {
+            padding-bottom: 0;
+        }
+        .section-container section.active .content,
+        .section-container .section.active .content, .section-container.auto section.active .content,
+        .section-container.auto .section.active .content {
+            display: block;
+        }
+        .section-container section.active .title,
+        .section-container .section.active .title, .section-container.auto section.active .title,
+        .section-container.auto .section.active .title {
+            background: #d5d5d5;
+        }
+
+        .section-container.tabs {
+            border: 0;
+            position: relative;
+        }
+        .section-container.tabs section,
+        .section-container.tabs .section {
+            padding-top: 0;
+            border: 0;
+            position: static;
+        }
+        .section-container.tabs section .title,
+        .section-container.tabs .section .title {
+            width: auto;
+            border: 2px solid #ecf0f1;
+            border-right: 0;
+            border-bottom: 0;
+            position: absolute;
+            z-index: 1;
+        }
+        .section-container.tabs section .title a,
+        .section-container.tabs .section .title a {
+            width: 100%;
+        }
+        .section-container.tabs section:last-child .title,
+        .section-container.tabs .section:last-child .title {
+            border-right: 2px solid #ecf0f1;
+        }
+        .section-container.tabs section .content,
+        .section-container.tabs .section .content {
+            border: 2px solid #ecf0f1;
+            position: absolute;
+            z-index: 10;
+            top: -1px;
+        }
+        .section-container.tabs section.active .title,
+        .section-container.tabs .section.active .title {
+            background-color: white;
+            z-index: 11;
+            border-bottom: 0;
+        }
+        .section-container.tabs section.active .content,
+        .section-container.tabs .section.active .content {
+            position: relative;
+        }
+
+        @media only screen and (min-width: 48em) {
+            .section-container.auto {
+                border: 0;
+                position: relative;
+            }
+            .section-container.auto section,
+            .section-container.auto .section {
+                padding-top: 0;
+                border: 0;
+                position: static;
+            }
+            .section-container.auto section .title,
+            .section-container.auto .section .title {
+                width: auto;
+                border: 2px solid #ecf0f1;
+                border-right: 0;
+                border-bottom: 0;
+                position: absolute;
+                z-index: 1;
+            }
+            .section-container.auto section .title a,
+            .section-container.auto .section .title a {
+                width: 100%;
+            }
+            .section-container.auto section:last-child .title,
+            .section-container.auto .section:last-child .title {
+                border-right: 2px solid #ecf0f1;
+            }
+            .section-container.auto section .content,
+            .section-container.auto .section .content {
+                border: 2px solid #ecf0f1;
+                position: absolute;
+                z-index: 10;
+                top: -1px;
+            }
+            .section-container.auto section.active .title,
+            .section-container.auto .section.active .title {
+                background-color: white;
+                z-index: 11;
+                border-bottom: 0;
+            }
+            .section-container.auto section.active .content,
+            .section-container.auto .section.active .content {
+                position: relative;
+            }
+
+            .section-container.accordion .section {
+                padding-top: 0 !important;
+            }
+
+            .section-container.vertical-nav {
+                border: 2px solid #ecf0f1;
+                border-top: none;
+            }
+            .section-container.vertical-nav section,
+            .section-container.vertical-nav .section {
+                padding-top: 0 !important;
+            }
+            .section-container.vertical-nav section .title a,
+            .section-container.vertical-nav .section .title a {
+                display: block;
+                width: 100%;
+            }
+            .section-container.vertical-nav section .content,
+            .section-container.vertical-nav .section .content {
+                display: none;
+            }
+            .section-container.vertical-nav section.active .content,
+            .section-container.vertical-nav .section.active .content {
+                display: block;
+                position: absolute;
+                left: 100%;
+                top: -1px;
+                z-index: 999;
+                min-width: 12.5em;
+                border: 2px solid #ecf0f1;
+            }
+
+            .section-container.horizontal-nav {
+                position: relative;
+                background: #efefef;
+                border: 2px solid #ecf0f1;
+            }
+            .section-container.horizontal-nav section,
+            .section-container.horizontal-nav .section {
+                padding-top: 0;
+                border: 0;
+                position: static;
+            }
+            .section-container.horizontal-nav section .title,
+            .section-container.horizontal-nav .section .title {
+                width: auto;
+                border: 2px solid #ecf0f1;
+                border-left: 0;
+                top: -1px;
+                position: absolute;
+                z-index: 1;
+            }
+            .section-container.horizontal-nav section .title a,
+            .section-container.horizontal-nav .section .title a {
+                width: 100%;
+            }
+            .section-container.horizontal-nav section .content,
+            .section-container.horizontal-nav .section .content {
+                display: none;
+            }
+            .section-container.horizontal-nav section.active .content,
+            .section-container.horizontal-nav .section.active .content {
+                display: block;
+                position: absolute;
+                z-index: 999;
+                left: 0;
+                top: -2px;
+                min-width: 12.5em;
+                border: 2px solid #ecf0f1;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/jquery.printElement.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?h=2') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.module = "programEdit";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+        Tecnotek.UI.urls["saveProgramFormUrl"] = "{{ path("_expediente_sysadmin_save_program_check_data") }}";
+        Tecnotek.UI.urls["recheckProgramFormUrl"] = "{{ path("_expediente_sysadmin_send_recheck_program_data") }}";
+        Tecnotek.UI.urls["pdfcheckProgramFormUrl"] = "{{ path("_expediente_sysadmin_send_pdfcheck_program_data") }}";
+        Tecnotek.UI.urls["pdfcreatecheckProgramFormUrl"] = "{{ path("_expediente_sysadmin_send_pdfcreatecheck_program_data") }}";
+        Tecnotek.UI.vars["print-extra-styles"] = "{{ asset('css/print.css') }}";
+
+
+        Tecnotek.UI.urls["getInfoProgramFullURL"] = "{{ path("_expediente_sysadmin_get_info_program_full") }}";
+    </script>
+
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'#mail-content',
+            plugins: [
+                'advlist autolink lists link image charmap preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'});</script>
+
+    <!-- basic fancybox setup -->
+    <script type="text/javascript">
+        $(function(){ $(".modalbox").fancybox(); });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24" style="width: 900px;">
+        <img src="{{ asset('assets/images/logoucr.png')}}"  width="200" height="200" align="left">
+        <div class="grid_24" style="width: 100%;">
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="{{ entity.id }}"></div>
+            <div class="titleRow">
+                <div class="left"><h3> {{ entity }}</h3></div>
+                <div class="left"><h3> - {{ entity.teacher }}</h3></div>
+                <div class="right"><a href="{{ path('_expediente_sysadmin_program') }}" class="button success-darker tiny"><span></span>{% trans %}label.back.list{% endtrans %}</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="titleRow">
+                <div class="left" style="margin-right: 15px; font-weight: bold;">{%trans%}select.group{%endtrans%}
+                    <select id="group" name="group" style="width: 150px;">
+                        {% for group in groups %}
+                            <option {% if group.id == currentGroup %}  selected="selected" {% endif %}
+                                    value="{{ group.id }}">{{group}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="right">
+                    <input type="hidden" id="programId" name="programId" value="{{ entity.id }}">
+                    <input type="hidden" id="userId" name="userId" value="{{ app.user.id }}">
+
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!-- -->
+            <div class="section-container auto" data-section>
+                {% for form in forms %}
+                    <section class="section">
+                        <p class="title"><a href="#panel1">{{ form.name }}</a></p>
+
+                        <div class="content" id="formulario-{{ form.id }}">
+                            <p class="form-title">Programa: {{ entity }}</p>
+                            <p class="form-title">Formulario: {{ form.name }}</p>
+                            <form id="form_{{ form.id }}">
+                                <input type="hidden" id="programId" name="programId" value="{{ entity.id }}">
+                                {% for question in form.questions  %}
+                                    {% if question.parent == null %}
+                                        {{ question|printQuestionnaireQuestion(answers, answerscheck, 2)|raw }}
+                                    {% endif %}
+                                {% endfor %}
+                                <input type="button" class="btnSubmitForm" value="Guardar" rel="form_{{ form.id}}">
+                                <input type="button" class="btnPrintForm" rel="formulario-{{ form.id }}" value="Imprimir">
+                                <input type="button" class="btnReCheckForm" value="Enviar revisión" rel="form_{{ entity.id}}">
+                                <input type="button" class="btnPdfCheckForm" value="Finalizar programa" rel="form_{{ entity.id}}">
+                                {% if is_granted('ROLE_SUPERADMIN') %}
+                                    <input type="button" class="btnPdfCreateCheckForm" value="Generar archivo" rel="form_{{ entity.id}}">
+                                {% endif %}
+                                <div class="clear"></div>
+                            </form>
+                        </div>
+
+                    </section>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        <a id="openProgramForm" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+    </div>
+    <!-- hidden showContactInfoLink form -->
+    <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+        <h3>Informaci&oacute;n de Programa</h3>
+        <div id="programContainer" name="programContainer" class="contactInfo">
+
+        </div>
+    </div>
+
+{% endblock %}

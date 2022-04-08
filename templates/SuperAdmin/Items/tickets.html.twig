@@ -1,0 +1,348 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Equipo
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?r=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.module = "ticketList";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+
+        Tecnotek.UI.urls["searchTickets"] = "{{ path('_expediente_sysadmin_ticket_search')}}";
+
+
+        Tecnotek.UI.urls["createTicketURL"] = "{{ path('_expediente_sysadmin_create_ticket')}}";
+
+
+
+        Tecnotek.UI.urls["updateTicketURL"] = "{{ path("_expediente_sysadmin_update_ticket") }}";
+
+
+        Tecnotek.UI.urls["getInfoTicketFullURL"] = "{{ path("_expediente_sysadmin_get_info_ticket_full") }}";
+        Tecnotek.UI.urls["getInfoTicketRealiceURL"] = "{{ path("_expediente_sysadmin_get_info_ticket_realice") }}";
+        Tecnotek.UI.urls["getInfoTicketURL"] = "{{ path("_expediente_sysadmin_get_info_ticket_detail") }}";
+
+
+        Tecnotek.UI.urls["getItemsURL"] = "{{ path("_expediente_get_items_list_for_ticket") }}";
+        Tecnotek.UI.urls["setItemToTicket"] = "{{ path("_expediente_set_item_to_ticket") }}";
+        Tecnotek.UI.urls["getTicketItemsURL"] = "{{ path("_expediente_get_items_list_of_ticket") }}";
+        Tecnotek.UI.urls["removeItemFromTicketURL"] = "{{ path("_expediente_remove_item_from_ticket") }}";
+        Tecnotek.UI.vars["ticketId"] = 0;
+        Tecnotek.UI.vars["itemName"] = "";
+
+        Tecnotek.UI.urls["saveTicketMessage"] = "{{ path('_expediente_sysadmin_save_ticket_message')}}";
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24">
+            <div class="titleRow">
+                <div class="left"><h3>{% trans %}label.ticket.list{% endtrans %}</h3></div>
+                {% if role == 1 %}
+                    <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_course_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
+                    <div class="right"><a id="openTicketForm" class="modalbox button success-darker tiny" href="#ticketFormContainer">{% trans %}label.new{% endtrans %}</a> </div>
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+
+            <div class="table">
+                <div class="row tableHeader">
+                    <div class="option_width sort_header" style="float: left; width: 150px; margin-left: -6px;"
+                         field-name="code" order="asc">
+                        <span class="header-title asc" title="Code">{% trans %}label.date{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 400px; margin-left: -6px;"
+                         field-name="name" order="asc">
+                        <span class="header-title sortable" title="Name">{% trans %}label.name{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
+                         field-name="type" order="asc">
+                        <span class="header-title sortable" title="Type">{% trans %}label.status{% endtrans %}</span>
+                    </div>
+                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
+                    <div class="right" style="width: 5px; height: 26px"></div>
+                    <div class="option_width right">
+                        <input id="searchText" name="searchText" value="{{ text }}">
+                    </div>
+                </div>
+
+                <div id="students-container">
+                </div>
+
+                <div id="exstudents-container">
+                </div>
+            </div>
+
+            <div style="margin-bottom:75px;" id="pagination-container">
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+
+        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="TICKET_ID" style="display: none;">
+            <div class="option_width" style="float: left; width: 150px; margin-left: -6px;">TICKET_DATE</div>
+            <div class="option_width" style="float: left; width: 400px; margin-left: -6px;">TICKET_NAME</div>
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">TICKET_STATUS</div>
+
+            {% if role == 1 %}
+                <div class="right imageButton questionsButton"  title="{% trans %}label.action.ticket{% endtrans %}" rel="TICKET_ID"></div>
+                <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="TICKET_ID"></div>
+            {% endif %}
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="TICKET_ID"></div>
+            <div class="clear"></div>
+        </div>
+
+
+        <br/>
+
+        <div style="display: none;">
+            <a id="openTicketView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+            <a id="openTicketActionView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showActionLink">{% trans %}label.open{% endtrans %}</a>
+            <a id="openTicketEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#ticketFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
+        </div>
+        <!-- hidden showContactInfoLink form -->
+        <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n de Prestamo</h3>
+            <div id="ticketContainerView" name="ticketContainerView" class="contactInfo">
+
+            </div>
+        </div>
+
+        <!-- hidden showContactInfoLink form -->
+        <div id="showActionLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n de Prestamo</h3>
+            <div id="ticketActionContainerView" name="ticketActionContainerView" class="contactInfo">
+
+            </div>
+
+            <div>
+                <h3 style="margin-bottom: 0px;" class="left">Items Agregados: </h3>
+                <a id="openItemsToGroup" class="modalbox left" href="#itemsToGroupContainer">&nbsp;</a>
+                <div class="clear"></div>
+            </div>
+
+
+            <div class="left table">
+                <div class="row tableHeader">
+                    <div class="option_width" style="float: left; width: 300px;">{% trans %}label.name{% endtrans %}</div>
+                </div>
+                <div class="left" id="itemsList" style="height: 250px; overflow: scroll;">
+
+                </div>
+            </div>
+
+            <div class="left" style="width: 275px; margin-left: 20px;">
+                <form id="searchform">
+                    <div>
+                        <div>Incluir</div>
+                        <div style="font-size: 10px;">Seleccione de la lista sugerida</div>
+
+                        <input type="text" size="30" value="" id="searchBox"/>
+                    </div>
+                    <div id="suggestions"></div>
+                </form>
+
+                <form id="messageform">
+                    <div>
+                        <div>Mensaje sobre solicitud</div>
+                        <div style="font-size: 10px;">Ingrese algun dato para el solicitate</div>
+
+                        <input type="text" size="30" value="" id="detailsTicketEditDetails"/>
+                        <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="saveMessage" value="{% trans %}label.send{% endtrans %}"/></div>
+
+                        <div style="margin-bottom: 5px; display: none">
+                            <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                            <input type="text" id="idTicketEditDetails" name="idTicketEditDetails" style="width: 250px" value="0">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="ticketFormContainer" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Solicitar equipo</h3>
+
+            <form class="customForm" id="ticketForm" name="ticketForm">
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.date{% endtrans %}</label>
+                    <input type="date" id="dateTicket" name="dateTicket" value=""/>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.hour{% endtrans %}</label>
+                    <input type="time" id="timeTicket" name="timeTicket" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.information{% endtrans %}</label>
+                    <textarea id="commentsTicket" name="commentsTicket" cols="50" rows="3" > </textarea>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.computer{% endtrans %}</label>
+                    <input type="checkbox" id="computerTicket" name="computerTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.computertx{% endtrans %}</label>
+                    <input disabled type="number" id="ncomputerTicket" name="ncomputerTicket" style="width: 50px">
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.videobeam{% endtrans %}</label>
+                    <input type="checkbox" id="videobeamTicket" name="videobeamTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.videobeamtx{% endtrans %}</label>
+                    <input disabled type="number" id="nvideobeamTicket" name="nvideobeamTicket" style="width: 50px">
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.camara{% endtrans %}</label>
+                    <input type="checkbox" id="camaraTicket" name="camaraTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.camaratx{% endtrans %}</label>
+                    <input disabled type="number" id="ncamaraTicket" name="ncamaraTicket" style="width: 50px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.control{% endtrans %}</label>
+                    <input type="checkbox" id="controlTicket" name="controlTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.presenter{% endtrans %}</label>
+                    <input type="checkbox" id="presenterTicket" name="presenterTicket" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.hdmi{% endtrans %}</label>
+                    <input type="checkbox" id="hdmiTicket" name="hdmiTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.cable{% endtrans %}</label>
+                    <input type="checkbox" id="cableTicket" name="cableTicket" value=""/>
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.recorder{% endtrans %}</label>
+                    <input type="checkbox" id="recorderTicket" name="recorderTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.speaker{% endtrans %}</label>
+                    <input type="checkbox" id="speakerTicket" name="speakerTicket" value=""/>
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.outlet{% endtrans %}</label>
+                    <input type="checkbox" id="outletTicket" name="outletTicket" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.tripod{% endtrans %}</label>
+                    <input type="checkbox" id="tripodTicket" name="tripodTicket" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px; align-items: center">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.authorized{% endtrans %}</label>
+                    <textarea id="authorizedTicket" name="authorizedTicket" cols="50" rows="3" > </textarea>{% trans %}label.authorized2{% endtrans %}
+                </div>
+
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="ticketCancel" id="ticketCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="ticketFormContainerEdit" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Editar Solicitud</h3>
+
+            <form class="customForm" id="ticketFormEdit" name="ticketFormEdit">
+
+                <div style="margin-bottom: 5px; display: none;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                    <input type="text" id="idTicketEdit" name="idTicketEdit" style="width: 250px" value="0">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.date{% endtrans %}</label>
+                    <input type="date" id="dateTicketEdit" name="dateTicketEdit" value=""/>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.hour{% endtrans %}</label>
+                    <input type="time" id="timeTicketEdit" name="timeTicketEdit" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.information{% endtrans %}</label>
+                    <textarea id="commentsTicketEdit" name="commentsTicketEdit" cols="50" rows="3" > </textarea>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.computer{% endtrans %}</label>
+                    <input type="checkbox" id="computerTicketEdit" name="computerTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.computertx{% endtrans %}</label>
+                    <input disabled type="number" id="ncomputerTicketEdit" name="ncomputerTicketEdit" style="width: 50px">
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.videobeam{% endtrans %}</label>
+                    <input type="checkbox" id="videobeamTicketEdit" name="videobeamTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.videobeamtx{% endtrans %}</label>
+                    <input disabled type="number" id="nvideobeamTicketEdit" name="nvideobeamTicketEdit" style="width: 50px">
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.camara{% endtrans %}</label>
+                    <input type="checkbox" id="camaraTicketEdit" name="camaraTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.camaratx{% endtrans %}</label>
+                    <input disabled type="number" id="ncamaraTicketEdit" name="ncamaraTicketEdit" style="width: 50px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.control{% endtrans %}</label>
+                    <input type="checkbox" id="controlTicketEdit" name="controlTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.presenter{% endtrans %}</label>
+                    <input type="checkbox" id="presenterTicketEdit" name="presenterTicketEdit" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.hdmi{% endtrans %}</label>
+                    <input type="checkbox" id="hdmiTicketEdit" name="hdmiTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.cable{% endtrans %}</label>
+                    <input type="checkbox" id="cableTicketEdit" name="cableTicketEdit" value=""/>
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.recorder{% endtrans %}</label>
+                    <input type="checkbox" id="recorderTicketEdit" name="recorderTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.speaker{% endtrans %}</label>
+                    <input type="checkbox" id="speakerTicketEdit" name="speakerTicketEdit" value=""/>
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.outlet{% endtrans %}</label>
+                    <input type="checkbox" id="outletTicketEdit" name="outletTicketEdit" value=""/> &nbsp; &nbsp;
+                    <label style="display: inline-block; width: 165px">{% trans %}label.tripod{% endtrans %}</label>
+                    <input type="checkbox" id="tripodTicketEdit" name="tripodTicketEdit" value=""/>
+                </div>
+
+                <div style="margin-bottom: 5px; align-items: center">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.authorized{% endtrans %}</label>
+                    <textarea id="authorizedTicketEdit" name="authorizedTicketEdit" cols="50" rows="3" > </textarea>{% trans %}label.authorized2{% endtrans %}
+                </div>
+
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="ticketCancelEdit" id="ticketCancelEdit" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

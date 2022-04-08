@@ -1,0 +1,61 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Usuarios
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    Tecnotek.UI.urls["api"] = "";
+    Tecnotek.UI.translates["btnDone"] = "";
+    Tecnotek.module = "coordinadorList";
+    Tecnotek.imagesURL = "/images";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+    Tecnotek.UI.urls["show"] = "{{ path('_expediente_sysadmin_coordinador_show_simple')}}";
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container_24">
+    <div class="grid_24">
+        <div class="titleRow">
+            <div class="left"><h3>{% trans %}label.usuarios.coordinador.listar{% endtrans %}</h3></div>
+            <div class="right"><a href="{{ path('_expediente_sysadmin_coordinador_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>
+            <div class="clear"></div>
+        </div>
+        <div class="grid_24 padline">
+            <div class="lineH"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="table">
+            <div class="row tableHeader">
+                <div class="option_width" style="float: left; width: 200px;">{% trans %}label.name{% endtrans %}</div>
+                <div class="option_width" style="float: left; width: 200px;">{% trans %}label.username{% endtrans %}</div>
+                <div class="option_width" style="float: left; width: 250px;">{% trans %}label.email{% endtrans %}</div>
+                <div class="option_width" style="float: left; width: 200px;">{% trans %}label.status{% endtrans %}</div>
+            </div>
+
+            {% set counter = 0 %}
+
+            {% for entity in pagination %}
+                <div class="row userRow {% if counter%2 == 0 %}tableRowOdd{%else%}tableRow{% endif %}" rel="{{ entity.id }}">
+                    <div class="option_width" style="float: left; width: 200px;">{{ entity.firstname }} {{ entity.lastname }}</div>
+                    <div class="option_width" style="float: left; width: 200px;">{{ entity.username }}</div>
+                    <div class="option_width" style="float: left; width: 250px;">{{ entity.email }}</div>
+                    <div class="option_width" style="float: left; width: 200px;">{% if entity.active %}{% trans %}usuarios.estado.1{% endtrans %}{% else %} {% trans %}usuarios.estado.2{% endtrans %} {% endif %}</div>
+                    <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="{{ entity.id }}"></div>
+                </div>
+                {% set counter = counter + 1 %}
+            {% endfor %}
+        </div>
+        <br/>
+    
+        <div style="margin-bottom:15px;">
+            {{ knp_pagination_render(pagination)|raw }}
+        </div>    
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Curso
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?e=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.module = "itemList";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+        Tecnotek.UI.urls["show"] = "{{ path('_expediente_sysadmin_item_show_simple')}}";
+        Tecnotek.UI.urls["edit"] = "{{ path('_expediente_sysadmin_item_edit_simple')}}";
+
+        Tecnotek.UI.urls["searchItems"] = "{{ path('_expediente_sysadmin_item_search')}}";
+
+
+        Tecnotek.UI.urls["createItemURL"] = "{{ path("_expediente_sysadmin_create_item") }}";
+        Tecnotek.UI.urls["updateItemURL"] = "{{ path("_expediente_sysadmin_update_item") }}";
+
+        Tecnotek.UI.urls["getInfoItemFullURL"] = "{{ path("_expediente_sysadmin_get_info_item_full") }}";
+        Tecnotek.UI.urls["getInfoItemURL"] = "{{ path("_expediente_sysadmin_get_info_item_detail") }}";
+
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24">
+            <div class="titleRow">
+                <div class="left"><h3>{% trans %}label.item.listar{% endtrans %}</h3></div>
+                <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_item_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
+                <div class="right"><a id="openItemForm" class="modalbox button success-darker tiny" href="#itemFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="table">
+                <div class="row tableHeader">
+                    <div class="option_width sort_header" style="float: left; width: 100px; margin-left: -6px;"
+                         field-name="code" order="asc">
+                        <span class="header-title asc" title="Code">{% trans %}label.code{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 450px; margin-left: -6px;"
+                         field-name="name" order="asc">
+                        <span class="header-title sortable" title="Name">{% trans %}label.name{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
+                         field-name="type" order="asc">
+                        <span class="header-title sortable" title="Type">{% trans %}label.type{% endtrans %}</span>
+                    </div>
+                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
+                    <div class="right" style="width: 5px; height: 26px"></div>
+                    <div class="option_width right">
+                        <input id="searchText" name="searchText" value="{{ text }}">
+                    </div>
+                </div>
+
+                <div id="students-container">
+                </div>
+
+                <div id="exstudents-container">
+                </div>
+            </div>
+
+            <div style="margin-bottom:75px;" id="pagination-container">
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+
+        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="ITEM_ID" style="display: none;">
+            <div class="option_width" style="float: left; width: 100px; margin-left: -6px;">ITEM_CODE</div>
+            <div class="option_width" style="float: left; width: 450px; margin-left: -6px;">ITEM_NAME</div>
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">ITEM_STATUS</div>
+
+            <!--<div class="right imageButton pdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>
+        <div class="right imageButton nopdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>-->
+
+            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="ITEM_ID"></div>
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="ITEM_ID"></div>
+            <div class="clear"></div>
+        </div>
+
+
+        <br/>
+
+        <div style="display: none;">
+            <a id="openItemView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+            <a id="openItemEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#itemFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
+        </div>
+        <!-- hidden showContactInfoLink form -->
+        <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+            <h3>Informaci&oacute;n del curso</h3>
+            <div id="itemContainerView" name="itemContainerView" class="contactInfo">
+
+            </div>
+        </div>
+
+
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="itemFormContainer" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Agregar Curso</h3>
+
+            <form class="customForm" id="itemForm" name="itemForm">
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                    <input type="text" id="nameItem" name="nameItem" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
+                    <input type="text" id="codeItem" name="codeItem" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.description{% endtrans %}</label>
+                    <input type="text" id="descriptionItem" name="descriptionItem" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.category{% endtrans %}</label>
+                    <select id="categoryItem" name="categoryItem" style="width: 120px;">
+                        <option value="0"></option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="itemCancel" id="itemCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+
+        <!-- hidden teacherAssignedFormContainer form -->
+        <div id="itemFormContainerEdit" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Editar Curso</h3>
+
+            <form class="customForm" id="itemFormEdit" name="itemFormEdit">
+
+                <div style="margin-bottom: 5px; display: none;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                    <input type="text" id="idItemEdit" name="idItemEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                    <input type="text" id="nameItemEdit" name="nameItemEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
+                    <input type="text" id="codeItemEdit" name="codeItemEdit" style="width: 250px">
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.description{% endtrans %}</label>
+                    <input type="text" id="descriptionItemEdit" name="descriptionItemEdit" style="width: 250px">
+                </div>
+
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: inline-block; width: 165px">{% trans %}label.category{% endtrans %}</label>
+                    <select id="categoryItemEdit" name="categoryItemEdit" style="width: 120px;">
+                        <option value="0"></option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="itemCancel" id="itemCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

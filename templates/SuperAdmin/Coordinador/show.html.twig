@@ -1,0 +1,136 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+Tecnotek :: Expediente :: Super Administrador :: Usuarios
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    Tecnotek.UI.urls["changePasswordURL"] = "{{ path("_change_admin_password") }}";
+    Tecnotek.UI.urls["deleteAdminURL"] = "{{ path("_delete_coordinador", {id: entity.id}) }}";
+    Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.user.delete{% endtrans %}";
+    Tecnotek.module = "showCoordinador";
+    Tecnotek.imagesURL = "/images";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container_24" style="width: 800px;">
+    <div class="grid_24" style="width: 100%;">
+        <div class="panelRow" id="doc-forms">
+            <div class="large-12 columns">
+
+                <div class="titleRow">
+                    <div class="left"><h3>{% trans %}label.usuarios.coordinador.show{% endtrans %}</h3></div>
+                    <div class="right"><a href="{{ path('_expediente_sysadmin_coordinador') }}"
+                                          class="button success-darker tiny"><span></span>{% trans %}label.volver{% endtrans %}</a></div>
+                    <div class="clear"></div>
+                </div>
+
+                <div id="showContainer">
+                    <div>
+                        <label>{%trans%}label.firstname{%endtrans%}</label>
+                        <span id="labelFirstname">{{ entity.firstname }}</span>
+                    </div>
+                    <div>
+                        <label>{%trans%}label.lastname{%endtrans%}</label>
+                        <span id="labelLastname">{{ entity.lastname }}</span>
+                        <div class="clear"></div>
+                    </div>
+                    <div>
+                        <label>{%trans%}label.username{%endtrans%}</label>
+                        <span id="labelUsername">{{ entity.username }}</span>
+                    </div>
+                    <div>
+                        <label>{%trans%}label.email{%endtrans%}</label>
+                        <span id="labelEmail">{{ entity.email }}</span>
+                    </div>
+                    <div>
+                        <label>{%trans%}label.status{%endtrans%}</label>
+                        <span id="labelActive">{% if entity.active %}{% trans %}usuarios.estado.1{% endtrans %}{% else %} {% trans %}usuarios.estado.2{% endtrans %} {% endif %}</span>
+                    </div>
+                    <div id="buttonsContainer" style="margin-top: 25px;">
+                        <div class="left button success-darker tiny" id="btnEditar">{% trans %}label.edit{% endtrans %}</div>
+                        <div class="left button success-darker tiny" id="btnCambiarPass" style="margin-left: 25px;">{% trans %}label.password.cambiar{% endtrans %}</div>
+                        <div class="left button success-darker tiny" id="btnEliminar" style="margin-left: 25px;">{% trans %}label.eliminar{% endtrans %}</div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <div id="editContainer" style="display: none;">
+
+                    <form class="customForm" id="createAdminForm" action="{{ path('_expediente_sysadmin_coordinador_update') }}" method="post">
+                        <input type="hidden" id="userId" name="userId" value="{{ entity.id }}">
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.firstname{% endtrans %}</label><input
+                                    type="text" id="firstname" name="firstname" required="required"
+                                    value="">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.lastname{% endtrans %}</label><input
+                                    type="text" id="lastname" name="lastname" required="required"
+                                    value="">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.username{% endtrans %}</label><input
+                                    type="text" id="username" name="username" required="required"
+                                    value="">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.email{% endtrans %}</label><input
+                                    type="text" id="email" name="email" required="required"
+                                    value="">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.active{% endtrans %}</label><input
+                                    type="checkbox" id="active" name="active" checked="checked">
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 60px;">
+                            <a id="btnCancelEdit" href="#" class="left button success-darker tiny" style="margin-right: 25px;"><span></span>{% trans %}label.cancelar{% endtrans %}</a>
+                            <input class="left button success-darker tiny" style="margin-top: 0px;"
+                                   type="submit" name="save"
+                                   value="{% trans %}label.save{% endtrans %}"/>
+                            <div class="clear"></div>
+                        </div>
+                    </form>
+                </div>
+                <div id="changePasswordContainer"
+                     style="margin-top: 25px; display: none; line-height: 30px; height: 30px; vertical-align: middle; border-top: solid 1px; padding-top: 5px;">
+                    <div class="left"
+                         style="font-weight: bold; width: 325px;">{%trans%}label.new.password{%endtrans%}:
+                        <input type="password" style="width: 185px;" id="newPassword" name="newPassword"
+                               value=""/></div>
+                    <div class="left"
+                         style="font-weight: bold; width: 325px;">{%trans%}label.confirm.password{%endtrans%}:
+                        <input type="password" style="width: 185px;" id="confirmPassword" name="confirmPassword"
+                               value=""/></div>
+
+                    <a id="btnCancelarPassword" href="#" class="button success-darker tiny" style="margin-left: 25px;"><span></span>{% trans %}label.cancelar{% endtrans %}</a>
+                    <div class="left button success-darker tiny" id="btnActualizarPassword" style="margin-left: 25px;">{% trans %}label.actualizar{% endtrans %}</div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

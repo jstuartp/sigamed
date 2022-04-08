@@ -1,0 +1,84 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    UCR :: Programas :: Reporte de Cargas Academicas
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/jquery.printElement.min.js') }}"></script>
+
+    <script type="text/javascript">
+        Tecnotek.module = "reports";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24">
+            <div>
+                <div class="left">
+                    <h3>{% trans %}label.report.academic{% endtrans %}</h3>
+                </div>
+                <div class="left" style="line-height: 48px; margin-left: 25px;">
+                    <span>{% trans %}label.report.academic.subtitle{% endtrans %}</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="filter-search table">
+                <div class="internal">
+                    <form id="searchForm" action="{{ path('_expediente_report_students') }}" method="post">
+                        <div class="clear"></div>
+                        <hr>
+                        <div>
+                            <label style="width: 126px;">Filtrar por:</label>
+
+                            <select id="teachers" name="teachers">
+                                <option value="-1"></option>
+                                <option value="0">Todos</option>
+                                {% for teacher in teachers %}
+                                    <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+
+
+
+
+            <div style="margin-top: 15px;">
+                <button style="margin-left: 15px; margin-top: 0px;" type="button" class="right button success-darker tiny" id="btnPrint" name="btnPrint" rel="Reporte de Clubes"><span></span>{% trans %}label.print{% endtrans %}</button>
+                <div class="clear"></div>
+            </div>
+
+            <div id="reportAcademic" style="margin-top: 25px; width: 950px;">
+                <table width='900' align='center'>
+                    <tr><td rowspan='3' span='3' width='250'><img src="{{ asset('images/logoucr.png') }}" alt=""></td><td align="center">ESCUELA DE CIENCIAS POLITICAS</td><td rowspan='3' width='250'><img src="{{ asset('images/ecp.png') }}" alt=""></td></tr>
+                    <tr><td align="center">CARGA ACADEMICA</td></tr>
+                    <tr><td align="center">II CICLO LECTIVO 2018</td></tr>
+                </table>
+                {{ hmtl | raw }}
+                <div class="pageBreak"> </div>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="wrapper">
+            <div class="grid_24 padline">
+                <div class="lineH"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

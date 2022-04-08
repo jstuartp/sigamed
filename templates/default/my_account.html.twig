@@ -1,0 +1,74 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador
+{% endblock %}
+
+
+
+{% block extrajs %}
+    <script type="text/javascript">
+        Tecnotek.UI.urls["changePasswordURL"] = "{{ path("_change_admin_password") }}";
+        Tecnotek.UI.urls["changePasswordURL"]
+
+        Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.user.delete{% endtrans %}";
+        Tecnotek.module = "";
+        Tecnotek.imagesURL = "/images";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+        Tecnotek.UI.vars["userId"] = {{ app.user.id }};
+
+        $(document).ready(function() {
+            $('#btnCambiarPass').click(function(event){
+                $("#btnCambiarPass").hide();
+                $("#changePasswordContainer").fadeIn('slow', function() {});
+            });
+
+            $('#btnCancelarPassword').click(function(event){
+                $("#changePasswordContainer").hide();
+                $("#btnCambiarPass").fadeIn('slow', function() {});
+            });
+
+            $('#btnActualizarPassword').click(function(event){
+                console.debug("Change Password of: " + Tecnotek.UI.vars["userId"] + " using " + Tecnotek.UI.urls["changePasswordURL"]);
+                Tecnotek.ajaxCall(Tecnotek.UI.urls["changePasswordURL"],
+                    {newPassword: $("#newPassword").val(), confirmPassword: $("#confirmPassword").val(),
+                        userId: Tecnotek.UI.vars["userId"]},
+                    function(data){
+                        if(data.error === true) {
+                            Tecnotek.showErrorMessage(data.message,true, "", false);
+                        } else {
+                            $("#changePasswordContainer").hide();
+                            $("#btnCambiarPass").fadeIn('slow', function() {});
+                            Tecnotek.showInfoMessage(data.message,true, "", false);
+                        }
+                    },
+                    function(jqXHR, textStatus){
+                        Tecnotek.showErrorMessage("Error updating password: " + textStatus + ".",
+                            true, "", false);
+                    }, true);
+            });
+        });
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container_24" style="width: 800px;">
+        <div class="grid_24" style="width: 100%;">
+
+            <div>
+                <div class="left"><label style="display: inline-block;">Administraci&oacute;n de Cuenta: </label>&nbsp;{{ app.user.username }}</div>
+                <div class="right button success-darker tiny" id="btnCambiarPass" style="margin-left: 25px;">{% trans %}label.password.cambiar{% endtrans %}</div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="changePasswordContainer" style="margin-top: 25px; display: none; line-height: 30px; height: 30px; vertical-align: middle; border-top: solid 1px; padding-top: 5px;">
+                <div class="left" style="font-weight: bold; width: 300px;">{%trans%}label.new.password{%endtrans%}: <input type="password" style="width: 185px;" id="newPassword" name="newPassword" value=""/></div>
+                <div class="left" style="font-weight: bold; width: 300px;">{%trans%}label.confirm.password{%endtrans%}: <input type="password" style="width: 185px;" id="confirmPassword" name="confirmPassword" value=""/></div>
+                <div class="left button success-darker tiny" id="btnCancelarPassword" style="margin-left: 25px;">{% trans %}label.cancelar{% endtrans %}</div>
+                <div class="left button success-darker tiny" id="btnActualizarPassword" style="margin-left: 25px;">{% trans %}label.actualizar{% endtrans %}</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

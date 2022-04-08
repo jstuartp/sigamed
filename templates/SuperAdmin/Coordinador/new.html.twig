@@ -1,0 +1,100 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Usuarios
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    Tecnotek.UI.urls["api"] = "";
+    Tecnotek.UI.translates["btnDone"] = "";
+    Tecnotek.module = "coordinadorList";
+    Tecnotek.imagesURL = "/images";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container_24" style="width: 800px;">
+    <div class="grid_24" style="width: 100%;">
+        <div class="panelRow" id="doc-forms">
+            <div class="large-12 columns">
+                <form class="customForm" id="createAdminForm" action="{{ path('_expediente_sysadmin_coordinador_save') }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_errors(form) }}
+
+                    {{ form_widget(form._token) }}
+
+                    <fieldset>
+                        <legend>{% trans %}label.usuarios.coordinador.new{% endtrans %}</legend>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.firstname) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.firstname{% endtrans %}</label>{{ form_widget(form.firstname) }}
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.lastname) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.lastname{% endtrans %}</label>{{ form_widget(form.lastname) }}
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.username) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.username{% endtrans %}</label>{{ form_widget(form.username) }}
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.email) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.email{% endtrans %}</label>{{ form_widget(form.email) }}
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.password) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.password{% endtrans %}</label>
+                                <input type="password" id="tecnotek_expediente_userformtype_password_Password" name="tecnotek_expediente_userformtype[password][Password]" required="required">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.password.reenter{% endtrans %}</label>
+                                <input type="password" id="tecnotek_expediente_userformtype_password_Re-enter Password" name="tecnotek_expediente_userformtype[password][Re-enter Password]" required="required">
+                            </div>
+                        </div>
+
+                        <div class="formRow">
+                            <label class="error">{{ form_errors(form.active) }}</label>
+                            <div class="large-12 columns">
+                                <label>{% trans %}label.active{% endtrans %}:</label>
+                                {{ form_widget(form.active) }}
+                            </div>
+                        </div>
+
+                        <div class="formRow ">
+                            <div class="large-12 columns buttonsPanel">
+                                <a href="{{ path('_expediente_sysadmin_coordinador') }}"
+                                   class="button success-darker tiny"><span></span>{% trans %}label.cancelar{% endtrans %}</a>
+
+                                <input class="button success-darker tiny" style="margin-top: 0px;"
+                                       type="submit" name="save"
+                                       value="{% trans %}label.save{% endtrans %}"/>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+{% endblock %}

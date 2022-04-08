@@ -1,0 +1,200 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Programas
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?j=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+
+    <script type="text/javascript">
+        Tecnotek.module = "programHistoric";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+        Tecnotek.UI.urls["searchHPrograms"] = "{{ path('_expediente_sysadmin_program_hsearch')}}";
+
+        Tecnotek.UI.urls["getInfoProgramFullURL"] = "{{ path("_expediente_sysadmin_get_info_program_full") }}";
+
+        Tecnotek.UI.urls["getInfoProgramURL"] = "{{ path("_expediente_sysadmin_get_info_program_detail") }}";
+
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+    <div class="container">
+        <div class="grid">
+            <div class="titleRow">
+                <div class="left"><h3>{% trans %}label.programs.list.previous{% endtrans %}</h3></div>
+                {% if role == 4 %}
+                    <div class="right"><a href="{{ path('_expediente_sysadmin_program_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>
+                {% endif %}
+                {% if role == 2 %}
+                    <div class="right"><a href="{{ path('_expediente_sysadmin_program_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+<!--
+            <div class="table">
+                <div class="row tableHeader">
+                    <div class="option_width sort_header" style="float: left; width: 400px; margin-left: -6px;"
+                         field-name="detail" order="asc">
+                        <span class="header-title asc" title="Detail">{% trans %}label.name{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 150px; margin-left: -6px;"
+                         field-name="user_id" order="asc">
+                        <span class="header-title sortable" title="User">{% trans %}label.teacher{% endtrans %}</span>
+                    </div>
+                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
+                         field-name="status" order="asc">
+                        <span class="header-title sortable" title="Status">{% trans %}label.status{% endtrans %}</span>
+                    </div>
+                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
+                    <div class="right" style="width: 5px; height: 26px"></div>
+                    <div class="option_width right">
+                        <input id="searchText" name="searchText" value="{{ text }}">
+                    </div>
+                </div>
+
+                <div id="students-container">
+                </div>
+
+                <div id="exstudents-container">
+                </div>
+            </div>-->
+
+            <div class="bs-example" data-example-id="contextual-table">
+                <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+                    <thead>
+                    <tr>
+                        <th  hidden>id</th>
+                        <th>Nombre</th>
+                        <th>Profesores</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arregloDato in programs %}
+                        <tr class="info">
+                            <td hidden>{{ arregloDato.id }}</td>
+                            <td>{{ arregloDato.detail }}</td>
+                            <td>{{ arregloDato.name }}</td>
+                            <td>{% if arregloDato.status == 1 %}  Creado {% endif %}
+                                {% if arregloDato.status == 2 %} Modificado {% endif %}
+                                {% if arregloDato.status == 3 %} Modificado en espera de Revisión {% endif %}
+                                {% if arregloDato.status == 4 %} Revisado correcciones pendientes {% endif %}
+                                {% if arregloDato.status == 5 %} Revisado y Aprobado {% endif %}
+                                {% if arregloDato.status == 6 %} Finalizado {% endif %}
+
+                            </td>
+                            <!-- Columna para poner los botones en la tabla -->
+                            <td class="nowrap">
+                                {% if role != 4 %}
+                                    <div class="button checkButton" title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID">
+                                        <a href=""> <div class="icon"><i class="fas fa-file" title="Archivo"></i></div></a></div>
+                                    &nbsp;&nbsp;&nbsp;
+                                {% endif %}
+
+
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+
+            {% if role != 3 and role != 4 %}
+                <div style="margin-bottom:75px;" id="pagination-container">
+                </div>
+            {% endif %}
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="PROGRAM_ID" style="display: none;">
+        <div class="option_width" title="TITLE_PROGR_DETAIL" style="float: left; width: 400px; margin-left: -6px;">PROGRAM_DETAIL</div>
+        <div class="option_width" title="TITLE_PROGR_NAME" style="float: left; width: 150px; margin-left: -6px;">PROGRAM_NAME</div>
+        <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">PROGRAM_STATUS</div>
+
+        <!--<div class="right imageButton pdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>
+        <div class="right imageButton nopdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>-->
+
+        <div class="clear"></div>
+    </div>
+
+
+    {% if role == 3 %}
+        <div id="excontactRowTemplate" class="row userRow ROW_CLASS" rel="EXPROGRAM_ID" style="display: none;">
+            <div class="option_width" title="TITLE_EXPROGR_DETAIL" style="float: left; width: 400px; margin-left: -6px;">EXPROGRAM_DETAIL</div>
+            <div class="option_width" title="TITLE_EXPROGR_NAME" style="float: left; width: 150px; margin-left: -6px;">EXPROGRAM_NAME</div>
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">EXPROGRAM_STATUS</div>
+
+            <div class="right imageButton questionsButton"  title="{% trans %}label.edit.program{% endtrans %}" rel="EXPROGRAM_ID"></div>
+            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="EXPROGRAM_ID"></div>
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="EXPROGRAM_ID"></div>
+            <div class="clear"></div>
+        </div>
+
+        <div id="excontactRowTemplateEnd" class="row userRow ROW_CLASS" rel="EXPROGRAM_ID" style="display: none;">
+            <div class="option_width" title="TITLE_EXPROGR_DETAIL" style="float: left; width: 400px; margin-left: -6px;">EXPROGRAM_DETAIL</div>
+            <div class="option_width" title="TITLE_EXPROGR_NAME" style="float: left; width: 150px; margin-left: -6px;">EXPROGRAM_NAME</div>
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">EXPROGRAM_STATUS</div>
+
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="EXPROGRAM_ID"></div>
+            <div class="clear"></div>
+        </div>
+    {% endif %}
+
+    <div style="display: none;">
+        <a id="openProgramForm" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+        <a id="openProgramEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#programFormContainer">{% trans %}label.open{% endtrans %}</a>
+    </div>
+    <!-- hidden showContactInfoLink form -->
+    <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+        <h3>Informaci&oacute;n de Programa</h3>
+        <div id="programContainer" name="programContainer" class="contactInfo">
+
+        </div>
+    </div>
+
+
+    <!-- hidden teacherAssignedFormContainer form -->
+    <div id="programFormContainer" style="display: none;">
+        <h3 style="margin-bottom: 0px;">Editar Programa</h3>
+
+        <form class="programEditForm" id="programEditForm" name="courseForm">
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.detail{% endtrans %}</label>
+                <input type="text" id="detailProgram" name="detailProgram" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.date{% endtrans %}</label>
+                <input type="text" id="dateProgram" name="dateProgram" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px; display: none;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                <input type="text" id="idProgram" name="idProgram" style="width: 250px">
+            </div>
+
+
+
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="courseCancel" id="courseCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+            <div class="clear"></div>
+        </form>
+    </div>
+
+{% endblock %}

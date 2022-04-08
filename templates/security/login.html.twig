@@ -1,0 +1,38 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24" style="text-align: center;">
+            <div class="loginPanel">
+                <h3>{%trans%}label.loginTitle{%endtrans%}</h3>
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <form action="{{ path('login') }}" method="post">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="_password" />
+
+                    <button type="submit">login</button>
+
+                    {#
+                        If you want to control the URL the user
+                        is redirected to on success (more details below)
+                        <input type="hidden" name="_target_path" value="/account" />
+                    #}
+                    <div><p>Esta Dirección en seguimiento al "artículo 16" del Reglamento de Regimen Académico Estudiantil, ha decidido implementar el presente sistema de recolección y revisión de los Programas de los Cursos, el cual permitirá la interacción del Coordinador de Línea Formativa con ustedes, con el fin de que se cumplnas los lineamientos aprobados en nuestro plan de estudios.</p>
+
+                        <p style="color:red;">FECHA LIMITE PARA RECOLECCIÓN Y REVISIÓN DEL PROGRAMAS EL 03 DE DICIEMBRE DEL 2019</p>
+
+                        <p>ARTÍCULO 16. Los programas de los cursos específicos de la carrera son aprobados con suficiente antelación, en primera instancia, por el grupo de profesores afines al curso, por la sección o por el departamento, según sea el caso. La ratificación del programa corresponde a la dirección de la unidad académica, en cumplimiento de los lineamientos implícitos en los planes de estudio aprobados por la asamblea de la unidad académica correspondiente. Los programas deben actualizarse periódicamente.</p></div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

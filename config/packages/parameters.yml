@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 3306
+    database_name: ucr
+    database_user: root
+    database_password: Js.Pz2383
+    mailer_transport: smtp
+    mailer_host: smtp.ucr.ac.cr
+    mailer_user: sistemas.ecp@ucr.ac.cr
+    mailer_password: P568T10#M0PlTRMUYdw9mbUQwbMDwZ8K
+    secret: d29d3c30330ace8c3b059f8293c6e11831fa2f11

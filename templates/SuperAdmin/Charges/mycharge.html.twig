@@ -1,0 +1,442 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Cargas Académicas
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?m=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+        Tecnotek.module = "chargeList";
+        Tecnotek.assetsURL = "{{ path('homepage')}}";
+
+
+        Tecnotek.UI.urls["sendEmailChargeYes"] = "{{ path("_expediente_sysadmin_send_email_charge_yes") }}";
+        Tecnotek.UI.urls["sendEmailChargeNo"] = "{{ path("_expediente_sysadmin_send_email_charge_no") }}";
+        Tecnotek.UI.urls["getInfoChargeTeacherStatusURL"] = "{{ path("_expediente_sysadmin_get_info_charge_teacher_status") }}";
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div style="display: none;">
+        <input style="height: 80px;" id="teacherId" name="teacherId" value="{{ teacherId }}">
+    </div>
+    <div class="container_24">
+        {% if charge %}
+        <div class="grid_24">
+
+            <div class="titleRow">
+                <div class="right"><h3>{% trans %}label.charge.listar{% endtrans %}</h3></div>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="courseContainer">
+                <div class="chargeTeacherStatusContainerView" id="chargeTeacherStatusContainerView">
+                </div>
+                {% if courses %}
+                <div class="fields_row route">
+                    <p style="text-decoration: underline; padding-bottom: 0px;">Cursos:</p>
+                </div>
+                <table style="border-width: 2px; border-style: solid;">
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                        </td>
+                        <td style="width: 100px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Sigla</span></br>
+                        </td>
+                        <td style="width: 400px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Nombre del curso</span></br>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Horario</span></br>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Aula Asignada</span></br>
+                        </td>
+
+                    </tr>
+
+                    {% for course in courses %}
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.weight }}</span>
+                        </td>
+                        <td style="width: 100px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.code }}</span>
+                        </td>
+                        <td style="width: 400px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.name }}-G{{ course.groupnumber }}</span>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.schedule }}</span>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.classroom }}</span>
+                        </td>
+                    </tr>
+
+
+                    {% endfor %}
+                </table>
+
+                {% endif %}
+                {% if commissions %}
+                <div class="fields_row route">
+                    <p style="text-decoration: underline; padding-bottom: 0px;">Comisiones:</p>
+                </div>
+                <table style="border-width: 2px; border-style: solid;">
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                        </td>
+                        <td style="width: 500px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                        </td>
+
+                    </tr>
+
+                    {% for commission in commissions %}
+                        <tr>
+                            <td style="width: 75px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ commission.weight }}</span>
+                            </td>
+                            <td style="width: 500px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ commission.name }}</span>
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+                {% endif %}
+                {% if projects %}
+                <div class="fields_row route">
+                    <p style="text-decoration: underline; padding-bottom: 0px;">Proyectos:</p>
+                </div>
+                <table style="border-width: 2px; border-style: solid;">
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                        </td>
+                        <td style="width: 500px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                        </td>
+
+                    </tr>
+
+                    {% for project in projects %}
+                        <tr>
+                            <td style="width: 75px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ project.weight }}</span>
+                            </td>
+                            <td style="width: 500px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ project.name }}</span>
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+                {% endif %}
+                {% if others %}
+                <div class="fields_row route">
+
+
+                        <p style="text-decoration: underline; padding-bottom: 0px;">Otros:</p>
+
+
+                </div>
+                <table style="border-width: 2px; border-style: solid;">
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                        </td>
+                        <td style="width: 500px; text-align: left;">
+                            <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                        </td>
+
+                    </tr>
+
+                    {% for other in others %}
+                        <tr>
+                            <td style="width: 175px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ other.weight }}</span>
+                            </td>
+                            <td style="width: 400px; text-align: left;">
+
+                                <span style="font-family:arial;font-size:16px;">{{ other.name }}</span>
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+                {% endif %}
+
+                <div class="pageBreak"> </div>
+            </div>
+
+            <div style="margin-bottom:75px;" id="pagination-container">
+            </div>
+
+
+
+        </div>
+        <div class="clear"></div>
+
+
+
+            <a id="openChargeFull" class="left button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#chargeFormContainerFull">{% trans %}Abrir Detalles completos{% endtrans %}</a>
+
+        <br><br><br><br><br>
+
+
+        <div id="chargeFormContainerFull" style="display: none;">
+            <h3 style="margin-bottom: 0px;">Carga Académica</h3>
+
+            <p>Profesor (a)</p>
+            <p>Escuela Ciencias Políticas</p>
+
+            <p>Estimado (a) docente:</p>
+
+            <p>Con el propósito de que pueda planificar con la debida anticipación su labor académica, me permito comunicarle la carga asignada para el primer ciclo lectivo 2020.  Le ruego indicarnos por este medio antes del 15 de enero su aceptación a la carga académica que se propone:</p>
+            <p>Esta carga esta sujeta a la disminución de apoyo presupuestario por parte de las Autoridades Universitarias, por lo tanto puede variar.</p>
+            {% if courses %}
+            <table style="border-width: 2px; border-style: solid;">
+                <tr>
+                    <td style="width: 75px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                    </td>
+                    <td style="width: 100px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Sigla</span></br>
+                    </td>
+                    <td style="width: 400px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Nombre del curso</span></br>
+                    </td>
+                    <td style="width: 150px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Horario</span></br>
+                    </td>
+                    <td style="width: 150px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Aula Asignada</span></br>
+                    </td>
+
+                </tr>
+
+                {% for course in courses %}
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.weight }}</span>
+                        </td>
+                        <td style="width: 100px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.code }}</span>
+                        </td>
+                        <td style="width: 400px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.name }}-G{{ course.groupnumber }}</span>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.schedule }}</span>
+                        </td>
+                        <td style="width: 150px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ course.classroom }}</span>
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+
+                {% endif %}
+            {% if commissions %}
+            <div class="fields_row route">
+                <p style="text-decoration: underline; padding-bottom: 0px;">Comisiones:</p>
+            </div>
+            <table style="border-width: 2px; border-style: solid;">
+                <tr>
+                    <td style="width: 75px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                    </td>
+                    <td style="width: 500px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                    </td>
+
+                </tr>
+
+                {% for commission in commissions %}
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ commission.weight }}</span>
+                        </td>
+                        <td style="width: 500px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ commission.name }}</span>
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+                {% endif  %}
+            {% if projects %}
+            <div class="fields_row route">
+                <p style="text-decoration: underline; padding-bottom: 0px;">Proyectos:</p>
+            </div>
+            <table style="border-width: 2px; border-style: solid;">
+                <tr>
+                    <td style="width: 75px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                    </td>
+                    <td style="width: 500px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                    </td>
+
+                </tr>
+
+                {% for project in projects %}
+                    <tr>
+                        <td style="width: 75px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ project.weight }}</span>
+                        </td>
+                        <td style="width: 500px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ project.name }}</span>
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+                {% endif %}
+            {% if others %}
+            <div class="fields_row route">
+                <p style="text-decoration: underline; padding-bottom: 0px;">Otros:</p>
+            </div>
+            <table style="border-width: 2px; border-style: solid;">
+                <tr>
+                    <td style="width: 75px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Carga Asignada</span></br>
+                    </td>
+                    <td style="width: 500px; text-align: left;">
+                        <span style="font-family:arial;font-size:16px;">Nombre</span></br>
+                    </td>
+
+                </tr>
+
+                {% for other in others %}
+                    <tr>
+                        <td style="width: 175px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ other.weight }}</span>
+                        </td>
+                        <td style="width: 400px; text-align: left;">
+
+                            <span style="font-family:arial;font-size:16px;">{{ other.name }}</span>
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+                {% endif %}
+
+            <h2>Asignación de Carga</h2>
+
+            <p>La asignación de esta carga incluye, según se el caso: la docencia, la investigación, acción social, labores docentes administrativas y la fijación de horario extra-clase. Como parte del proceso de autoevaluación es indispensable su participación en las reuniones convocadas por los coordinadores de nivel y línea formativa.</p>
+
+            <h1>Programa del Curso</h1>
+
+            <p>En seguimiento al Punto N. 6.4, del Acta No. 05-2012 de Asamblea de Escuela, la entrega del programa a los estudiantes se realizará en formato digital, por lo anterior a partir del 19 de diciembre del 2019 y hasta el 11 de febrero del 2020, se habilitará en el Sitio Web de la Escuela, la plataforma para la Confección y Revisión del Programas. Es oportuno señalarles que la revisión del programa se realiza en seguimiento al Reglamento de Régimen Académico Estudiantil en el Capítulo V De la administración de los cursos.</p>
+
+            <p>Como parte del proceso de mejoramiento de la Unidad Académica es recomendable que los profesores que imparten un mismo curso, se reúnan para identificar aspectos comunes respecto a los formatos de evaluación, estrategias pedagógicas, según sea la modalidad del curso, bibliografía y actividades conjuntas. Les solicito al docente que utiliza la Plataforma de Docencia Multiversa señalar en el programa del curso, el grado de virtualidad, siguiendo los parámetros establecidos en el punto 6. La presencialidad en los cursos con algún grado de virtualidad, de la  RESOLUCIÓN VD-R-9374-2016 (http://vd.ucr.ac.cr/documento/vd-r-9374-2016/)</p>
+
+            <p>Los programas de los cursos deben de visibilizar y responder a la visión de la Universidad de Costa Rica en cuanto al vínculo de sus tres quehaceres principales: Docencia, Investigación y Acción Social. En línea con los resultados de la autoevaluación se debe evidencias en los programas de los cursos que impartirá en el I Ciclo de 2020, la incorporación de resultados de los proyectos de Investigación y Acción Social desarrollados dentro de la carrera u otras, que sean pertinentes para las temáticas de dicho curso.</p>
+
+                <h1>Atención de Estudiantes</h1>
+
+            <p>Es un deber de todo docente cumplir con la atención a los estudiantes de acuerdo a lo estipulado por el “Reglamento del Régimen Académico y Servicio Docente” en su artículo No. 53:
+            “a) El profesorado de tiempo completo deberá indicar, según su plan de trabajo y de acuerdo con los lineamientos de la Vicerrectoría de Docencia, un número de horas semanales por la atención de consultas de los alumnos. El horario respectivo, aprobado por la decanatura, o dirección de una unidad académica, sede regional o unidad académicas de investigación, deberá cumplirse con la misma rigurosidad con que debe cumplir el horario de lecciones y deberá exhibirse, durante todo el período lectivo, en la puerta de la oficina del profesor o de la profesora, o en el lugar que la Dirección de la unidad deberá destinar para ese fin.
+            b) El profesorado de tiempo parcial tendrá las mismas obligaciones que el de tiempo completo, proporcionalmente a su jornada, según lo establecido por la Vicerrectoría de Docencia.”</p>
+
+            <p>Además, la Circular de la Vicerrectoría de Docencia No. VD-C-3-2010, indica las horas de atención de alumnos según las siguientes cuotas mínimas:</p>
+
+            <p>Tiempo completo: 	8 horas semanales</p>
+            <p>Tres cuartos de tiempo:  6 horas semanales</p>
+            <p>Medio tiempo:   4 horas semanales</p>
+            <p>Cuarto de tiempo:  2 horas semanales</p>
+            <p>Octavos de tiempo o jornadas menores:  1 hora semanal</p>
+
+            <p>Se requiere un espacio, para la atención de estudiantes, favor realizar la gestión ante la Unidad Académica.</p>
+
+                    <h1>Giras y Actividades Extracurriculares</h1>
+
+            <p>Respecto a las giras les solicito contemplar el Manual de Giras y coordinar con antelación la programación con la finalidad de planificar el apoyo requerido, por ejemplo, transporte, la correspondencia del objetivo de la gira con la unidad respectiva del programa y poder comunicar con el debido tiempo a los demás profesores, esto con el fin de justificar la ausencia de los estudiantes en los otros cursos, para que no se vea afectado el desarrollo del resto de las clases.</p>
+            <p>Informar a la administración de las actividades que se realizarán en el curso a su digno cargo, para la divulgación.</p>
+
+                        <h1>Requerimientos del Proceso de Re acreditación de la Escuela</h1>
+
+            <p>1-Con el propósito de mantener actualizado los datos académicos del personal docente; a partir del 08 de enero del 2019 se habilitará el Sitio Web de la Escuela, una aplicación para la captura del curriculum vitae, misma que deberá ser actualizada cada semestre.</p>
+
+            <p>2-Se incorporó en nuestro compromiso de mejoramiento el objetivo de que los docentes participen en Eventos Académicos, para lo cual les solicitamos envíen su plan de participación para dicho ciclo en este tipo de actividades y  le recordamos que la Universidad de Costa Rica, cuenta con recursos para apoyar la participación de los docentes en eventos académicos, para cual deben de seguir el Reglamento del régimen de beneficios para el mejoramiento académico en el exterior para el personal docente y administrativo en servicio (http://www.cu.ucr.ac.cr/uploads/tx_ucruniversitycouncildatabases/normative/regimen_beneficios_academico.pdf) y gestionar el permiso correspondiente, siguiendo las indicaciones emitidas en el oficio ECP-1625-2017.</p>
+
+            <p>3-Con el fin de mejorar los estándares 32-34 referidos a mejorar la producción científica tenemos el desafío de que cada uno de nosotros publique al menos, un artículo científico al año en revistas indexadas de primer nivel.  Estos productos pueden ser individuales o en colectivo y los mismos pueden ser referidos a resultados de investigación, sistematización de experiencias de Acción Social, material didáctico, obra profesional, entre otros;  les recordamos que la Universidad cuenta con una amplia gama de revistas indexadas así como mecanismo que incentivan la publicación  para la obtención de puntos académicos, tanto para docentes en Régimen como Profesores Interinos,  (http://www.cea.ucr.ac.cr/index.php/departamentos/regimen#documentos).  Igualmente es importante la publicación en revistas indexadas internacionales y en otros idiomas.</p>
+
+            <p>Con toda consideración y estima,</p>
+
+
+
+            <p>M.Sc. Fernando Zeledón Torres</p>
+            <p>Director</p>
+
+            </br>
+
+
+            {% if charge.status != 3 and charge.status != 4 and charge.status != 5%}
+                <form id="form_{{ charge.id }}">
+                    <div id="formAcceptCharge"><label>Aprobar carga:
+                            <input type="button" class="btnSendEmailChargeYes" value="Aprobar carga" rel="{{ charge.id }}">
+                            Rechazar carga:
+                            <input type="button" class="btnSendEmailChargeNo" value="Rechazar carga" rel="{{ charge.id }}"></label>
+
+
+                        Comentarios:<textarea style="height: 80px;" rows="5" id="detailout" name="detailout">{{ charge.detailout }}</textarea></div>
+                </form>
+            {% endif %}
+        </div>
+
+        {% endif %}
+
+    </div>
+{% endblock %}

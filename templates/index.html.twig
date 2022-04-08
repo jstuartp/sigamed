@@ -1,0 +1,153 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador
+{% endblock %}
+
+{% block content %}
+    <div class="container_24">
+        <div class="grid_24">
+            {% if is_granted('ROLE_SUPERADMIN') %}
+                <div class="services first">
+                    <a href="{{ path('_expediente_sysadmin_program_create') }}">
+                        <em>
+                            <img src="{{ asset('assets/images/2page_img4.png') }}" alt="">
+                            <img src="{{ asset('assets/images/2page_img4.png') }}" alt="" class="image-hover">
+                        </em>
+                        <span>Archivo <strong></strong></span>
+                    </a>
+                </div>
+                <div class="services first">
+                    <a href="{{ path('_expediente_sysadmin_program_search') }}">
+                <em>
+                    <img src="{{ asset('assets/images/1page_img2.png') }}" alt="">
+                    <img src="{{ asset('assets/images/1page_img2-hover.png') }}" alt="" class="image-hover">
+                    </em>
+                    <span>Crear Plan <strong></strong></span>
+                    </a>
+                </div>
+                <div class="services">
+                    <a href="#">
+                        <em>
+                            <img src="{{ asset('assets/images/1page_img3.png') }}" alt="">
+                            <img src="{{ asset('assets/images/1page_img3-hover.png') }}" alt="" class="image-hover">
+                        </em>
+                        <span>Revisar Planes <strong></strong></span>
+                    </a>
+                </div>
+                <div class="services">
+                    <a href="#">
+                        <em>
+                            <img src="{{ asset('assets/images/1page_img4.png') }}" alt="">
+                            <img src="{{ asset('assets/images/1page_img4-hover.png') }}" alt="" class="image-hover">
+                        </em>
+                        <span>Reportes <strong></strong></span>
+                    </a>
+                </div>
+                <div class="services last">
+                    <a href="#">
+                        <em>
+                            <img src="{{ asset('assets/images/1page_img5.png') }}" alt="">
+                            <img src="{{ asset('assets/images/1page_img5-hover.png') }}" alt="" class="image-hover">
+                        </em>
+                        <span>Mantenimientos <strong></strong></span>
+                    </a>
+                </div>
+            {% else %}
+                {% if is_granted('ROLE_PROFESOR') %}
+                    <div style="margin: 0 auto; width: 420px;">
+
+                        <div class="services first">
+                            <a href="{{ path('_expediente_sysadmin_programh') }}">
+                                <em>
+                                    <img src="{{ asset('assets/images/2page_img4.png') }}" alt="">
+                                    <img src="{{ asset('assets/images/2page_img4.png') }}" alt="" class="image-hover">
+                                </em>
+                                <span>Archivo de programas<strong></strong></span>
+                            </a>
+                        </div>
+                        <div class="services first">
+                            <a href="{{ path('_expediente_sysadmin_program') }}">
+                                <em>
+                                    <img src="{{ asset('assets/images/1page_img2.png') }}" alt="">
+                                    <img src="{{ asset('assets/images/1page_img2-hover.png') }}" alt="" class="image-hover">
+                                </em>
+                                <span>Crear programa<strong></strong></span>
+                            </a>
+                        </div>
+
+                    </div>
+
+                {% else %}
+                    {% if is_granted('ROLE_COORDINADOR') %}
+                        <div style="margin: 0 auto; width: 420px;">
+
+                            <div class="services first">
+                                <a href="{{ path('_expediente_sysadmin_programh') }}">
+                                    <em>
+                                        <img src="{{ asset('assets/images/2page_img4.png') }}" alt="">
+                                        <img src="{{ asset('assets/images/2page_img4.png') }}" alt="" class="image-hover">
+                                    </em>
+                                    <span>Archivo de programas<strong></strong></span>
+                                </a>
+                            </div>
+                            <div class="services first">
+                                <a href="{{ path('_expediente_sysadmin_program') }}">
+                                    <em>
+                                        <img src="{{ asset('assets/images/1page_img2.png') }}" alt="">
+                                        <img src="{{ asset('assets/images/1page_img2-hover.png') }}" alt="" class="image-hover">
+                                    </em>
+                                    <span>Crear programa<strong></strong></span>
+                                </a>
+                            </div>
+                        </div>
+
+
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <br/>
+
+
+        <br/>
+        <div class="grid_24 padline">
+            <div class="lineH">
+
+
+
+            </div>
+
+            <div>
+                <p>ANUNCIOS</p>
+                <p><label style="color: #9c3328"></label></p>
+            </div>
+        </div>
+
+
+        <div class="grid_24 padline">
+            <div class="lineH"></div>
+        </div>
+
+
+        <div class="large-12 columns">
+                <div class="grid_8" style="text-align: center;">
+                    <h2>ECP</h2>
+                    <a class="th" href="https://ecp.ucr.ac.cr/" target="_blank"><img src="{{ asset('assets/images/ecp.png') }}" data-caption="" width="175px" height="50px"></a>
+                    <p class="pad">Pagina Ciencias Politicas.</p>
+                    <a href="http://ecp.fcs.ucr.ac.cr/" target="_blank" class="button tiny">Ir al Sitio</a>
+                </div>
+                <div class="grid_8"  style="text-align: center;">
+                    <h2>UCR</h2>
+                    <a class="th" href="http://www.ucr.ac.cr/" target="_blank"><img src="{{ asset('assets/images/ucr.gif') }}" data-caption="" width="175px" height="50px"></a>
+                    <p class="pad">Pagina Universidad de Costa Rica.</p>
+                    <a href="http://www.ucr.ac.cr/" target="_blank" class="button tiny">Ir al Sitio</a>
+                </div>
+            </div>
+
+
+    </div>
+{% endblock %}

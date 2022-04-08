@@ -1,0 +1,343 @@
+{% extends 'layouts/logged_layout.html.twig' %}
+
+{% block htmlTitle %}
+    Tecnotek :: Expediente :: Super Administrador :: Curso
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?c=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript">
+    Tecnotek.module = "courseList";
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+    Tecnotek.UI.urls["show"] = "{{ path('_expediente_sysadmin_course_show_simple')}}";
+    Tecnotek.UI.urls["edit"] = "{{ path('_expediente_sysadmin_course_edit_simple')}}";
+
+    Tecnotek.UI.urls["searchCourses"] = "{{ path('_expediente_sysadmin_course_search')}}";
+
+
+    Tecnotek.UI.urls["createCourseURL"] = "{{ path("_expediente_sysadmin_create_course") }}";
+    Tecnotek.UI.urls["updateCourseURL"] = "{{ path("_expediente_sysadmin_update_course") }}";
+
+    Tecnotek.UI.urls["getInfoCourseFullURL"] = "{{ path("_expediente_sysadmin_get_info_course_full") }}";
+    Tecnotek.UI.urls["getInfoCourseURL"] = "{{ path("_expediente_sysadmin_get_info_course_detail") }}";
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="grid">
+        <div class="titleRow">
+            <div class="left"><h3>{% trans %}label.course.listar{% endtrans %}</h3></div>
+            <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_course_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
+            <div class="right"><a id="openCourseForm" class="modalbox button success-darker tiny" href="#courseFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+            <div class="clear"></div>
+        </div>
+
+
+    </div>
+    <div class="clear"></div>
+    <!-- TABLA DE STUART CON DATATABLES-->
+    <div class="bs-example" data-example-id="contextual-table">
+        <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+            <thead>
+            <tr>
+                <th  hidden>id</th>
+                <th>Nombre Curso</th>
+                <th>Sigla</th>
+                <th>Tipo</th>
+                <th> </th>
+                <th> </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for arregloDato in courses %}
+                <tr class="info">
+                    <td hidden>{{ arregloDato.id }}</td>
+                    <td>{{ arregloDato.name }}</td>
+                    <td>{{ arregloDato.code }}</td>
+                    <td>{% if arregloDato.type == 1 %}  Creado {% endif %}
+                        {% if arregloDato.type == 2 %} Modificado {% endif %}
+                        {% if arregloDato.type == 3 %} Modificado en espera de Revisión {% endif %}
+                        {% if arregloDato.type == 4 %} Revisado correcciones pendientes {% endif %}
+                        {% if arregloDato.type == 5 %} Revisado y Aprobado {% endif %}
+                        {% if arregloDato.type == 6 %} Finalizado {% endif %}
+
+                    </td>
+                    <!-- Columna para poner los botones en la tabla -->
+                    <td class="nowrap">
+                        {% if role != 4 %}
+                                <div class="icon editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar"></i></div>
+                        {% endif %}
+                    </td>
+                    <td class="nowrap">
+                        {% if role != 4 %}
+                            <div class="icon viewButton" rel="{{ arregloDato.id }}"><i class="fas fa-eye" title="Ver"></i></div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- FIN DE TABLA DE STUART -->
+
+
+    <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="COURSE_ID" style="display: none;">
+        <div class="option_width" style="float: left; width: 100px; margin-left: -6px;">COURSE_CODE</div>
+        <div class="option_width" style="float: left; width: 450px; margin-left: -6px;">COURSE_NAME</div>
+        <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">COURSE_TYPE</div>
+
+        <!--<div class="right imageButton pdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>
+        <div class="right imageButton nopdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>-->
+
+        <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="COURSE_ID"></div>
+        <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="COURSE_ID"></div>
+        <div class="clear"></div>
+    </div>
+
+
+        <br/>
+
+    <div style="display: none;">
+        <a id="openCourseView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+        <a id="openCourseEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#courseFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
+    </div>
+    <!-- hidden showContactInfoLink form -->
+    <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
+
+        <h3>Informaci&oacute;n del curso</h3>
+        <div id="courseContainerView" name="courseContainerView" class="contactInfo">
+
+        </div>
+    </div>
+
+
+
+    <!-- hidden teacherAssignedFormContainer form -->
+    <div id="courseFormContainer" style="display: none;">
+        <h3 style="margin-bottom: 0px;">Agregar Curso</h3>
+
+        <form class="customForm" id="courseForm" name="courseForm">
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                <input type="text" id="nameCourse" name="nameCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
+                <input type="text" id="codeCourse" name="codeCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
+                <select id="typeCourse" name="typeCourse" style="width: 120px;">
+                    <option value="1">Normal</option>
+                    <option value="2">Verano</option>
+                    <option value="3">Tutoria</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.requisit{% endtrans %}</label>
+                <input type="text" id="requisitCourse" name="requisitCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.corequisite{% endtrans %}</label>
+                <input type="text" id="corequisiteCourse" name="corequisiteCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.credit{% endtrans %}</label>
+                <input type="text" id="creditCourse" name="creditCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.area{% endtrans %}</label>
+                <input type="text" id="areaCourse" name="areaCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.schedule{% endtrans %}</label>
+                <input type="text" id="scheduleCourse" name="scheduleCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.groupnumber{% endtrans %}</label>
+                <input type="text" id="groupnumberCourse" name="groupnumberCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.classroom{% endtrans %}</label>
+                <input type="text" id="classroomCourse" name="classroomCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.room{% endtrans %}</label>
+                <input type="text" id="roomCourse" name="roomCourse" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.section{% endtrans %}</label>
+                <select id="sectionCourse" name="sectionCourse" style="width: 120px;">
+                    <option value="1">Repertorios</option>
+                    <option value="2">Cursos de servicio</option>
+                    <option value="3">Primer Año</option>
+                    <option value="4">Segundo Año</option>
+                    <option value="5">Tercer Año</option>
+                    <option value="6">Cursos Optativos Tercer Año</option>
+                    <option value="7">Cuarto Año</option>
+                    <option value="8">Quinto Año</option>
+                    <option value="9">Trabajos Finales</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.teacher{% endtrans %}</label>
+                <select id="teacherCourseAdd" name="teacherCourseAdd" style="width: 120px;">
+                    <option value="0"></option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.status{% endtrans %}</label>
+                <select id="statusCourse" name="statusCourse" style="width: 120px;">
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>
+                </select>
+            </div>
+
+
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="courseCancel" id="courseCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
+            <div class="clear"></div>
+        </form>
+    </div>
+
+    <!-- hidden teacherAssignedFormContainer form -->
+    <div id="courseFormContainerEdit" style="display: none;">
+        <h3 style="margin-bottom: 0px;">Editar Curso</h3>
+
+        <form class="customForm" id="courseFormEdit" name="courseFormEdit">
+
+            <div style="margin-bottom: 5px; display: none;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
+                <input type="text" id="idCourseEdit" name="idCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
+                <input type="text" id="nameCourseEdit" name="nameCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
+                <input type="text" id="codeCourseEdit" name="codeCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
+                <select id="typeCourseEdit" name="typeCourseEdit" style="width: 120px;">
+                    <option value="1">Normal</option>
+                    <option value="2">Verano</option>
+                    <option value="3">Tutoria</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.requisit{% endtrans %}</label>
+                <input type="text" id="requisitCourseEdit" name="requisitCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.corequisite{% endtrans %}</label>
+                <input type="text" id="corequisiteCourseEdit" name="corequisiteCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.credit{% endtrans %}</label>
+                <input type="text" id="creditCourseEdit" name="creditCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.area{% endtrans %}</label>
+                <input type="text" id="areaCourseEdit" name="areaCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.schedule{% endtrans %}</label>
+                <input type="text" id="scheduleCourseEdit" name="scheduleCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.groupnumber{% endtrans %}</label>
+                <input type="text" id="groupnumberCourseEdit" name="groupnumberCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.classroom{% endtrans %}</label>
+                <input type="text" id="classroomCourseEdit" name="classroomCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.room{% endtrans %}</label>
+                <input type="text" id="roomCourseEdit" name="roomCourseEdit" style="width: 250px">
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.section{% endtrans %}</label>
+                <select id="sectionCourseEdit" name="sectionCourseEdit" style="width: 120px;">
+                    <option value="1">Repertorios</option>
+                    <option value="2">Cursos de servicio</option>
+                    <option value="3">Primer Año</option>
+                    <option value="4">Segundo Año</option>
+                    <option value="5">Tercer Año</option>
+                    <option value="6">Cursos Optativos Tercer Año</option>
+                    <option value="7">Cuarto Año</option>
+                    <option value="8">Quinto Año</option>
+                    <option value="9">Trabajos Finales</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.teacher{% endtrans %}</label>
+                <select id="teacherCourse" name="teacherCourse" style="width: 120px;">
+                    <option value="0"></option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.firstname ~ " " ~ teacher.lastname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <label style="display: inline-block; width: 165px">{% trans %}label.status{% endtrans %}</label>
+                <select id="statusCourseEdit" name="statusCourseEdit" style="width: 120px;">
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>
+                </select>
+            </div>
+
+
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="courseCancel" id="courseCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+            <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
+            <div class="clear"></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
