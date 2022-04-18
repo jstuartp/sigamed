@@ -16,8 +16,8 @@ Tecnotek :: Expediente :: Super Administrador :: Usuarios
 {% endblock %}
 
 {% block content %}
-<div class="container_24" style="width: 800px;">
-    <div class="grid_24" style="width: 100%;">
+<div class="container" style="width: 800px;">
+    <div class="grid" style="width: 100%;">
         <div class="panelRow" id="doc-forms">
             <div class="large-12 columns">
 
@@ -30,24 +30,24 @@ Tecnotek :: Expediente :: Super Administrador :: Usuarios
 
                 <div id="showContainer">
                     <div>
-                        <label>{%trans%}label.firstname{%endtrans%}</label>
+                        <label><strong>{%trans%}label.firstname{%endtrans%}:  </strong></label>
                         <span id="labelFirstname">{{ entity.firstname }}</span>
                     </div>
                     <div>
-                        <label>{%trans%}label.lastname{%endtrans%}</label>
+                        <label><strong>{%trans%}label.lastname{%endtrans%}:  </strong></label>
                         <span id="labelLastname">{{ entity.lastname }}</span>
                         <div class="clear"></div>
                     </div>
                     <div>
-                        <label>{%trans%}label.username{%endtrans%}</label>
+                        <label><strong>{%trans%}label.username{%endtrans%}:  </strong></label>
                         <span id="labelUsername">{{ entity.username }}</span>
                     </div>
                     <div>
-                        <label>{%trans%}label.email{%endtrans%}</label>
+                        <label><strong>{%trans%}label.email{%endtrans%}:  </strong></label>
                         <span id="labelEmail">{{ entity.email }}</span>
                     </div>
                     <div>
-                        <label>{%trans%}label.status{%endtrans%}</label>
+                        <label><strong>{%trans%}label.status{%endtrans%}:  </strong></label>
                         <span id="labelActive">{% if entity.active %}{% trans %}usuarios.estado.1{% endtrans %}{% else %} {% trans %}usuarios.estado.2{% endtrans %} {% endif %}</span>
                     </div>
                     <div id="buttonsContainer" style="margin-top: 25px;">

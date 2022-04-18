@@ -3331,4 +3331,29 @@ Tecnotek.Tickets = {
             }, true
         );
     }// End of loadStudentRelatives
+
+
+
 };
+
+table = $('#example2Colum').DataTable({
+    language: {
+        processing: "En curso...",
+        search: "Buscar:",
+        paginate: {
+            first:      "Primero",
+            previous:   "Anterior",
+            next:       "Siguiente",
+            last:       "Último"
+        },
+    },
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+
+
+})

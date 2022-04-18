@@ -469,7 +469,8 @@
   <!-- Datatables buttons para manejar los botones de impresion dentro de las tablas -->
 
   <!--tablas personalisadas -->
-  <script src="{{ asset('assets/js/mytable.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/mytable.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js') }}"></script>
 {% endblock %}
 {% if is_granted('ROLE_PROFESOR') %}
   <script type="text/javascript" src="{{ asset('assets/js/teacher_application.js?v=2') }}"></script>

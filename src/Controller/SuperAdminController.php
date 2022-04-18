@@ -60,7 +60,9 @@ class SuperAdminController extends AbstractController
         return $this->render('index.html.twig', array('name' => $name));
     }
 
-
+    /**
+     * @Route("/changePassword", name="_change_admin_password")
+     */
     public function changeUserPasswordAction(){
         $logger = $this->get('logger');
 
@@ -876,18 +878,41 @@ class SuperAdminController extends AbstractController
             'form'   => $form->createView()));
     }
 
-    public function profesorSaveAction(){
+
+    /**
+     * @Route("/profesor/show/{id}", name="_expediente_sysadmin_profesor_show")
+     */
+    public function profesorShowIdAction($id, EntityManagerInterface $em)
+    {
+       // $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository("App:User")->find($id);
+        //$form   = $this->createForm(new \Tecnotek\ExpedienteBundle\Form\UserFormType(), $entity);
+        $form = $this->createForm(UserFormType::class, $entity, array(
+            'action' => $this->generateUrl('_expediente_sysadmin_profesor_show_simple'),
+            'method' => 'PUT',
+        ));
+        return $this->render('SuperAdmin/Profesor/show.html.twig', array('entity' => $entity,
+            'form'   => $form->createView()));
+    }
+
+
+    /**
+     * @Route("/profesor/save", name="_expediente_sysadmin_profesor_save")
+     */
+    public function profesorSaveAction(Request $request, EntityManagerInterface $em){
         $entity  = new User();
-        $request = $this->getRequest();
+        //$request = $this->getRequest();
+
         //$form    = $this->createForm(new \Tecnotek\ExpedienteBundle\Form\UserFormType(), $entity);
         $form = $this->createForm(UserFormType::class, $entity, array(
             'action' => $this->generateUrl('_expediente_sysadmin_profesor_save'),
             'method' => 'PUT',
         ));
-        $form->bindRequest($request);
+        //$form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+           // $em = $this->getDoctrine()->getEntityManager();
             $role = $em->getRepository('App:Role')->
             findOneBy(array('role' => 'ROLE_PROFESOR'));
             $entity->getUserRoles()->add($role);
@@ -902,9 +927,11 @@ class SuperAdminController extends AbstractController
             ));
         }
     }
-
-    public function profesorDeleteAction($id){
-        $em = $this->getDoctrine()->getEntityManager();
+    /**
+     * @Route("/profesor/delete/{id}", name="_delete_profesor")
+     */
+    public function profesorDeleteAction(EntityManagerInterface $em, $id){
+        //$em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository("TecnotekExpedienteBundle:User")->find( $id );
         if ( isset($entity) ) {
             $em->remove($entity);
@@ -913,8 +940,11 @@ class SuperAdminController extends AbstractController
         return $this->redirect($this->generateUrl('_expediente_sysadmin_profesor'));
     }
 
-    public function profesorUpdateAction(){
-        $em = $this->getDoctrine()->getEntityManager();
+    /**
+     * @Route("/profesor/update", name="_expediente_sysadmin_profesor_update")
+     */
+    public function profesorUpdateAction(EntityManagerInterface $em){
+        //$em = $this->getDoctrine()->getEntityManager();
         //$request = $this->get('request')->request;
         $request = $this->get('request_stack')->getCurrentRequest();
         $entity = $em->getRepository("App:User")->find( $request->get('userId'));
