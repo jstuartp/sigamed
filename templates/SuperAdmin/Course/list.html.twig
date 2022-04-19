@@ -12,8 +12,13 @@
 {% endblock %}
 
 {% block extrajs %}
+<<<<<<< HEAD
     <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?c=1') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+=======
+    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?c=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+>>>>>>> 3fd6df9 (Archivos no indexados)
     <script type="text/javascript">
     Tecnotek.module = "courseList";
     Tecnotek.assetsURL = "{{ path('homepage')}}";
@@ -34,8 +39,13 @@
 {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="container">
     <div class="grid">
+=======
+<div class="container_24">
+    <div class="grid_24">
+>>>>>>> 3fd6df9 (Archivos no indexados)
         <div class="titleRow">
             <div class="left"><h3>{% trans %}label.course.listar{% endtrans %}</h3></div>
             <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_course_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
@@ -43,6 +53,7 @@
             <div class="clear"></div>
         </div>
 
+<<<<<<< HEAD
 
     </div>
     <div class="clear"></div>
@@ -91,6 +102,41 @@
         </table>
     </div>
     <!-- FIN DE TABLA DE STUART -->
+=======
+        <div class="table">
+            <div class="row tableHeader">
+                <div class="option_width sort_header" style="float: left; width: 100px; margin-left: -6px;"
+                     field-name="code" order="asc">
+                    <span class="header-title asc" title="Code">{% trans %}label.code{% endtrans %}</span>
+                </div>
+                <div class="option_width sort_header" style="float: left; width: 450px; margin-left: -6px;"
+                     field-name="name" order="asc">
+                    <span class="header-title sortable" title="Name">{% trans %}label.name{% endtrans %}</span>
+                </div>
+                <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
+                     field-name="type" order="asc">
+                    <span class="header-title sortable" title="Type">{% trans %}label.type{% endtrans %}</span>
+                </div>
+                <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
+                <div class="right" style="width: 5px; height: 26px"></div>
+                <div class="option_width right">
+                    <input id="searchText" name="searchText" value="{{ text }}">
+                </div>
+            </div>
+
+            <div id="students-container">
+            </div>
+
+            <div id="exstudents-container">
+            </div>
+        </div>
+
+        <div style="margin-bottom:75px;" id="pagination-container">
+        </div>
+
+    </div>
+    <div class="clear"></div>
+>>>>>>> 3fd6df9 (Archivos no indexados)
 
 
     <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="COURSE_ID" style="display: none;">
