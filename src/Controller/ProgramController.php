@@ -581,7 +581,6 @@ class ProgramController extends AbstractController
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
             $programId = $request->get('programId');
-            $programId = 1100;
 
             //$em = $this->getDoctrine()->getEntityManager();
 
@@ -947,54 +946,57 @@ class ProgramController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/student/programSendPdfCheck", name="_expediente_sysadmin_send_pdfcheck_program_data")
+     */
     public function sendCheckPdfProgramFormAction(\Swift_Mailer $mailer){
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
-            $translator = $this->get("translator");
-            try {
-                //$request = $this->get('request')->request;
-                $request = $this->get('request_stack')->getCurrentRequest();
-                $programId = $request->get('programId');
-                $userId = $request->get('userId');
+        $translator = $this->get("translator");
+        try {
+            //$request = $this->get('request')->request;
+            $request = $this->get('request_stack')->getCurrentRequest();
+            $programId = $request->get('programId');
+            $userId = $request->get('userId');
 
-                $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getEntityManager();
 
-                if( isset($programId) ){
-                    $program = $em->getRepository("App:Programs")->find($programId);
-                    $user = $em->getRepository("App:User")->find($userId);
+            if( isset($programId) ){
+                $program = $em->getRepository("App:Programs")->find($programId);
+                $user = $em->getRepository("App:User")->find($userId);
 
-                    $program->setStatus(5);
-                    $em->persist($program);
-                    $em->flush();
+                $program->setStatus(5);
+                $em->persist($program);
+                $em->flush();
 
-                    $detail = $program->getDetail();
-                    $teacher = $program->getTeacher();
+                $detail = $program->getDetail();
+                $teacher = $program->getTeacher();
 
-                    $teacherEmail = $teacher->getEmail();
+                $teacherEmail = $teacher->getEmail();
 
-                    /// enviar por correo
-                    $message = (new \Swift_Message('Programa completado'))
-                        ->setSubject('Programa completado')
-                        ->setFrom('ciencias.politicas@ucr.ac.cr')
-                        ->setTo(['sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr', 'ciencias.politicas@ucr.ac.cr', $teacherEmail])  ///$teacher->getEmail()
-                        ->setBody(
-                            'El coordinador '.$user->getFirstname(). ' '. $user->getLastname() .'  ha concluido la revisión de su programa de '. $detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr para descargar el archivo'
-                        );
+                /// enviar por correo
+                $message = (new \Swift_Message('Programa completado'))
+                    ->setSubject('Programa completado')
+                    ->setFrom('ciencias.politicas@ucr.ac.cr')
+                    ->setTo(['sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr', 'ciencias.politicas@ucr.ac.cr', $teacherEmail])  ///$teacher->getEmail()
+                    ->setBody(
+                        'El coordinador '.$user->getFirstname(). ' '. $user->getLastname() .'  ha concluido la revisión de su programa de '. $detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr para descargar el archivo'
+                    );
 
-                    $mailer->send($message);
+                $mailer->send($message);
 
-                    return new Response(json_encode(array('error' => false)));
+                return new Response(json_encode(array('error' => false)));
 
-                } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
-                }
+            } else {
+                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
             }
-            catch (Exception $e) {
-                $info = toString($e);
-                $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
-                return new Response(json_encode(array('error' => true, 'message' => $info)));
-            }
+        }
+        catch (Exception $e) {
+            $info = toString($e);
+            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $info)));
+        }
         /*}// endif this is an ajax request
         else
         {
@@ -1002,6 +1004,10 @@ class ProgramController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/student/programSendPdfCreateCheck", name="_expediente_sysadmin_send_pdfcreatecheck_program_data")
+     * @Method({"GET", "POST"})
+     */
     public function sendCheckPdfCreateProgramFormAction(){
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?

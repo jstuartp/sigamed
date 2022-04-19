@@ -28,6 +28,8 @@ use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 /*use Tecnotek\App\Entity\Route;
 use Tecnotek\App\Entity\Buseta;
@@ -39,18 +41,21 @@ use Tecnotek\App\Entity\SubCourseEntry;
 use Tecnotek\App\Entity\AssignedTeacher;
 */
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 //use Symfony\Component\DateTime;
 //use Symfony\Component\Validator\Constraints\DateTime;
 
 use App\Entity\Post;
 use App\Form\PostType;
-use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class SuperAdminController extends AbstractController
 {
@@ -1358,8 +1363,11 @@ class SuperAdminController extends AbstractController
         }
     }
 
-    public function periodDeleteAction($id){
-        $em = $this->getDoctrine()->getEntityManager();
+    /**
+     * @Route("/period/delete/{id}", name="_delete_period")
+     */
+    public function periodDeleteAction($id, EntityManagerInterface $em){
+        //$em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository("App:Period")->find( $id );
         if ( isset($entity) ) {
             $em->remove($entity);
@@ -1395,9 +1403,9 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/period/admin/{id}", name="_expediente_sysadmin_period_admin")
      */
-    public function adminPeriodAction($id)
+    public function adminPeriodAction($id, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        //$em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository("App:Period")->find($id);
         $grades = $em->getRepository("App:Grade")->findAll();
         $institutions = $em->getRepository("App:Institution")->findAll();
@@ -1411,8 +1419,12 @@ class SuperAdminController extends AbstractController
             'menuIndex' => 5));
     }
 
-    public function loadPeriodInfoAction(){
-        $logger = $this->get('logger');
+    /**
+     * @Route("/period/load", name="_expediente_sysadmin_load_period_info")
+     * @Method({"GET", "POST"})
+     */
+    public function loadPeriodInfoAction(Request $request, EntityManagerInterface $em, LoggerInterface $logger){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
        // {
             try {
@@ -1421,10 +1433,10 @@ class SuperAdminController extends AbstractController
                 $periodId = $request->get('periodId');
                 $gradeId = $request->get('gradeId');
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($gradeId) && isset($periodId)) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
                     //Get Groups
                     $sql = "SELECT g.id, g.name, g.user_id as 'teacherId', CONCAT(u.firstname,' ',u.lastname) as 'teacherName', institution.name as 'institutionName', institution.id as 'institutionId'"
                         . " FROM tek_groups g"
@@ -1447,7 +1459,7 @@ class SuperAdminController extends AbstractController
 
                     return new Response(json_encode(array('error' => false, 'groups' => $groups, 'courses' => $courses)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
@@ -1462,7 +1474,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
-
+    /**
+     * @Route("/period/teachers/load", name="_expediente_sysadmin_load_courses_groups_by_teacher")
+     */
     public function loadCoursesByTeacherAction(){ //2016 - 4
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1534,6 +1548,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/coursesassigned/load/", name="_expediente_sysadmin_load_courses_assigned_by_teacher")
+     */
     public function loadCoursesAssignedByTeacherAction(){ //2016 - 4
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1607,6 +1624,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/loadCoursesByGrade", name="_expediente_sysadmin_load_courses_by_grade")
+     */
     public function loadAvailableCoursesAction(){
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1646,6 +1666,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/associateCourse", name="_expediente_sysadmin_associate_course")
+     */
     public function associateCourseAction(){
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1710,6 +1733,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/couseAssociationRemove", name="_expediente_sysadmin_course_association_remove")
+     */
     public function courseAssociationRemoveAction(){
 
         $logger = $this->get('logger');
@@ -1745,6 +1771,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/teachersCourses/load/", name="_expediente_sysadmin_load_course_class_by_group")
+     */
     public function loadAvailableCourseClassAction(){   //2016 -4
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1788,6 +1817,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/period/teachers/create/", name="_expediente_sysadmin_create_teacher_assigned")
+     */
     public function createTeacherAssignedAction(){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1834,6 +1866,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/courses/createassigned/", name="_expediente_sysadmin_create_course_assigned")
+     */
     public function createCourseAssignedAction(){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -1878,6 +1913,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/teachers/remove", name="_expediente_sysadmin_teacher_assigned_remove")
+     */
     public function removeTeacherAssignedAction(){    /// 2016 - 4
 
         $logger = $this->get('logger');
@@ -1913,6 +1951,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/courses/removeassigned/", name="_expediente_sysadmin_course_assigned_remove")
+     */
     public function removeCourseAssignedAction(){    /// 2016 - 4
 
         $logger = $this->get('logger');
@@ -2243,6 +2284,9 @@ class SuperAdminController extends AbstractController
         ));
     }
 
+    /**
+     * @Route("/commissions/removeassigned/", name="_expediente_sysadmin_commission_assigned_remove")
+     */
     public function removeCommissionAssignedAction(){    /// 2016 - 4
 
         $logger = $this->get('logger');
@@ -2278,6 +2322,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/commissions/commissionassigned/", name="_expediente_sysadmin_create_commission_assigned")
+     */
     public function createCommissionAssignedAction(){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2325,6 +2372,9 @@ class SuperAdminController extends AbstractController
     }
 
 
+    /**
+     * @Route("/period/commissionsassigned/load/", name="_expediente_sysadmin_load_commissions_assigned_by_teacher")
+     */
     public function loadCommissionsAssignedByTeacherAction(){ //2016 - 4
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2405,7 +2455,9 @@ class SuperAdminController extends AbstractController
     }
 
 
-
+    /**
+     * @Route("/projects/removeassigned/", name="_expediente_sysadmin_project_assigned_remove")
+     */
     public function removeProjectAssignedAction(){    /// 2016 - 4
 
         $logger = $this->get('logger');
@@ -2441,6 +2493,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/projects/projectassigned/", name="_expediente_sysadmin_create_project_assigned")
+     */
     public function createProjectAssignedAction(){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2486,6 +2541,9 @@ class SuperAdminController extends AbstractController
     }
 
 
+    /**
+     * @Route("/period/projectsassigned/load/", name="_expediente_sysadmin_load_projects_assigned_by_teacher")
+     */
     public function loadProjectsAssignedByTeacherAction(){ //2016 - 4
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2559,6 +2617,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/others/removeassigned/", name="_expediente_sysadmin_other_assigned_remove")
+     */
     public function removeOtherAssignedAction(){    /// 2016 - 4
 
         $logger = $this->get('logger');
@@ -2594,6 +2655,9 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+    /**
+     * @Route("/others/otherassigned/", name="_expediente_sysadmin_create_other_assigned")
+     */
     public function createOtherAssignedAction(){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2641,6 +2705,9 @@ class SuperAdminController extends AbstractController
     }
 
 
+    /**
+     * @Route("/period/othersassigned/load/", name="_expediente_sysadmin_load_others_assigned_by_teacher")
+     */
     public function loadOthersAssignedByTeacherAction(){ //2016 - 4
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
