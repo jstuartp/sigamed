@@ -7,24 +7,288 @@
 {% block extracss %}
     <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <style type="text/css">
+        @media all {
+            .questionnaireQuestion label{float: left; width: 350px; }
+            .questionnaireQuestion textarea { height: 80px; }
+            .questionnaireQuestion .short {max-width: 50px;}
+            .questionnaireQuestion span {margin-left: 10px; margin-right: 10px; font-family: Georgia, serif;
+                color: #646464; font-size: 1.2em;}
+            .questionnaireQuestion .questions-group { border: solid 1px; background-color: #9FEC9F; padding: 10px;
+                margin-bottom: 15px;}
+            .questionnaireQuestion .along-input { width: 415px; }
+            .form-title {display: none;}
+        }
+
+        @media only screen {
+
+            .btnSubmitForm, .btnPrintForm { margin: 10px; float: right;}
+            .form-title {display: none;}
+            .hiddenOnScreen {display: none;}
+        }
+
+        @media print {
+            .questionnaire-textarea {display: none; visibility: false;}
+            .hiddenOnScreen {display: block;}
+        }
+
+
+
+        .form-type-9{width: 100%; color: #000;}
+        .form-type-9 th{text-align: center; vertical-align: middle;}
+        .form-type-9 th:first-child{text-align: left;}
+        .form-type-9 tr{text-align: center; vertical-align: middle; line-height: 30px; height:30px;}
+        .form-type-9 tr td{color: #000;}
+        .form-type-9 tr td:first-child{text-align: left; padding-left: 5px;}
+
+        .section-container, .section-container.auto {
+            width: 100%;
+            display: block;
+            margin-bottom: 1.25em;
+            border: 2px solid #ecf0f1;
+            border-top: none;
+        }
+        .section-container section,
+        .section-container .section, .section-container.auto section,
+        .section-container.auto .section {
+            border-top: 2px solid #ecf0f1;
+            position: relative;
+        }
+        .section-container section .title,
+        .section-container .section .title, .section-container.auto section .title,
+        .section-container.auto .section .title {
+            top: 0;
+            cursor: pointer;
+            width: 100%;
+            margin: 0;
+            background-color: #efefef;
+        }
+        .section-container section .title a,
+        .section-container .section .title a, .section-container.auto section .title a,
+        .section-container.auto .section .title a {
+            padding: 0.9375em;
+            display: inline-block;
+            color: #333333;
+            font-size: 0.875em;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .section-container section .title:hover,
+        .section-container .section .title:hover, .section-container.auto section .title:hover,
+        .section-container.auto .section .title:hover {
+            background-color: #e2e2e2;
+        }
+        .section-container section .content,
+        .section-container .section .content, .section-container.auto section .content,
+        .section-container.auto .section .content {
+            display: none;
+            padding: 0.9375em;
+            background-color: white;
+        }
+        .section-container section .content > *:last-child,
+        .section-container .section .content > *:last-child, .section-container.auto section .content > *:last-child,
+        .section-container.auto .section .content > *:last-child {
+            margin-bottom: 0;
+        }
+        .section-container section .content > *:first-child,
+        .section-container .section .content > *:first-child, .section-container.auto section .content > *:first-child,
+        .section-container.auto .section .content > *:first-child {
+            padding-top: 0;
+        }
+        .section-container section .content > *:last-child,
+        .section-container .section .content > *:last-child, .section-container.auto section .content > *:last-child,
+        .section-container.auto .section .content > *:last-child {
+            padding-bottom: 0;
+        }
+        .section-container section.active .content,
+        .section-container .section.active .content, .section-container.auto section.active .content,
+        .section-container.auto .section.active .content {
+            display: block;
+        }
+        .section-container section.active .title,
+        .section-container .section.active .title, .section-container.auto section.active .title,
+        .section-container.auto .section.active .title {
+            background: #d5d5d5;
+        }
+
+        .section-container.tabs {
+            border: 0;
+            position: relative;
+        }
+        .section-container.tabs section,
+        .section-container.tabs .section {
+            padding-top: 0;
+            border: 0;
+            position: static;
+        }
+        .section-container.tabs section .title,
+        .section-container.tabs .section .title {
+            width: auto;
+            border: 2px solid #ecf0f1;
+            border-right: 0;
+            border-bottom: 0;
+            position: absolute;
+            z-index: 1;
+        }
+        .section-container.tabs section .title a,
+        .section-container.tabs .section .title a {
+            width: 100%;
+        }
+        .section-container.tabs section:last-child .title,
+        .section-container.tabs .section:last-child .title {
+            border-right: 2px solid #ecf0f1;
+        }
+        .section-container.tabs section .content,
+        .section-container.tabs .section .content {
+            border: 2px solid #ecf0f1;
+            position: absolute;
+            z-index: 10;
+            top: -1px;
+        }
+        .section-container.tabs section.active .title,
+        .section-container.tabs .section.active .title {
+            background-color: white;
+            z-index: 11;
+            border-bottom: 0;
+        }
+        .section-container.tabs section.active .content,
+        .section-container.tabs .section.active .content {
+            position: relative;
+        }
+
+        @media only screen and (min-width: 48em) {
+            .section-container.auto {
+                border: 0;
+                position: relative;
+            }
+            .section-container.auto section,
+            .section-container.auto .section {
+                padding-top: 0;
+                border: 0;
+                position: static;
+            }
+            .section-container.auto section .title,
+            .section-container.auto .section .title {
+                width: auto;
+                border: 2px solid #ecf0f1;
+                border-right: 0;
+                border-bottom: 0;
+                position: absolute;
+                z-index: 1;
+            }
+            .section-container.auto section .title a,
+            .section-container.auto .section .title a {
+                width: 100%;
+            }
+            .section-container.auto section:last-child .title,
+            .section-container.auto .section:last-child .title {
+                border-right: 2px solid #ecf0f1;
+            }
+            .section-container.auto section .content,
+            .section-container.auto .section .content {
+                border: 2px solid #ecf0f1;
+                position: absolute;
+                z-index: 10;
+                top: -1px;
+            }
+            .section-container.auto section.active .title,
+            .section-container.auto .section.active .title {
+                background-color: white;
+                z-index: 11;
+                border-bottom: 0;
+            }
+            .section-container.auto section.active .content,
+            .section-container.auto .section.active .content {
+                position: relative;
+            }
+
+            .section-container.accordion .section {
+                padding-top: 0 !important;
+            }
+
+            .section-container.vertical-nav {
+                border: 2px solid #ecf0f1;
+                border-top: none;
+            }
+            .section-container.vertical-nav section,
+            .section-container.vertical-nav .section {
+                padding-top: 0 !important;
+            }
+            .section-container.vertical-nav section .title a,
+            .section-container.vertical-nav .section .title a {
+                display: block;
+                width: 100%;
+            }
+            .section-container.vertical-nav section .content,
+            .section-container.vertical-nav .section .content {
+                display: none;
+            }
+            .section-container.vertical-nav section.active .content,
+            .section-container.vertical-nav .section.active .content {
+                display: block;
+                position: absolute;
+                left: 100%;
+                top: -1px;
+                z-index: 999;
+                min-width: 12.5em;
+                border: 2px solid #ecf0f1;
+            }
+
+            .section-container.horizontal-nav {
+                position: relative;
+                background: #efefef;
+                border: 2px solid #ecf0f1;
+            }
+            .section-container.horizontal-nav section,
+            .section-container.horizontal-nav .section {
+                padding-top: 0;
+                border: 0;
+                position: static;
+            }
+            .section-container.horizontal-nav section .title,
+            .section-container.horizontal-nav .section .title {
+                width: auto;
+                border: 2px solid #ecf0f1;
+                border-left: 0;
+                top: -1px;
+                position: absolute;
+                z-index: 1;
+            }
+            .section-container.horizontal-nav section .title a,
+            .section-container.horizontal-nav .section .title a {
+                width: 100%;
+            }
+            .section-container.horizontal-nav section .content,
+            .section-container.horizontal-nav .section .content {
+                display: none;
+            }
+            .section-container.horizontal-nav section.active .content,
+            .section-container.horizontal-nav .section.active .content {
+                display: block;
+                position: absolute;
+                z-index: 999;
+                left: 0;
+                top: -2px;
+                min-width: 12.5em;
+                border: 2px solid #ecf0f1;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block extrajs %}
     <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/tek_exp_period_admin.js?j=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_period_admin.js?j=1') }}"></script>
     <script type="text/javascript">
         Tecnotek.UI.urls["deleteURL"] = "{{ path("_delete_period", {id: entity.id}) }}";
         Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.period.delete{% endtrans %}";
 
-        Tecnotek.UI.urls["createEntryURL"] = "{{ path("_expediente_sysadmin_create_entry") }}";
+
         Tecnotek.UI.urls["associateCourseURL"] = "{{ path("_expediente_sysadmin_associate_course") }}";
         Tecnotek.UI.urls["loadAvailableCoursesForGradeURL"] = "{{ path("_expediente_sysadmin_load_courses_by_grade") }}";
-        Tecnotek.UI.urls["deleteGroupURL"] = "{{ path("_expediente_sysadmin_group_remove") }}";
-        Tecnotek.UI.urls["deleteEntryURL"] = "{{ path("_expediente_sysadmin_entry_remove") }}";
         Tecnotek.UI.urls["deleteCourseAssociationURL"] = "{{ path("_expediente_sysadmin_course_association_remove") }}";
         Tecnotek.UI.urls["loadPeriodInfoByGradeURL"] = "{{ path("_expediente_sysadmin_load_period_info") }}";
-        Tecnotek.UI.urls["loadEntriesByCourseURL"] = "{{ path("_expediente_sysadmin_load_entries_by_course") }}";
-        Tecnotek.UI.urls["saveGroupURL"] = "{{ path("_expediente_sysadmin_group_save") }}";
+
         Tecnotek.module = "adminPeriod";
         Tecnotek.assetsURL = "{{ path('homepage')}}";
         Tecnotek.UI.vars["periodId"] = {{ entity.id }};
@@ -33,7 +297,6 @@
         Tecnotek.UI.urls["getInfoChargeTeacherFullURL"] = "{{ path("_expediente_sysadmin_get_info_charge_teacher_full") }}";
 
         Tecnotek.UI.urls["loadCoursesByTeacherURL"] = "{{ path("_expediente_sysadmin_load_courses_groups_by_teacher") }}";
-        Tecnotek.UI.urls["loadAvailableCoursesForTeacher"] = "{{ path("_expediente_sysadmin_load_courses_by_teacher_group") }}";
         Tecnotek.UI.urls["deleteTeacherAssignedURL"] = "{{ path("_expediente_sysadmin_teacher_assigned_remove") }}";
         Tecnotek.UI.urls["loadCoursesClassForGroupURL"] = "{{ path("_expediente_sysadmin_load_course_class_by_group") }}";
         Tecnotek.UI.urls["createTeacherAssignedURL"] = "{{ path("_expediente_sysadmin_create_teacher_assigned") }}";
@@ -54,11 +317,6 @@
         Tecnotek.UI.urls["createOtherAssignedURL"] = "{{ path("_expediente_sysadmin_create_other_assigned") }}";
         Tecnotek.UI.urls["deleteOtherAssignedURL"] = "{{ path("_expediente_sysadmin_other_assigned_remove") }}";
 
-
-        Tecnotek.UI.urls["getStudentsURL"] = "{{ path("_expediente_get_students_list_for_group") }}";
-        Tecnotek.UI.urls["setStudentToGroup"] = "{{ path("_expediente_set_student_to_group") }}";
-        Tecnotek.UI.urls["getGroupStudentsURL"] = "{{ path("_expediente_get_students_list_of_group") }}";
-        Tecnotek.UI.urls["removeStudentFromGroupURL"] = "{{ path("_expediente_remove_student_from_group") }}";
     </script>
 {% endblock %}
 
