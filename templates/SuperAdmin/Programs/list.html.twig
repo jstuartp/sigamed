@@ -95,7 +95,8 @@
                 <th>Nombre</th>
                 <th>Profesores</th>
                 <th>Estado</th>
-                <th>Acción</th>
+                <th></th>
+                <th></th>
 
             </tr>
             </thead>
@@ -114,17 +115,17 @@
 
                 </td>
                 <!-- Columna para poner los botones en la tabla -->
+                {% if role != 4 %}
                 <td class="nowrap">
-                    {% if role != 4 %}
                     <div class="button checkButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
                          <div class="icon"><i class="fas fa-file" title="Archivo"></i></div></div>
-                        &nbsp;&nbsp;&nbsp;
-                        <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><i class="fas fa-eye" title="Ver"></i></div>
-                    {% endif %}
-
-
-
                 </td>
+                {% endif %}
+                {% if role != 4 %}
+                <td class="nowrap">
+                        <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><i class="fas fa-eye" title="Ver"></i></div>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
             </tbody>

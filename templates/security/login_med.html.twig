@@ -20,7 +20,7 @@
       <div class="row g-2">
         <div class="col">
           <div class="loginPanel">
-            <h1>LOGO</h1>
+            <h1>{%trans%}system.title{%endtrans%}</h1>
             <!--<h2>{%trans%}label.loginTitle{%endtrans%}</h2>-->
             {% if error %}
               <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
