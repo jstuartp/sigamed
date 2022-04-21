@@ -1444,18 +1444,31 @@ class SuperAdminController extends AbstractController
                         . " LEFT JOIN tek_institutions institution ON institution.id = g.institution_id"
                         . " WHERE g.period_id = " . $periodId . " AND g.grade_id = " . $gradeId
                         . " ORDER BY g.name";
+                    //$stmt = $em->getConnection()->prepare($sql);
+                    //$stmt->execute();
+                    //$groups = $stmt->fetchAll();
+
+
+                    $em->clear();
+                    $em->getRepository(Period::class);
                     $stmt = $em->getConnection()->prepare($sql);
-                    $stmt->execute();
-                    $groups = $stmt->fetchAll();
+                    $result = $stmt->executeQuery();
+                    $groups = $result->fetchAllAssociative();
 
                     //Get Courses
                     $sql = "SELECT cc.id, c.name, cc.user_id as 'teacherId', (CONCAT(u.firstname, ' ', u.lastname)) as 'teacherName', c.id as 'courseId' "
                         . " FROM tek_courses c, tek_course_class cc, tek_users u"
                         . " WHERE cc.period_id = " . $periodId . " AND cc.grade_id = " . $gradeId . " AND cc.course_id = c.id AND u.id = cc.user_id"
                         . " ORDER BY c.name";
-                    $stmt = $em->getConnection()->prepare($sql);
+                    /*$stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $courses = $stmt->fetchAll();
+                    $courses = $stmt->fetchAll();*/
+
+                    $em->clear();
+                    $em->getRepository(Period::class);
+                    $stmt = $em->getConnection()->prepare($sql);
+                    $result = $stmt->executeQuery();
+                    $courses = $result->fetchAllAssociative();
 
                     return new Response(json_encode(array('error' => false, 'groups' => $groups, 'courses' => $courses)));
                 } else {
@@ -1476,9 +1489,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/teachers/load", name="_expediente_sysadmin_load_courses_groups_by_teacher")
+     * @Method({"GET", "POST"})
      */
-    public function loadCoursesByTeacherAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function loadCoursesByTeacherAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
             try {
@@ -1487,23 +1501,28 @@ class SuperAdminController extends AbstractController
                 $periodId = $request->get('periodId');
                 $teacherId = $request->get('teacherId');
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($periodId) && isset($teacherId)) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
 
                     /* $dql = "SELECT a FROM TecnotekExpedienteBundle:AssignedTeacher a WHERE a.period = $periodId AND a.user = $teacherId";
                      $query = $em->createQuery($dql);
                      $entries = $query->getResult();
  */
 
-                    $stmt = $this->getDoctrine()->getEntityManager()
-                        ->getConnection()
+                    $sql='SELECT t.id as id, t.group_id, c.id as course, c.name as name, cc.id as courseclass, concat(g.grade_id,"-",g.name)  as groupname
+                                    FROM `tek_assigned_teachers` t, tek_courses c, tek_course_class cc, tek_groups g
+                                    where cc.course_id = c.id and t.course_class_id = cc.id and g.id = t.group_id and cc.period_id = "'.$periodId.'" and t.user_id = "'.$teacherId.'"';
+                    /*$em = $this->getConnection()
                         ->prepare('SELECT t.id as id, t.group_id, c.id as course, c.name as name, cc.id as courseclass, concat(g.grade_id,"-",g.name)  as groupname
                                     FROM `tek_assigned_teachers` t, tek_courses c, tek_course_class cc, tek_groups g
-                                    where cc.course_id = c.id and t.course_class_id = cc.id and g.id = t.group_id and cc.period_id = "'.$periodId.'" and t.user_id = "'.$teacherId.'"');
-                    $stmt->execute();
-                    $entity = $stmt->fetchAll();
+                                    where cc.course_id = c.id and t.course_class_id = cc.id and g.id = t.group_id and cc.period_id = "'.$periodId.'" and t.user_id = "'.$teacherId.'"');*/
+                    $em->clear();
+                    $em->getRepository(Period::class);
+                    $stmt = $em->getConnection()->prepare($sql);
+                    $result = $stmt->executeQuery();
+                    $entity = $result->fetchAllAssociative();
 
                     $colors = array(
                         "one" => "#38255c",
@@ -1516,7 +1535,7 @@ class SuperAdminController extends AbstractController
                         $html .= '<div id="courseTeacherRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                         $html .= '    <div id="entryNameField_' . $entry['courseclass'] . '" name="entryNameField_' . $entry['courseclass'] . '" class="option_width" style="float: left; width: 150px;">' . $entry['name'] . '</div>';
                         $html .= '    <div id="entryCodeField_' . $entry['group_id'] . '" name="entryCodeField_' . $entry['group_id'] . '" class="option_width" style="float: left; width: 100px;">' . $entry['groupname'] . '</div>';
-                        $html .= '    <div class="right imageButton deleteButton deleteTeacherAssigned" style="height: 16px;" title="Eliminar"  rel="' . $entry['id'] . '"></div>';
+                        $html .= '    <div class="right icon button imageButton deleteButton deleteTeacherAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                         $html .= '    <div class="clear"></div>';
                         $html .= '</div>';
 
@@ -1533,12 +1552,12 @@ class SuperAdminController extends AbstractController
 
                     return new Response(json_encode(array('error' => false, 'groupOptions' => $groupOptions, 'entriesHtml' => $html)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
+                //$logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -1550,34 +1569,46 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/coursesassigned/load/", name="_expediente_sysadmin_load_courses_assigned_by_teacher")
+     * @Method({"GET", "POST"})
      */
-    public function loadCoursesAssignedByTeacherAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function loadCoursesAssignedByTeacherAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $periodId = $request->get('periodId');
             $teacherId = $request->get('teacherId');
+            //$periodId=1;
+            //$teacherId =218;
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 /* $dql = "SELECT a FROM TecnotekExpedienteBundle:AssignedTeacher a WHERE a.period = $periodId AND a.user = $teacherId";
                  $query = $em->createQuery($dql);
                  $entries = $query->getResult();
 */
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, c.code as code, c.schedule as schedule
                                     FROM `tek_assigned_courses` t, tek_courses c 
                                     where t.course_id = c.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql='SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, c.code as code, c.schedule as schedule
+                                    FROM `tek_assigned_courses` t, tek_courses c 
+                                    where t.course_id = c.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
+
 
                 $colors = array(
                     "one" => "#38255c",
@@ -1591,7 +1622,7 @@ class SuperAdminController extends AbstractController
                 foreach( $entity as $entry ){
                     $html .= '<div id="courseAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                     $html .= '    <div id="entryNameField_' . $entry['course'] . '" name="entryNameField_' . $entry['course'] . '" class="option_width" style="float: left; width: 300px;">' .$entry['groupnumber'].'-' .$entry['code'].' '. $entry['name'] . '</div>';
-                    $html .= '    <div class="right imageButton deleteButton deleteCourseAssigned" style="height: 16px;" title="Eliminar"  rel="' . $entry['id'] . '"></div>';
+                    $html .= '    <div class="right icon button imageButton deleteButton deleteCourseAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -1609,12 +1640,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false, 'courseOptions' => $courseOptions, 'entriesAssignedHtml' => $html)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
+            //$logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -1626,9 +1657,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/loadCoursesByGrade", name="_expediente_sysadmin_load_courses_by_grade")
+     * @Method({"GET", "POST"})
      */
-    public function loadAvailableCoursesAction(){
-        $logger = $this->get('logger');
+    public function loadAvailableCoursesAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
             try {
@@ -1637,26 +1669,32 @@ class SuperAdminController extends AbstractController
                 $periodId = $request->get('periodId');
                 $gradeId = $request->get('gradeId');
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($gradeId) && isset($periodId)) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
                     //Get Courses
                     $sql = "SELECT c.id, c.name, c.groupnumber, c.code"
                         . " FROM tek_courses c"
                         . " WHERE c.id not in (select cc.course_id from tek_course_class cc where cc.period_id = " . $periodId . " AND cc.grade_id = " . $gradeId . ")"
                         . " ORDER BY c.name";
+                    //$stmt = $em->getConnection()->prepare($sql);
+                    //$stmt->execute();
+                    //$courses = $stmt->fetchAll();
+                    $em->clear();
+                    $em->getRepository(Period::class);
                     $stmt = $em->getConnection()->prepare($sql);
-                    $stmt->execute();
-                    $courses = $stmt->fetchAll();
+                    $result = $stmt->executeQuery();
+                    $courses = $result->fetchAllAssociative();
+
                     return new Response(json_encode(array('error' => false, 'courses' => $courses)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::loadAvailableCoursesAction [' . $info . "]");
+                //$logger->err('SuperAdmin::loadAvailableCoursesAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -1668,9 +1706,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/associateCourse", name="_expediente_sysadmin_associate_course")
+     * @Method({"GET", "POST"})
      */
-    public function associateCourseAction(){
-        $logger = $this->get('logger');
+    public function associateCourseAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
             try {
@@ -1681,12 +1720,12 @@ class SuperAdminController extends AbstractController
                 $courseId = $request->get('courseId');
                 $teacherId = $request->get('teacherId');
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($gradeId) && isset($periodId) && isset($courseId) && isset($teacherId)) {
 
                     $courseClass = new CourseClass();
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
                     $teacher = $em->getRepository("App:User")->find($teacherId);
                     //$courseClass->setPeriod($em->getRepository("App:Period")->find($periodId));
 
@@ -1718,12 +1757,12 @@ class SuperAdminController extends AbstractController
 
                     return new Response(json_encode(array('error' => false, 'courseClass' => $courseClass->getId())));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::loadAvailableCoursesAction [' . $info . "]");
+                //$logger->err('SuperAdmin::loadAvailableCoursesAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -1819,9 +1858,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/teachers/create/", name="_expediente_sysadmin_create_teacher_assigned")
+     * @Method({"GET", "POST"})
      */
-    public function createTeacherAssignedAction(){ //2016 - 4 temp
-        $logger = $this->get('logger');
+    public function createTeacherAssignedAction(Request $request, EntityManagerInterface $em){ //2016 - 4 temp
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
        // {
             try {
@@ -1836,10 +1876,10 @@ class SuperAdminController extends AbstractController
                 $groupId = $keywords[0];
                 $gradeId = $keywords[1];
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($courseClassId) && isset($groupId) && isset($teacherId)) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
 
                     $assignedTeacher = new AssignedTeacher();
                     $assignedTeacher->setCourseClass($em->getRepository("App:CourseClass")->find($courseClassId));
@@ -1851,12 +1891,12 @@ class SuperAdminController extends AbstractController
 
                     return new Response(json_encode(array('error' => false)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
+                //$logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
        /* }// endif this is an ajax request
@@ -1868,9 +1908,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/courses/createassigned/", name="_expediente_sysadmin_create_course_assigned")
+     * @Method({"GET", "POST"})
      */
-    public function createCourseAssignedAction(){ //2016 - 4 temp
-        $logger = $this->get('logger');
+    public function createCourseAssignedAction(Request $request, EntityManagerInterface $em){ //2016 - 4 temp
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
             try {
@@ -1881,10 +1922,10 @@ class SuperAdminController extends AbstractController
                 $courseId = $request->get('courseId');
                 $weight = $request->get('weight');
 
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($courseId) && isset($periodId) && isset($teacherId)) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
 
                     $assignedCourse = new AssignedCourse();
                     $assignedCourse->setCourse($em->getRepository("App:Course")->find($courseId));
@@ -1898,12 +1939,12 @@ class SuperAdminController extends AbstractController
 
                     return new Response(json_encode(array('error' => false)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
+                //$logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
        /* }// endif this is an ajax request
@@ -1915,17 +1956,18 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/teachers/remove", name="_expediente_sysadmin_teacher_assigned_remove")
+     * @Method({"GET", "POST"})
      */
-    public function removeTeacherAssignedAction(){    /// 2016 - 4
+    public function removeTeacherAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
 
-        $logger = $this->get('logger');
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
             try {
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $teacherAssignedId = $request->get('teacherAssignedId');
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($teacherAssignedId) ) {
                     $em = $this->getDoctrine()->getEntityManager();
@@ -1936,12 +1978,12 @@ class SuperAdminController extends AbstractController
                     }
                     return new Response(json_encode(array('error' => false)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::removeTeacherAssignedAction [' . $info . "]");
+                //$logger->err('SuperAdmin::removeTeacherAssignedAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -1953,20 +1995,21 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/courses/removeassigned/", name="_expediente_sysadmin_course_assigned_remove")
+     * @Method({"GET", "POST"})
      */
-    public function removeCourseAssignedAction(){    /// 2016 - 4
+    public function removeCourseAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
 
-        $logger = $this->get('logger');
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
             try {
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $courseAssignedId = $request->get('courseAssignedId');
-                $translator = $this->get("translator");
+                //$translator = $this->get("translator");
 
                 if( isset($courseAssignedId) ) {
-                    $em = $this->getDoctrine()->getEntityManager();
+                    //$em = $this->getDoctrine()->getEntityManager();
                     $entity = $em->getRepository("App:AssignedCourse")->find( $courseAssignedId );
                     if ( isset($entity) ) {
                         $em->remove($entity);
@@ -1974,12 +2017,12 @@ class SuperAdminController extends AbstractController
                     }
                     return new Response(json_encode(array('error' => false)));
                 } else {
-                    return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                    return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
                 }
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('SuperAdmin::removeCourseAssignedAction [' . $info . "]");
+                //$logger->err('SuperAdmin::removeCourseAssignedAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -2078,7 +2121,7 @@ class SuperAdminController extends AbstractController
             $type = $request->get('type');
             $status = $request->get('status');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($userId)) {
                 $em = $this->getDoctrine()->getEntityManager();
@@ -2094,7 +2137,7 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
@@ -2286,20 +2329,21 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/commissions/removeassigned/", name="_expediente_sysadmin_commission_assigned_remove")
+     * @Method({"GET", "POST"})
      */
-    public function removeCommissionAssignedAction(){    /// 2016 - 4
+    public function removeCommissionAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
 
-        $logger = $this->get('logger');
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $commissionAssignedId = $request->get('commissionAssignedId');
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($commissionAssignedId) ) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
                 $entity = $em->getRepository("App:AssignedCommission")->find( $commissionAssignedId );
                 if ( isset($entity) ) {
                     $em->remove($entity);
@@ -2307,12 +2351,12 @@ class SuperAdminController extends AbstractController
                 }
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::removeCommissionAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::removeCommissionAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2324,9 +2368,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/commissions/commissionassigned/", name="_expediente_sysadmin_create_commission_assigned")
+     * @Method({"GET", "POST"})
      */
-    public function createCommissionAssignedAction(){ //2016 - 4 temp
-        $logger = $this->get('logger');
+    public function createCommissionAssignedAction(Request $request, EntityManagerInterface $em){ //2016 - 4 temp
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -2338,10 +2383,10 @@ class SuperAdminController extends AbstractController
             $type = $request->get('type');
             $weight = $request->get('weight');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($commissionId) && isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $assignedCommission = new AssignedCommission();
                 $assignedCommission->setCommission($em->getRepository("App:Commission")->find($commissionId));
@@ -2356,12 +2401,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::createTeacherAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /* }// endif this is an ajax request
@@ -2374,34 +2419,43 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/commissionsassigned/load/", name="_expediente_sysadmin_load_commissions_assigned_by_teacher")
+     * @Method({"GET", "POST"})
      */
-    public function loadCommissionsAssignedByTeacherAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function loadCommissionsAssignedByTeacherAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $periodId = $request->get('periodId');
             $teacherId = $request->get('teacherId');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 /* $dql = "SELECT a FROM TecnotekExpedienteBundle:AssignedTeacher a WHERE a.period = $periodId AND a.user = $teacherId";
                  $query = $em->createQuery($dql);
                  $entries = $query->getResult();
 */
-
+/*
                 $stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as commission, c.name as name, t.type as type
                                     FROM `tek_assigned_commissions` t, tek_commissions c 
                                     where t.commission_id = c.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql='SELECT t.id as id, c.id as commission, c.name as name, t.type as type
+                                    FROM `tek_assigned_commissions` t, tek_commissions c 
+                                    where t.commission_id = c.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
 
                 $colors = array(
                     "one" => "#38255c",
@@ -2421,7 +2475,7 @@ class SuperAdminController extends AbstractController
                     $html .= '<div id="commissionAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                     $html .= '    <div id="entryNameField_' . $entry['commission'] . '" name="entryNameField_' . $entry['commission'] . '" class="option_width" style="float: left; width: 250px;">' . $entry['name'] . '</div>';
                     $html .= '    <div  class="option_width" style="float: left; width: 50px;">' . $typeC . '</div>';
-                    $html .= '    <div class="right imageButton deleteButton deleteCommissionAssigned" style="height: 16px;" title="Eliminar"  rel="' . $entry['id'] . '"></div>';
+                    $html .= '    <div class="right icon button imageButton deleteButton deleteCommissionAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -2439,12 +2493,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false, 'commissionOptions' => $commissionOptions, 'entriesAssignedHtml' => $html)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::loadCommissionsByTeacherAction [' . $info . "]");
+            //$logger->err('SuperAdmin::loadCommissionsByTeacherAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2457,20 +2511,21 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/projects/removeassigned/", name="_expediente_sysadmin_project_assigned_remove")
+     * @Method({"GET", "POST"})
      */
-    public function removeProjectAssignedAction(){    /// 2016 - 4
+    public function removeProjectAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
 
-        $logger = $this->get('logger');
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $projectAssignedId = $request->get('projectAssignedId');
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($projectAssignedId) ) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
                 $entity = $em->getRepository("App:AssignedProject")->find( $projectAssignedId );
                 if ( isset($entity) ) {
                     $em->remove($entity);
@@ -2478,12 +2533,12 @@ class SuperAdminController extends AbstractController
                 }
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::removeProjectAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::removeProjectAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2495,9 +2550,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/projects/projectassigned/", name="_expediente_sysadmin_create_project_assigned")
+     * @Method({"GET", "POST"})
      */
-    public function createProjectAssignedAction(){ //2016 - 4 temp
-        $logger = $this->get('logger');
+    public function createProjectAssignedAction(Request $request, EntityManagerInterface $em){ //2016 - 4 temp
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -2508,10 +2564,10 @@ class SuperAdminController extends AbstractController
             $projectId = $request->get('projectId');
             $weight = $request->get('weight');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($projectId) && isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $assignedProject = new AssignedProject();
                 $assignedProject->setProject($em->getRepository("App:Project")->find($projectId));
@@ -2525,12 +2581,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::createProjectAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::createProjectAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /* }// endif this is an ajax request
@@ -2543,34 +2599,43 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/projectsassigned/load/", name="_expediente_sysadmin_load_projects_assigned_by_teacher")
+     * @Method({"GET", "POST"})
      */
-    public function loadProjectsAssignedByTeacherAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function loadProjectsAssignedByTeacherAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $periodId = $request->get('periodId');
             $teacherId = $request->get('teacherId');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 /* $dql = "SELECT a FROM TecnotekExpedienteBundle:AssignedTeacher a WHERE a.period = $periodId AND a.user = $teacherId";
                  $query = $em->createQuery($dql);
                  $entries = $query->getResult();
 */
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, p.id as project, p.name as name
                                     FROM `tek_assigned_projects` t, tek_projects p 
                                     where t.project_id = p.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql = 'SELECT t.id as id, p.id as project, p.name as name
+                                    FROM `tek_assigned_projects` t, tek_projects p 
+                                    where t.project_id = p.id and t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
 
                 $colors = array(
                     "one" => "#38255c",
@@ -2584,7 +2649,7 @@ class SuperAdminController extends AbstractController
                 foreach( $entity as $entry ){
                     $html .= '<div id="projectAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                     $html .= '    <div id="entryNameField_' . $entry['project'] . '" name="entryNameField_' . $entry['project'] . '" class="option_width" style="float: left; width: 300px;">' . $entry['name'] . '</div>';
-                    $html .= '    <div class="right imageButton deleteButton deleteProjectAssigned" style="height: 16px;" title="Eliminar"  rel="' . $entry['id'] . '"></div>';
+                    $html .= '    <div class="right icon button imageButton deleteButton deleteProjectAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -2602,12 +2667,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false, 'projectOptions' => $projectOptions, 'entriesAssignedHtml' => $html)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::loadProjectsByTeacherAction [' . $info . "]");
+            //$logger->err('SuperAdmin::loadProjectsByTeacherAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2619,20 +2684,21 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/others/removeassigned/", name="_expediente_sysadmin_other_assigned_remove")
+     * @Method({"GET", "POST"})
      */
-    public function removeOtherAssignedAction(){    /// 2016 - 4
+    public function removeOtherAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
 
-        $logger = $this->get('logger');
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $otherAssignedId = $request->get('otherAssignedId');
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($otherAssignedId) ) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
                 $entity = $em->getRepository("App:AssignedOther")->find( $otherAssignedId );
                 if ( isset($entity) ) {
                     $em->remove($entity);
@@ -2640,12 +2706,12 @@ class SuperAdminController extends AbstractController
                 }
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::removeOtherAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::removeOtherAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2657,13 +2723,13 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/others/otherassigned/", name="_expediente_sysadmin_create_other_assigned")
+     * @Method({"GET", "POST"})
      */
-    public function createOtherAssignedAction(){ //2016 - 4 temp
-        $logger = $this->get('logger');
+    public function createOtherAssignedAction(Request $request, EntityManagerInterface $em){ //2016 - 4 temp
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
-            //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $periodId = $request->get('periodId');
             $teacherId = $request->get('teacherId');
@@ -2671,10 +2737,10 @@ class SuperAdminController extends AbstractController
             $weight = $request->get('weight');
             $type = $request->get('type');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $assignedOther = new AssignedOther();
                 $assignedOther->setWeight($weight);
@@ -2689,12 +2755,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::createOtherAssignedAction [' . $info . "]");
+            //$logger->err('SuperAdmin::createOtherAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /* }// endif this is an ajax request
@@ -2707,34 +2773,43 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/period/othersassigned/load/", name="_expediente_sysadmin_load_others_assigned_by_teacher")
+     * @Method({"GET", "POST"})
      */
-    public function loadOthersAssignedByTeacherAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function loadOthersAssignedByTeacherAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $periodId = $request->get('periodId');
             $teacherId = $request->get('teacherId');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($periodId) && isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 /* $dql = "SELECT a FROM TecnotekExpedienteBundle:AssignedTeacher a WHERE a.period = $periodId AND a.user = $teacherId";
                  $query = $em->createQuery($dql);
                  $entries = $query->getResult();
 */
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, t.name as name
                                     FROM `tek_assigned_other` t
                                     where t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql= 'SELECT t.id as id, t.name as name
+                                    FROM `tek_assigned_other` t
+                                    where t.user_id = "'.$teacherId.'" and t.period_id = "'.$periodId.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
 
                 $colors = array(
                     "one" => "#38255c",
@@ -2748,7 +2823,7 @@ class SuperAdminController extends AbstractController
                 foreach( $entity as $entry ){
                     $html .= '<div id="otherAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                     $html .= '    <div id="entryNameField_' . $entry['id'] . '" name="entryNameField_' . $entry['id'] . '" class="option_width" style="float: left; width: 300px;">' . $entry['name'] . '</div>';
-                    $html .= '    <div class="right imageButton deleteButton deleteOtherAssigned" style="height: 16px;" title="Eliminar"  rel="' . $entry['id'] . '"></div>';
+                    $html .= '    <div class="right icon button imageButton deleteButton deleteOtherAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -2759,12 +2834,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false, 'entriesAssignedHtml' => $html)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::loadOthersByTeacherAction [' . $info . "]");
+            //$logger->err('SuperAdmin::loadOthersByTeacherAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2799,33 +2874,42 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/charge/getInfoTeacherChargeStatus", name="_expediente_sysadmin_get_info_charge_teacher_status")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoChargeTeacherStatusAction(){ //2016 - 4
-        $logger = $this->get('logger');
+    public function getInfoChargeTeacherStatusAction(Request $request, EntityManagerInterface $em){ //2016 - 4
+        //$logger = $this->get('logger');
 
         $html = "";
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-
             $teacherId = $request->get('teacherId');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($teacherId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
 //aca voy yt
 
                 $currentPeriod = $em->getRepository("App:Period")->findOneBy(array('isActual' => true));
                 $periodId  = $currentPeriod->getId();
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+               /* $stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT status as status, id as id, detailin as detailin
                                     FROM `tek_charges` c
                                     where c.user_id = "'.$teacherId.'" and c.period_id = "'.$periodId.'" order by id asc');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql='SELECT status as status, id as id, detailin as detailin
+                                    FROM `tek_charges` c
+                                    where c.user_id = "'.$teacherId.'" and c.period_id = "'.$periodId.'" order by id asc';
+                $em->clear();
+                $em->getRepository(Programs::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
 
                 $colors = array(
                     "one" => "#38255c",
@@ -2852,13 +2936,13 @@ class SuperAdminController extends AbstractController
 
             return new Response(json_encode(array('error' => false, 'html' => $html)));
         } else {
-            return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+            return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
         }
 
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
+            //$logger->err('SuperAdmin::loadCoursesByTeacherAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -3022,9 +3106,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/getInfoChargeFull", name="_expediente_sysadmin_get_info_charge_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoChargeFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoChargeFullAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -3032,7 +3117,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $chargeId = $request->get('chargeId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $charge = $em->getRepository("App:Charges")->find($chargeId);
 
@@ -3107,7 +3192,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
+            //$logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3118,18 +3203,20 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/getInfoTeacherChargeFull", name="_expediente_sysadmin_get_info_charge_teacher_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoChargeTeacherFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoChargeTeacherFullAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
+            //$request = $this->get('request_stack')->getCurrentRequest();
             //$request = $this->get('request')->request;
             $teacherId = $request->get('teacherId');
             $period_id = $request->get('periodId'); //agregada 2020
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $charge = $em->getRepository("App:Charges")->findBy(array('teacher'=>$teacherId));
             //$user = $em->getRepository("App:User")->find($teacherId);
@@ -3160,13 +3247,22 @@ class SuperAdminController extends AbstractController
 
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
                                     FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
                                     where t.user_id = u.id and t.course_id = c.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql='SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
+                                    where t.user_id = u.id and t.course_id = c.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
 
                 $html .= "<label>Cursos:</label><br>";
                 foreach( $entity as $entry ){
@@ -3176,26 +3272,46 @@ class SuperAdminController extends AbstractController
 
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, p.id as project, p.name as name, u.lastname as lastname, u.firstname as firstname
                                     FROM `tek_assigned_projects` t, tek_projects p, tek_users u  
                                     where t.user_id = u.id and t.project_id = p.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql='SELECT t.id as id, p.id as project, p.name as name, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_projects` t, tek_projects p, tek_users u  
+                                    where t.user_id = u.id and t.project_id = p.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
+
+
                 $html .= "<br>";
                 $html .= "<label>Proyectos:</label><br>";
                 foreach( $entity as $entry ){
                     $html .=  '<label>'. $entry['name'] .' I-'.$entry['project']  .'</label><br> ';
                 }
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as commission, c.name as name, u.lastname as lastname, u.firstname as firstname
                                     FROM `tek_assigned_commissions` t, tek_commissions c, tek_users u  
                                     where t.user_id = u.id and t.commission_id = c.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+                $sql='SELECT t.id as id, c.id as commission, c.name as name, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_commissions` t, tek_commissions c, tek_users u  
+                                    where t.user_id = u.id and t.commission_id = c.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
+
                 $html .= "<br>";
                 $html .= "<label>Comisiones:</label><br>";
                 foreach( $entity as $entry ){
@@ -3203,13 +3319,22 @@ class SuperAdminController extends AbstractController
                 }
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, t.name as name, t.weight as charge, u.lastname as lastname, u.firstname as firstname
                                     FROM `tek_assigned_other` t, tek_users u  
                                     where t.user_id = u.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+                $sql='SELECT t.id as id, t.name as name, t.weight as charge, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_other` t, tek_users u  
+                                    where t.user_id = u.id and t.user_id = "'.$user->getId() .'" and t.period_id = "'.$period_id.'"';
+                $em->clear();
+                $em->getRepository(Period::class);
+                $stmt = $em->getConnection()->prepare($sql);
+                $result = $stmt->executeQuery();
+                $entity = $result->fetchAllAssociative();
+
                 $html .= "<br>";
                 $html .= "<label>Otros:</label><br>";
                 foreach( $entity as $entry ){
@@ -3228,7 +3353,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
+            //$logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
