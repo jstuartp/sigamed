@@ -614,6 +614,7 @@ Tecnotek.AdminPeriod = {
         if(teacherId == 0){//Clean page
             console.debug("Clean page!!!");
         } else {
+            //alert(teacherId);
             Tecnotek.ajaxCall(Tecnotek.UI.urls["loadCoursesToAssignedByTeacherURL"],
                 {   periodId: Tecnotek.UI.vars["periodId"],
                     teacherId: teacherId},

@@ -6,7 +6,7 @@
   <header id="header" class="top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="{{ path('homepage') }}">NombreSistema</a></h1>
+      <h1 class="logo me-auto"><a href="{{ path('homepage') }}">{% trans %}system.title{% endtrans %}</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -146,8 +146,9 @@
       <!--<a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a>-->
 
     </div>
-  </header><!-- End Header -->
 
+  </header><!-- End Header -->
+  <div class="row" ><div class="col-12"> &nbsp;&nbsp;</div> </div>
 {% endblock %}
 {% block hero %} {% endblock %}
 {% block whyus %} {% endblock %}
