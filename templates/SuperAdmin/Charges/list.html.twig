@@ -165,6 +165,8 @@
 
             <form class="customForm" id="chargeForm" name="chargeForm">
 
+
+
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.detailin{% endtrans %}</label>
                     <input type="text" id="detailinCharge" name="detailinCharge" style="width: 250px">
@@ -189,11 +191,11 @@
                     </div>
                 </div>
 
-
-                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="btnchargeCancel" id="btnchargeCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
-                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
-                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="button" name="btnsaveSend" id="btnsaveSend" value="{% trans %}label.includeSave{% endtrans %}"/></div>
+                <div class="right"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="btnchargeCancel" id="btnchargeCancel" value="{% trans %}label.cancelar{% endtrans %}"/>
+                    <input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/>
+                    <input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="button" name="btnsaveSend" id="btnsaveSend" value="{% trans %}label.includeSave{% endtrans %}"/></div>
                 <div class="clear"></div>
+
             </form>
         </div>
 
