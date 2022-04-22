@@ -3364,9 +3364,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/updateCharge/", name="_expediente_sysadmin_update_charge")
+     * @Method({"GET", "POST"})
      */
-    public function updateChargeAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateChargeAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3384,7 +3385,7 @@ class SuperAdminController extends AbstractController
             $translator = $this->get("translator");
 
             if( $chargeId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $charge = new Charges();
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3403,12 +3404,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::createChargeAction [' . $info . "]");
+            //$logger->err('Charge::createChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3419,9 +3420,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/createCharge/", name="_expediente_sysadmin_create_charge")
+     * @Method({"GET", "POST"})
      */
-    public function createChargeAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function createChargeAction(Request $request, EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3437,10 +3439,10 @@ class SuperAdminController extends AbstractController
 
 
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($userId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $charge = new Charges();
                 $charge->setDetailin($detailin);
@@ -3471,12 +3473,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::createChargeAction [' . $info . "]");
+            //$logger->err('Charge::createChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
