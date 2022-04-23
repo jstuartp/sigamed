@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?c=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?f=2') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
     Tecnotek.module = "courseList";
@@ -77,7 +77,7 @@
                     <!-- Columna para poner los botones en la tabla -->
                     <td class="nowrap">
                         {% if role != 4 %}
-                                <div class="icon editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar"></i></div>
+                                <div class="icon button editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar"></i></div>
                         {% endif %}
                     </td>
                     <td class="nowrap">
