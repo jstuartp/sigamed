@@ -33,6 +33,7 @@
 </script>
 {% endblock %}
 
+
 {% block content %}
 <div class="container">
     <div class="grid">
@@ -71,7 +72,7 @@
                         {% if arregloDato.type == 3 %} Modificado en espera de Revisión {% endif %}
                         {% if arregloDato.type == 4 %} Revisado correcciones pendientes {% endif %}
                         {% if arregloDato.type == 5 %} Revisado y Aprobado {% endif %}
-                        {% if arregloDato.type == 6 %} Finalizado {% endif %}
+                    {% if arregloDato.type == 6 %} Finalizado {% endif %}-
 
                     </td>
                     <!-- Columna para poner los botones en la tabla -->
@@ -340,4 +341,18 @@
         </form>
     </div>
 </div>
+{% endblock %}
+{% block css %}
+    <script type="text/css">
+        table.dataTable tbody th, table.dataTable tbody td {
+            padding: 20px 40px; /* e.g. change 8x to 4px here */
+        }
+        th, td { white-space: nowrap; }
+        div.dataTables_wrapper {
+            width: 15000px;
+            margin: 0 auto;
+        }
+
+        tr { height: 50px; }
+    </script>
 {% endblock %}

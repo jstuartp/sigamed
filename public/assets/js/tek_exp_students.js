@@ -3358,7 +3358,7 @@ table = $('#example2Colum').DataTable({
     "paging": true,
     "lengthChange": true,
     "searching": true,
-    "ordering": true,
+    "ordering": false,
     "info": true,
     "autoWidth": false,
     "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
