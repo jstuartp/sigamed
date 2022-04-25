@@ -401,9 +401,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/updateCourse/", name="_expediente_sysadmin_update_course")
+     * @Method({"GET", "POST"})
      */
-    public function updateCourseAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateCourseAction(Request $request, EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -429,10 +430,10 @@ class SuperAdminController extends AbstractController
             $status = $request->get('status');
             $user = $request->get('user');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $courseId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $course = new Course();
                 $course = $em->getRepository("App:Course")->find($courseId);
@@ -462,12 +463,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::createCourseAction [' . $info . "]");
+            //$logger->err('Course::createCourseAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -552,9 +553,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/course/getInfoCourseFull", name="_expediente_sysadmin_get_info_course_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoCourseFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoCourseFullAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -562,7 +564,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $courseId = $request->get('courseId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $course = $em->getRepository("App:Course")->find($courseId);
 
@@ -642,7 +644,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -653,9 +655,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/getInfoCourseDetail", name="_expediente_sysadmin_get_info_course_detail")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoCourseDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoCourseDetailAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -663,7 +666,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $courseId = $request->get('courseId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $course = $em->getRepository("App:Course")->find($courseId);
 
@@ -707,7 +710,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
