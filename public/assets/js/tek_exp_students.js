@@ -241,6 +241,8 @@ Tecnotek.Courses = {
         Tecnotek.UI.vars["page"] = 1;
         Tecnotek.Courses.searchCourses();
 
+        Tecnotek.Courses.initButtons();
+
     },
 
 
@@ -271,11 +273,17 @@ Tecnotek.Courses = {
                 }, true);
         });
 
-        $('.editButton').unbind();
-        $('.editButton').click(function(event){
+        /*$('.questionsButton').unbind().click(function(event){
+            event.preventDefault();
+            location.href = Tecnotek.UI.urls["programQ"] + $(this).attr("rel");
+            //location.href = Tecnotek.UI.urls["programQ"] + "/" + $(this).attr("rel");
+        });*/
+
+        $('.editButton').unbind().click(function(event){
             event.preventDefault();
 
-                var courseId = $(this).attr("rel");
+                //var courseId = $(this).attr("rel");
+            var courseId =0;
                 Tecnotek.UI.vars["idCourseEdit"]  = courseId;
                 Tecnotek.ajaxCall(Tecnotek.UI.urls["getInfoCourseURL"],
                 {courseId: $(this).attr("rel")},
@@ -3350,7 +3358,7 @@ table = $('#example2Colum').DataTable({
     "paging": true,
     "lengthChange": true,
     "searching": true,
-    "ordering": true,
+    "ordering": false,
     "info": true,
     "autoWidth": false,
     "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3

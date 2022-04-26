@@ -462,21 +462,20 @@
 <script src="{{ asset('shared/assets/js/foundation/foundation.topbar.js') }}"></script>
   <!-- js para las datatables -->
   <!-- DataTables -->
-  <script src="{{ asset('assets/datatables/DataTables-1.11.5/js/jquery.dataTables.js')}}"></script>
-  <script src="{{ asset('assets/datatables/DataTables-1.11.5/js/dataTables.bootstrap5.js')}}"></script>
-  <!-- Datatables buttons para manejar los botones de impresion dentro de las tablas -->
-  <script src="{{ asset('assets/datatables/Buttons-2.2.2/js/buttons.bootstrap5.js') }}"></script>
-  <!-- Datatables buttons para manejar los botones de impresion dentro de las tablas -->
+
+  <script src="{{ asset('assets/datatables/datatables.css') }}"></script>
+  <script src="{{ asset('assets/datatables/datatables.js') }}"></script>
+
 
   <!--tablas personalisadas -->
   <script type="text/javascript" src="{{ asset('assets/js/mytable.js')}}"></script>
   <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js') }}"></script>
 {% endblock %}
 {% if is_granted('ROLE_PROFESOR') %}
-  <script type="text/javascript" src="{{ asset('assets/js/teacher_application.js?v=2') }}"></script>
-  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?v=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/teacher_application.js?a=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?c=2') }}"></script>
 {% else %}
-  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?v=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?c=2') }}"></script>
 {% endif %}
 
 {% block extrajs %}{% endblock %}

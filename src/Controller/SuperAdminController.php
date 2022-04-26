@@ -325,9 +325,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/createCourse/", name="_expediente_sysadmin_create_course")
+     * @Method({"GET", "POST"})
      */
-    public function createCourseAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function createCourseAction(EntityManagerInterface $em, Request $request){ //2018-13-03
+     //   $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -354,10 +355,10 @@ class SuperAdminController extends AbstractController
 
 
 
-            $translator = $this->get("translator");
+          //  $translator = $this->get("translator");
 
             if( isset($userId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+               // $em = $this->getDoctrine()->getEntityManager();
 
                 $course = new Course();
                 $course->setName($name);
@@ -385,12 +386,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"Error")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::createCourseAction [' . $info . "]");
+           // $logger->err('Course::createCourseAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -401,9 +402,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/updateCourse/", name="_expediente_sysadmin_update_course")
+     * @Method({"GET", "POST"})
      */
-    public function updateCourseAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateCourseAction(Request $request, EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -429,10 +431,10 @@ class SuperAdminController extends AbstractController
             $status = $request->get('status');
             $user = $request->get('user');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $courseId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $course = new Course();
                 $course = $em->getRepository("App:Course")->find($courseId);
@@ -462,12 +464,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::createCourseAction [' . $info . "]");
+            //$logger->err('Course::createCourseAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -552,9 +554,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/course/getInfoCourseFull", name="_expediente_sysadmin_get_info_course_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoCourseFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoCourseFullAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -562,7 +565,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $courseId = $request->get('courseId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $course = $em->getRepository("App:Course")->find($courseId);
 
@@ -642,7 +645,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -653,9 +656,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/getInfoCourseDetail", name="_expediente_sysadmin_get_info_course_detail")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoCourseDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoCourseDetailAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -663,7 +667,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $courseId = $request->get('courseId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $course = $em->getRepository("App:Course")->find($courseId);
 
@@ -707,7 +711,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2889,8 +2893,6 @@ class SuperAdminController extends AbstractController
             if( isset($teacherId)) {
                 //$em = $this->getDoctrine()->getEntityManager();
 
-//aca voy yt
-
                 $currentPeriod = $em->getRepository("App:Period")->findOneBy(array('isActual' => true));
                 $periodId  = $currentPeriod->getId();
 
@@ -2906,7 +2908,7 @@ class SuperAdminController extends AbstractController
                                     FROM `tek_charges` c
                                     where c.user_id = "'.$teacherId.'" and c.period_id = "'.$periodId.'" order by id asc';
                 $em->clear();
-                $em->getRepository(Programs::class);
+                //$em->getRepository(Program::class);
                 $stmt = $em->getConnection()->prepare($sql);
                 $result = $stmt->executeQuery();
                 $entity = $result->fetchAllAssociative();
@@ -3364,9 +3366,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/updateCharge/", name="_expediente_sysadmin_update_charge")
+     * @Method({"GET", "POST"})
      */
-    public function updateChargeAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateChargeAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3384,7 +3387,7 @@ class SuperAdminController extends AbstractController
             $translator = $this->get("translator");
 
             if( $chargeId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $charge = new Charges();
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3403,12 +3406,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::createChargeAction [' . $info . "]");
+            //$logger->err('Charge::createChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3419,9 +3422,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/createCharge/", name="_expediente_sysadmin_create_charge")
+     * @Method({"GET", "POST"})
      */
-    public function createChargeAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function createChargeAction(Request $request, EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3437,10 +3441,10 @@ class SuperAdminController extends AbstractController
 
 
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( isset($userId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $charge = new Charges();
                 $charge->setDetailin($detailin);
@@ -3471,12 +3475,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::createChargeAction [' . $info . "]");
+            //$logger->err('Charge::createChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3581,6 +3585,7 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/charge/sendEmailCharge", name="_expediente_sysadmin_send_email_charge")
+     * @Method({"GET", "POST"})
      */
     public function sendEmailChargeAction(\Swift_Mailer $mailer){ //2018-18-06
         $logger = $this->get('logger');
@@ -3690,11 +3695,11 @@ class SuperAdminController extends AbstractController
 
         $sql = "SELECT *"
             . " FROM tek_charges c"
-            . " WHERE c.user_id = ".$user_id." and c.period_id = ".$period_id;
+            . " WHERE c.user_id = ".$user_id." and c.period_id = ".$period_id." and c.status != 1";
 
         $stmt = $em->getConnection()->prepare($sql);
 
-        $charge = $stmt->executeQuery()->fetchAllAssociative();
+        $charges = $stmt->executeQuery()->fetchAllAssociative();
 
 
         $sql = "SELECT *"
@@ -3703,7 +3708,7 @@ class SuperAdminController extends AbstractController
 
         $stmt = $em->getConnection()->prepare($sql);
 
-        $courses = $stmt->executeQuery()->fetchAllAssociative();;
+        $courses = $stmt->executeQuery()->fetchAllAssociative();
 
         $sql = "SELECT *"
             . " FROM tek_assigned_commissions ac, tek_commissions c"
@@ -3711,7 +3716,7 @@ class SuperAdminController extends AbstractController
 
         $stmt = $em->getConnection()->prepare($sql);
 
-        $commissions = $stmt->executeQuery()->fetchAllAssociative();;
+        $commissions = $stmt->executeQuery()->fetchAllAssociative();
 
         $sql = "SELECT *"
             . " FROM tek_assigned_projects ap, tek_projects p"
@@ -3719,7 +3724,7 @@ class SuperAdminController extends AbstractController
 
         $stmt = $em->getConnection()->prepare($sql);
 
-        $projects = $stmt->executeQuery()->fetchAllAssociative();;
+        $projects = $stmt->executeQuery()->fetchAllAssociative();
 
         $sql = "SELECT *"
             . " FROM tek_assigned_other o"
@@ -3727,18 +3732,19 @@ class SuperAdminController extends AbstractController
 
         $stmt = $em->getConnection()->prepare($sql);
 
-        $others = $stmt->executeQuery()->fetchAllAssociative();;
+        $others = $stmt->executeQuery()->fetchAllAssociative();
 
-        return $this->render('SuperAdmin/Charges/mycharge.html.twig', array('teacherId' => $user_id, 'charge' => $charge, 'commissions' => $commissions,'projects' => $projects,'courses' => $courses, 'others' => $others,
+        return $this->render('SuperAdmin/Charges/mycharge.html.twig', array('teacherId' => $user_id, 'charges' => $charges, 'commissions' => $commissions,'projects' => $projects,'courses' => $courses, 'others' => $others,
             'menuIndex' => 5));
     }
 
     /**
      * @Route("/charge/sendEmailChargeYes", name="_expediente_sysadmin_send_email_charge_yes")
+     * @Method({"GET", "POST"})
      */
     public function sendEmailChargeYesAction(\Swift_Mailer $mailer){ //2018-18-06
-        $logger = $this->get('logger');
-        $translator = $this->get("translator");
+        //$logger = $this->get('logger');
+        //$translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
@@ -3771,18 +3777,19 @@ class SuperAdminController extends AbstractController
                 return new Response(json_encode(array('error' => false)));
 
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
 
     /**
      * @Route("/charge/sendEmailChargeNo", name="_expediente_sysadmin_send_email_charge_no")
+     * @Method({"GET", "POST"})
      */
     public function sendEmailChargeNoAction(\Swift_Mailer $mailer){ //2018-18-06
         $logger = $this->get('logger');

@@ -67,8 +67,8 @@
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.reports{% endtrans %}</a>
           <ul class="dropdown">
-            <li><a href="{{ path('_expediente_sysadmin_academic') }}">{% trans %}label.academic{% endtrans %}</a></li>
-            <li><a href="{{ path('_expediente_sysadmin_charges') }}">{% trans %}label.charges{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.academic{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.charges{% endtrans %}</a></li>
 
           </ul>
         </li>
@@ -105,7 +105,7 @@
                 <li class="divider"></li>
                 <li class="dropdown{% if menuIndex is defined and menuIndex == 3%} current{% endif %}"><a href="#">{% trans %}label.programs{% endtrans %}</a>
                   <ul class="dropdown">
-                    <li><a href="{{ path('_expediente_sysadmin_program') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
+                    <li><a href="{{ path('_expediente_sysadmin_program_search') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
                   </ul>
                 </li>
                 <li class="divider"></li>
