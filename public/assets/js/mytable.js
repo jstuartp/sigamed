@@ -3,17 +3,6 @@
  */
 
 
-table = $('#myTable').DataTable({
-    "paging": true,
-    "lengthChange": true,
-    "searching": false,
-    "ordering": false,
-    "info": true,
-    "autoWidth": true,
-    "responsive": true,
-    "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
-
-})
 
 
 
@@ -33,10 +22,8 @@ table = $('#example2').DataTable({
     "searching": true,
     "ordering": false,
     "info": true,
-    "autoWidth": true,
-    "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
-
-})
+    "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
+});
 /*
 
 $(document).ready(function () {
