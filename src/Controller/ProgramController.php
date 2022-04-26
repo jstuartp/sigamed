@@ -218,7 +218,7 @@ class ProgramController extends AbstractController
             )));*/
             } catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('Program::searchProgramsAction [' . $info . "]");
+                //$logger->err('Program::searchProgramsAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }/*
         }
@@ -529,7 +529,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/program/programQCheck", name="_expediente_sysadmin_program_questions_check_simple")
+     * @Route("/program/programQCheck/", name="_expediente_sysadmin_program_questions_check_simple")
      */
     public function programCheckQuestionsAction($id, EntityManagerInterface $em)
     {
@@ -1564,9 +1564,10 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/students/getInfoProgramFull", name="_expediente_sysadmin_get_info_program_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoProgramFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoProgramFullAction(Request $request, EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
             try {
@@ -1574,7 +1575,7 @@ class ProgramController extends AbstractController
                 //$request = $this->get('request')->request;
                 $programId = $request->get('programId');
 
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
                 //$student = new Student();
                 $program = $em->getRepository("App:Programs")->find($programId);
                 $course = $program->getCourse();
@@ -1615,7 +1616,7 @@ class ProgramController extends AbstractController
             }
             catch (Exception $e) {
                 $info = toString($e);
-                $logger->err('Program::showProgramAction [' . $info . "]");
+                //$logger->err('Program::showProgramAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request

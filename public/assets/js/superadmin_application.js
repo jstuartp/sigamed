@@ -983,15 +983,19 @@ var Tecnotek = {
                     //location.href = Tecnotek.UI.urls["programQ"] + "/" + $(this).attr("rel");
                 });
 
+                $('.checkButton').unbind().click(function(event){
+                    event.preventDefault();
+                    location.href = Tecnotek.UI.urls["programQCheck"] + $(this).attr("rel");
+                });
+
                 $('.nopdfButton').click(function(event){
                     event.preventDefault();
                     alert("El programa aun no se ha finalizado");
                 });
 
-/*
+
                 $('.viewButton').unbind();
                 $('.viewButton').click(function(event){
-                    alert("jodase");
                     console.debug("Click en view button: " + Tecnotek.UI.urls["getInfoProgramFullURL"]);
                     event.preventDefault();
                     //Tecnotek.UI.vars["relativeId"] = $(this).attr("rel");
@@ -1013,6 +1017,13 @@ var Tecnotek = {
 
                 });
 
+
+                $("#openProgramForm").fancybox({
+                    'afterLoad' : function(){
+
+                    }
+                });
+/*
                 $('.adminButton').unbind().click(function(event){
                     event.preventDefault();
                     location.href = Tecnotek.UI.urls["admin"] + "/" + $(this).attr("rel");
@@ -1039,11 +1050,6 @@ var Tecnotek = {
                     alert("El programa aun no se ha finalizado");
                 });
 
-                $("#openProgramForm").fancybox({
-                    'afterLoad' : function(){
-
-                    }
-                });
 
                 $("#openProgramEdit").fancybox({
                     'afterLoad' : function(){

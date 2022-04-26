@@ -472,10 +472,10 @@
   <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js') }}"></script>
 {% endblock %}
 {% if is_granted('ROLE_PROFESOR') %}
-  <script type="text/javascript" src="{{ asset('assets/js/teacher_application.js?v=2') }}"></script>
-  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?v=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/teacher_application.js?a=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?c=2') }}"></script>
 {% else %}
-  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?v=2') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/superadmin_application.js?c=2') }}"></script>
 {% endif %}
 
 {% block extrajs %}{% endblock %}

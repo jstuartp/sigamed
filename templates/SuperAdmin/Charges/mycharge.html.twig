@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block extracss %}
-    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
-    <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/fancybox/fancybox_style.css') }}" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
 
 {% endblock %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?m=1') }}"></script>
-    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?m=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
         Tecnotek.module = "chargeList";
         Tecnotek.assetsURL = "{{ path('homepage')}}";
@@ -31,7 +31,7 @@
         <input style="height: 80px;" id="teacherId" name="teacherId" value="{{ teacherId }}">
     </div>
     <div class="container_24">
-        {% if charge %}
+        {% if charges %}
         <div class="grid_24">
 
             <div class="titleRow">
@@ -421,19 +421,20 @@
             <p>Director</p>
 
             </br>
+            {% for charge in charges |slice(0, 1)%}
+                {% if charge.status != 3 and charge.status != 4 and charge.status != 5%}
+                    <form id="form_{{ charge.id }}">
+                        <div id="formAcceptCharge"><label>Aprobar carga:
+                                <input type="button" class="btnSendEmailChargeYes" value="Aprobar carga" rel="{{ charge.id }}">
+                                Rechazar carga:
+                                <input type="button" class="btnSendEmailChargeNo" value="Rechazar carga" rel="{{ charge.id }}"></label>
 
 
-            {% if charge.status != 3 and charge.status != 4 and charge.status != 5%}
-                <form id="form_{{ charge.id }}">
-                    <div id="formAcceptCharge"><label>Aprobar carga:
-                            <input type="button" class="btnSendEmailChargeYes" value="Aprobar carga" rel="{{ charge.id }}">
-                            Rechazar carga:
-                            <input type="button" class="btnSendEmailChargeNo" value="Rechazar carga" rel="{{ charge.id }}"></label>
+                            Comentarios:<textarea style="height: 80px;" rows="5" id="detailout" name="detailout">{{ charge.detailout }}</textarea></div>
+                    </form>
+                {% endif %}
+            {% endfor %}
 
-
-                        Comentarios:<textarea style="height: 80px;" rows="5" id="detailout" name="detailout">{{ charge.detailout }}</textarea></div>
-                </form>
-            {% endif %}
         </div>
 
         {% endif %}
