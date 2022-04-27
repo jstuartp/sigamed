@@ -97,7 +97,7 @@ class QuestionnaireExtension extends AbstractExtension
                 $value3 = $answerscheck[$question->getId()]->getMainText();
             }
 
-            $labelStyle = ' style="  float: left; width: 350px;" ';
+            $labelStyle = ' style="  float: left; width: 200px;" ';
             $html = "";
             $html .= "<div class='questionnaireQuestion'>";
             switch($question->getType()){
@@ -171,14 +171,16 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
                     class="clear"></div>';
                     $texts = explode('-',$question->getSecondText());
-                    $html .= '<div>' .
-                        '<div class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</div>' .
-                        '<div class="clear"></div>' .
-                        '</div>';
-                    $html .= '<div class="questions-group">';
+
+                    $html .= '<table>';
+                    $html .= '<tr>' .
+                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</td>' .
+                        '<td class="clear"></td>' .
+                        '</tr>';
+                    //$html .= '<div class="questions-group">';
                     foreach ( $question->getChildren() as $q) {
                         $value1 = "";
                         if(array_key_exists($q->getId(), $answers)){
@@ -188,27 +190,28 @@ class QuestionnaireExtension extends AbstractExtension
                             $value2 = array("","","","");
                         }
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
-                        $html .= '<div>' .
-                            '<div class="left" style="width: 150px;"> '
+                        $html .= '<tr>' .
+                            '<td class="left" style="width: 150px;"> '
                             . '<input type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
                             '" value="' . $value2[0] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 300px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 300px;"> '
                             . '<input type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
-                            . '" value="' . $value2[1] . '"></div>' .
+                            . '" value="' . $value2[1] . '"></td>' .
 
-                            '<div class="left" style="width: 75px;"> '
+                            '<td class="left" style="width: 75px;"> '
                             . '<input style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 50px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 50px;"> '
                             . '<textarea style="width: 300px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
-                            . '</div>' .
-                            '<div class="clear"></div>' .
-                            '</div>';
+                            . '</td>' .
+                            '<td class="clear"></td>' .
+                            '</tr>';
                     }
-                    $html .= '</div>';
+                    //$html .= '</div>';
+                    $html .= '</table>';
                     break;
                 case 9:
                     $texts = explode('-',$question->getSecondText());
@@ -260,15 +263,16 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
                     class="clear"></div>';
                     $texts = explode('-',$question->getSecondText());
-                    $html .= '<div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</div>' .
-                        '<div class="clear"></div>' .
-                        '</div>';
-                    $html .= '<div class="questions-group">';
+                    $html .= '<table>' .
+                        '<tr>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</td>' .
+                        '<td class="clear"></td>' .
+                        '</tr>';
+                    //$html .= '<div class="questions-group">';
                     foreach ( $question->getChildren() as $q) {
                         $value1 = "";
                         if(array_key_exists($q->getId(), $answers)){
@@ -278,31 +282,32 @@ class QuestionnaireExtension extends AbstractExtension
                             $value2 = array("","","","","");
                         }
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
-                        $html .= '<div>' .
-                            '<div class="left" style="width: 100px;"> '
+                        $html .= '<tr>' .
+                            '<td class="left" style="width: 100px;"> '
                             . '<input style="width: 100px;" type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
                             '" value="' . $value2[0] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 100px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 100px;"> '
                             . '<input style="width: 100px;" type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
-                            . '" value="' . $value2[1] . '"></div>' .
+                            . '" value="' . $value2[1] . '"></td>' .
 
-                            '<div class="left" style="width: 100px;"> '
+                            '<td class="left" style="width: 100px;"> '
                             . '<input style="width: 100px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 250px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 250px;"> '
                             . '<textarea style="width: 250px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
-                            . '</div>' .
-                            '<div class="left" style="width: 250px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 250px;"> '
                             . '<textarea style="width: 250px;" type="text" id="qaux5-' . $q->getId() . '" name="qaux5-' .
                             $q->getId() . '">' . $value2[4] . '</textarea>'
-                            . '</div>' .
-                            '<div class="clear"></div>' .
-                            '</div>';
+                            . '</td>' .
+                            '<td class="clear"></td>' .
+                            '</tr>';
                     }
-                    $html .= '</div>';
+                    //$html .= '</div>';
+                    $html .= '</table>';
                     break;
                 default:
                     $html .= 'Tipo desconocido: ' . $question->getType();
@@ -395,14 +400,15 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
                     class="clear"></div>';
                     $texts = explode('-',$question->getSecondText());
-                    $html .= '<div>' .
-                        '<div class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</div>' .
-                        '<div class="clear"></div>' .
-                        '</div>';
-                    $html .= '<div class="questions-group">';
+                    $html .= '<table>';
+                    $html .= '<tr>' .
+                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</td>' .
+                        '<td class="clear"></td>' .
+                        '</tr>';
+                    //$html .= '<div class="questions-group">';
                     foreach ( $question->getChildren() as $q) {
                         $value1 = "";
                         if(array_key_exists($q->getId(), $answers)){
@@ -412,27 +418,27 @@ class QuestionnaireExtension extends AbstractExtension
                             $value2 = array("","","","");
                         }
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
-                        $html .= '<div>' .
-                            '<div class="left" style="width: 150px;"> '
+                        $html .= '<tr>' .
+                            '<td class="left" style="width: 150px;"> '
                             . '<input disabled type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
                             '" value="' . $value2[0] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 300px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 300px;"> '
                             . '<input disabled type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
-                            . '" value="' . $value2[1] . '"></div>' .
+                            . '" value="' . $value2[1] . '"></td>' .
 
-                            '<div class="left" style="width: 75px;"> '
+                            '<td class="left" style="width: 75px;"> '
                             . '<input disabled style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 50px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 50px;"> '
                             . '<textarea maxlength="5000" disabled style="width: 300px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
-                            . '</div>' .
-                            '<div class="clear"></div>' .
-                            '</div>';
+                            . '</td>' .
+                            '<td class="clear"></td>' .
+                            '</tr>';
                     }
-                    $html .= '</div>';
+                    $html .= '</table>';
                     break;
                 case 9:
                     $texts = explode('-',$question->getSecondText());
@@ -484,15 +490,16 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
                     class="clear"></div>';
                     $texts = explode('-',$question->getSecondText());
-                    $html .= '<div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</div>' .
-                        '<div class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</div>' .
-                        '<div class="clear"></div>' .
-                        '</div>';
-                    $html .= '<div class="questions-group">';
+                    $html .= '<table>';
+                    $html .= '<tr>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</td>' .
+                        '<td class="clear"></div>' .
+                        '</tr>';
+                    //$html .= '<div class="questions-group">';
                     foreach ( $question->getChildren() as $q) {
                         $value1 = "";
                         if(array_key_exists($q->getId(), $answers)){
@@ -502,26 +509,26 @@ class QuestionnaireExtension extends AbstractExtension
                             $value2 = array("","","","","");
                         }
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
-                        $html .= '<div>' .
-                            '<div class="left" style="width: 100px;"> '
+                        $html .= '<tr>' .
+                            '<td class="left" style="width: 100px;"> '
                             . '<input disabled style="width: 100px;" type="text" value="' . $value2[0] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 100px;"> '
-                            . '<input disabled style="width: 100px;" type="text" value="' . $value2[1] . '"></div>' .
+                            . '</td>' .
+                            '<td class="left" style="width: 100px;"> '
+                            . '<input disabled style="width: 100px;" type="text" value="' . $value2[1] . '"></td>' .
 
-                            '<div class="left" style="width: 100px;"> '
+                            '<td class="left" style="width: 100px;"> '
                             . '<input disabled style="width: 100px;" type="text" value="' . $value2[2] . '">'
-                            . '</div>' .
-                            '<div class="left" style="width: 250px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 250px;"> '
                             . '<textarea disabled style="width: 250px;" type="text" maxlength="5000" >' . $value2[3] . '</textarea>'
-                            . '</div>' .
-                            '<div class="left" style="width: 250px;"> '
+                            . '</td>' .
+                            '<td class="left" style="width: 250px;"> '
                             . '<textarea disabled style="width: 250px;" type="text" maxlength="5000" >' . $value2[4] . '</textarea>'
-                            . '</div>' .
-                            '<div class="clear"></div>' .
-                            '</div>';
+                            . '</td>' .
+                            '<td class="clear"></td>' .
+                            '</tr>';
                     }
-                    $html .= '</div>';
+                    $html .= '</table>';
                     break;
                 default:
                     $html .= 'Tipo desconocido: ' . $question->getType();
