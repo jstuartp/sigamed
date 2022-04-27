@@ -2,11 +2,18 @@
  * Created by Stuart on 23/7/2018.
  */
 
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "ordering": true,
+        "order": [[ 0, "desc" ]]
+    } );
+} );
 
 
 
 
 table = $('#example2').DataTable({
+
     language: {
         processing: "En curso...",
         search: "Buscar:",
@@ -18,12 +25,13 @@ table = $('#example2').DataTable({
         },
     },
     "paging": true,
-    "lengthChange": true,
+    "lengthChange": false,
     "searching": true,
-    "ordering": false,
+    "ordering": true,
     "info": true,
-    "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-});
+    "order": [[ 0, "desc" ], [1, "desc"]]
+})
+
 /*
 
 $(document).ready(function () {

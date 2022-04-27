@@ -26,11 +26,10 @@
   <link rel="stylesheet" href={{ asset('medilab/assets/vendor/glightbox/css/glightbox.min.css')}} />
   <link rel="stylesheet" href={{ asset('medilab/assets/vendor/remixicon/remixicon.css')}} />
   <link rel="stylesheet" href={{ asset('medilab/assets/vendor/swiper/swiper-bundle.min.css')}} />
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('assets/datatables/DataTables-1.11.5/css/dataTables.bootstrap5.css') }} ">
-    <!-- DataTables SIMPLE-->
-    <!-- Datatables buttons para manejar los botones de impresion dentro de las tablas -->
-    <link href="{{ asset('assets/datatables/Buttons-2.2.2/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.js"></script>
 
 
   <!-- Template Main CSS File -->
@@ -463,12 +462,17 @@
   <!-- js para las datatables -->
   <!-- DataTables -->
 
-  <script src="{{ asset('assets/datatables/datatables.css') }}"></script>
-  <script src="{{ asset('assets/datatables/datatables.js') }}"></script>
+
+
+
+
+ <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script> -->
 
 
   <!--tablas personalisadas -->
-  <script type="text/javascript" src="{{ asset('assets/js/mytable.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/mytable.js?a=1')}}"></script>
   <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js') }}"></script>
 {% endblock %}
 {% if is_granted('ROLE_PROFESOR') %}

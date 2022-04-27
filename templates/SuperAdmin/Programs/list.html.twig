@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?f=2') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?f=4') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
 
     <script type="text/javascript">
@@ -56,7 +56,7 @@
                 <table class="table table-bordered table-hover   table-striped nowrap" id="example2" style="font-size: 14px">
                     <thead>
                     <tr>
-                        <th  hidden>id</th>
+                        <th>id</th>
                           <th>Nombre</th>
                           <th>Profesores</th>
                           <th>Estado</th>
@@ -72,7 +72,7 @@
                     {% for arregloDato in programsM %}
                     <tr class="info">
 
-                        <td hidden>{{ arregloDato.id }}</td>
+                        <td >{{ arregloDato.id }}</td>
                         <td class="nowrap">{{ arregloDato.detail }}</td>
                         <td class="nowrap">{{ arregloDato.name }}</td>
                         <td class="nowrap">{% if arregloDato.status == 1 %}  Creado {% endif %}

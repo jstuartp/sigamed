@@ -2762,6 +2762,8 @@ Tecnotek.Programs = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
+                    alert("Se ha guardado la informacion DEL CURSO.");
+                    location.reload(true); //Codigo agregado por Stuart 27/04
                     Tecnotek.Programs.searchPrograms();
                 }
             },
@@ -3070,6 +3072,7 @@ Tecnotek.programEdit = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     alert("Se ha guardado la informacion correctamente.");
+
                 }
             },
             function(jqXHR, textStatus){
@@ -3238,7 +3241,8 @@ Tecnotek.Tickets = {
                             if(data.error === true) {
                                 Tecnotek.showErrorMessage(data.message,true, "", false);
                             } else {
-                                window.location.reload(true);
+
+                                location.reload(true);
                             }
                         },
                         function(jqXHR, textStatus){
@@ -3344,24 +3348,4 @@ Tecnotek.Tickets = {
 
 };
 
-table = $('#example2Colum').DataTable({
-    language: {
-        processing: "En curso...",
-        search: "Buscar:",
-        paginate: {
-            first:      "Primero",
-            previous:   "Anterior",
-            next:       "Siguiente",
-            last:       "Último"
-        },
-    },
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": false,
-    "info": true,
-    "autoWidth": false,
-    "order": [[ 0, "desc" ],[ 1, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
 
-
-})
