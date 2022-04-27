@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
     <style type="text/css">
         @media all {
-            .questionnaireQuestion label{float: left; width: 350px; }
+            .questionnaireQuestion label{ width: 350px; margin-bottom: 0px;}
             .questionnaireQuestion textarea { height: 80px; }
             .questionnaireQuestion .short {max-width: 50px;}
             .questionnaireQuestion span {margin-left: 10px; margin-right: 10px; font-family: Georgia, serif;
@@ -40,6 +40,10 @@
         .form-type-9 tr{text-align: center; vertical-align: middle; line-height: 30px; height:30px;}
         .form-type-9 tr td{color: #000;}
         .form-type-9 tr td:first-child{text-align: left; padding-left: 5px;}
+
+        .section {
+            padding: 0px;
+        }
 
         .section-container, .section-container.auto {
             width: 100%;
@@ -103,6 +107,8 @@
         .section-container section.active .content,
         .section-container .section.active .content, .section-container.auto section.active .content,
         .section-container.auto .section.active .content {
+
+            padding-top: 0;
             display: block;
         }
         .section-container section.active .title,
