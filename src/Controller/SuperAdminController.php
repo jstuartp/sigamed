@@ -2476,10 +2476,10 @@ class SuperAdminController extends AbstractController
                     }else{
                         $typeC = "Miembro";
                     }
-                    $html .= '<div id="commissionAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
-                    $html .= '    <div id="entryNameField_' . $entry['commission'] . '" name="entryNameField_' . $entry['commission'] . '" class="option_width" style="float: left; width: 250px;">' . $entry['name'] . '</div>';
-                    $html .= '    <div  class="option_width" style="float: left; width: 50px;">' . $typeC . '</div>';
-                    $html .= '    <div class="right icon button imageButton deleteButton deleteCommissionAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
+                    $html .= '<div id="commissionAssginedRows_' . $entry['id'] . '">';
+                    $html .= '    <div id="entryNameField_' . $entry['commission'] . '" name="entryNameField_' . $entry['commission'] . '" style="float: left; width: 450px;">' . $entry['name'] . '</div>';
+                    $html .= '    <div  style="float: left; width: 50px;">' . $typeC . '</div>';
+                    $html .= '    <div  style="float: right; width: 50px;" class="right icon button imageButton deleteButton deleteCommissionAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
