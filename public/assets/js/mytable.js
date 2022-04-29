@@ -3,7 +3,17 @@
  */
 
 $(document).ready(function() {
-    $('#example1').DataTable( {
+    $('#example2').DataTable( {
+        language: {
+            processing: "En curso...",
+            search: "Buscar:",
+            paginate: {
+                first:      "Primero",
+                previous:   "Anterior",
+                next:       "Siguiente",
+                last:       "Último"
+            },
+        },
         "ordering": true,
         "order": [[ 0, "desc" ]]
     } );
@@ -11,8 +21,7 @@ $(document).ready(function() {
 
 
 
-
-table = $('#example2').DataTable({
+table = $('#example3').DataTable({
 
     language: {
         processing: "En curso...",

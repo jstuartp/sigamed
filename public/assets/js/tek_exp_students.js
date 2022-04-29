@@ -410,6 +410,9 @@ Tecnotek.Courses = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
+                   /* alert("Se ha guardado la informacion DEL CURSO."); */
+                    location.reload(true); //agregado por stuart para hacer la recarga 29/04
+
                     Tecnotek.Courses.searchCourses();
                 }
             },
@@ -2762,7 +2765,7 @@ Tecnotek.Programs = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
-                    alert("Se ha guardado la informacion DEL CURSO.");
+                    alert("Se ha guardado la informacion DEL PROGRAMA.");
                     location.reload(true); //Codigo agregado por Stuart 27/04
                     Tecnotek.Programs.searchPrograms();
                 }

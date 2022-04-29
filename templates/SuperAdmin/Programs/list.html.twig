@@ -46,7 +46,11 @@
                 {% endif %}
                 {% if role == 1 %}
                     <!--<div class="right"><a href="{{ path('_expediente_sysadmin_program_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>-->
-                    <div class="col-4"><a id="openProgramCreate" class="modalbox button success-darker tiny" href="#programFormContainerCreate">{% trans %}label.add{% endtrans %}</a> </div>
+                    <div class="col-4">
+                        <a id="openProgramCreate" class="modalbox button success-darker tiny" href="#programFormContainerCreate">
+                            <button type="button" class="btn btn-info"> {% trans %}label.add{% endtrans %}</button>
+                        </a>
+                    </div>
                 {% endif %}
                 <div class="clear"></div>
             </div>
@@ -56,7 +60,7 @@
                 <table class="table table-bordered table-hover   table-striped nowrap" id="example2" style="font-size: 14px">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <th hidden> id</th>
                           <th>Nombre</th>
                           <th>Profesores</th>
                           <th>Estado</th>
@@ -72,7 +76,7 @@
                     {% for arregloDato in programsM %}
                     <tr class="info">
 
-                        <td >{{ arregloDato.id }}</td>
+                        <td hidden >{{ arregloDato.id }}</td>
                         <td class="nowrap">{{ arregloDato.detail }}</td>
                         <td class="nowrap">{{ arregloDato.name }}</td>
                         <td class="nowrap">{% if arregloDato.status == 1 %}  Creado {% endif %}
