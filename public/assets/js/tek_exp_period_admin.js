@@ -847,7 +847,7 @@ Tecnotek.AdminPeriod = {
                         $html = '<div id="courseRow_' + data.courses[i].id  + '" class="row userRow tableRowOdd">';
                         $html += '    <div id="courseNameField_' + data.courses[i].id + '" name="courseNameField_' + data.courses[i].id + '" class="option_width" style="float: left; width: 250px;">' + data.courses[i].name + '</div>';
                         $html += '    <div id="courseTeacherField_' + data.courses[i].id + '" name="courseTeacherField_' + data.courses[i].id + '" class="option_width" style="float: left; width: 250px;">' + data.courses[i].teacherName + '</div>';
-                        $html += '    <div class="right imageButton deleteButton deleteCourse" style="height: 16px;" title="Eliminar"  rel="' + data.courses[i].id + '"></div>';
+                        $html += '    <div style="float: right; width: 50px;" class="right icon button imageButton deleteButton deleteCourse" style="height: 16px;" title="Eliminar"  rel="' + data.courses[i].id + '"><i class="fas fa-trash"></i></div>';
                         //$html += '    <div class="right imageButton editButton editCourse"  title="Editar"  rel="' + data.courses[i].id + '" teacher="' + data.courses[i].teacherId + '"></div>';
                         $html += '    <div class="clear"></div>';
                         $html += '</div>';
