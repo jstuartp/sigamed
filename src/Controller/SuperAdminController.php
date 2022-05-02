@@ -1625,8 +1625,8 @@ class SuperAdminController extends AbstractController
 
                 foreach( $entity as $entry ){
                     $html .= '<div id="courseAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
-                    $html .= '    <div id="entryNameField_' . $entry['course'] . '" name="entryNameField_' . $entry['course'] . '" class="option_width" style="float: left; width: 300px;">' .$entry['groupnumber'].'-' .$entry['code'].' '. $entry['name'] . '</div>';
-                    $html .= '    <div class="right icon button imageButton deleteButton deleteCourseAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
+                    $html .= '    <div id="entryNameField_' . $entry['course'] . '" name="entryNameField_' . $entry['course'] . '" class="option_width" style="float: left; width: 800px;">' .$entry['groupnumber'].'-' .$entry['code'].' '. $entry['name'] . '</div>';
+                    $html .= '    <div style="float: right; width: 50px;" class="right icon button imageButton deleteButton deleteCourseAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -2653,7 +2653,7 @@ class SuperAdminController extends AbstractController
                 foreach( $entity as $entry ){
                     $html .= '<div id="projectAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
                     $html .= '    <div id="entryNameField_' . $entry['project'] . '" name="entryNameField_' . $entry['project'] . '" class="option_width" style="float: left; width: 300px;">' . $entry['name'] . '</div>';
-                    $html .= '    <div class="right icon button imageButton deleteButton deleteProjectAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
+                    $html .= '    <div style="float: right; width: 50px;" class="right icon button imageButton deleteButton deleteProjectAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
@@ -2826,8 +2826,8 @@ class SuperAdminController extends AbstractController
 
                 foreach( $entity as $entry ){
                     $html .= '<div id="otherAssginedRows_' . $entry['id'] . '" class="row userRow tableRowOdd">';
-                    $html .= '    <div id="entryNameField_' . $entry['id'] . '" name="entryNameField_' . $entry['id'] . '" class="option_width" style="float: left; width: 300px;">' . $entry['name'] . '</div>';
-                    $html .= '    <div class="right icon button imageButton deleteButton deleteOtherAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
+                    $html .= '    <div id="entryNameField_' . $entry['id'] . '" name="entryNameField_' . $entry['id'] . '" class="option_width" style="float: left; width: 800px;">' . $entry['name'] . '</div>';
+                    $html .= '    <div style="float: right; width: 50px;" class="right icon button imageButton deleteButton deleteOtherAssigned" title="Eliminar"  rel="' . $entry['id'] . '"><i class="fas fa-trash"></i></div>';
                     $html .= '    <div class="clear"></div>';
                     $html .= '</div>';
 
