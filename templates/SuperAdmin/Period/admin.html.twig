@@ -329,9 +329,24 @@
     <div class="container">
     <div class="grid">
     <div>
+        <div class="row">
+            <div class="col-8">
         <div class="left"><h3>{% trans %}label.period.admin{% endtrans %}: {{ entity }}</h3></div>
-        <div class="right"><a href="{{ path('_expediente_sysadmin_period') }}" class="button success-darker tiny"><span></span>{% trans %}label.back.list{% endtrans %}</a></div>
+            </div>
+            <div class="col-4" align="right">
+        <div class="right"><a href="{{ path('_expediente_sysadmin_period') }}" >
+                <button type="button" class="btn btn-info"> <span style="color: #f0f0f0"> {% trans %}label.back.list{% endtrans %}</span></button>
+            </a>
+        </div>
+            </div>
+        </div>
         <div class="clear"></div>
+        <div class="row">
+            &nbsp;
+        </div>
+        <div class="row">
+            &nbsp;
+        </div>
     </div>
 
     <div class="centeredDiv">

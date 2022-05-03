@@ -3099,8 +3099,8 @@ textarea.form-control-lg {
 
 .btn-info {
   color: #000;
-  background-color: #0dcaf0;
-  border-color: #0dcaf0;
+  background-color: #1977cc;   /*cambio stuart original 0dcaf0*/
+  border-color: #1977cc;
 }
 .btn-info:hover {
   color: #000;

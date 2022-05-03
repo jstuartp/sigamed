@@ -318,21 +318,24 @@
     <div class="container" style="width: 900px;">
         <div class="grid" style="width: 100%;">
             <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="{{ entity.id }}"></div>
-            <div class="titleRow">
-                <div class="left"><h3> {{ entity }}</h3></div>
-                <div class="left"><h3> - {{ entity.teacher }}</h3></div>
-                <div class="right"><a href="{{ path('_expediente_sysadmin_program') }}" class="button success-darker tiny"><span></span>{% trans %}label.back.list{% endtrans %}</a></div>
-                <div class="clear"></div>
-            </div>
-            <div class="titleRow">
-                <div class="left" style="margin-right: 15px; font-weight: bold;">{%trans%}select.group{%endtrans%}
-                    <select id="group" name="group" style="width: 150px;">
-                        {% for group in groups %}
-                            <option {% if group.id == currentGroup %}  selected="selected" {% endif %}
-                                    value="{{ group.id }}">{{group}}</option>
-                        {% endfor %}
-                    </select>
+                <div class="row">
+                    <div class="col-8"><h3> {{ entity }}</h3>
+                    <h3> - {{ entity.teacher }}</h3></div>
+                    <div class="col-4" align="right">
+                        <a href="{{ path('_expediente_sysadmin_program_search') }}" class="button success-darker tiny">
+                            <button type="button" class="btn btn-info"> <span style="color: #f0f0f0">{% trans %}label.back.list{% endtrans %}</span></button>
+                        </a></div>
                 </div>
+                <div class="clear"></div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+
+            <div class="titleRow">
+
                 <div class="right">
                     <input type="hidden" id="programId" name="programId" value="{{ entity.id }}">
                     <input type="hidden" id="userId" name="userId" value="{{ app.user.id }}">
