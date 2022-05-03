@@ -29,12 +29,25 @@
 
 <div class="container">
     <div class="grid">
-        <div class="titleRow">
+        <div class="row">
+            <div class="col-8">
             <div class="left"><h3>{% trans %}label.period.listar{% endtrans %}</h3></div>
-
+            </div>
                 <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_period_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
-                <div class="right"><a id="openPeriodForm" class="modalbox button success-darker tiny" href="#periodFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+            <div class="col-4" align="right">
+            <div class="right">
+                <a id="openPeriodForm" class="modalbox button success-darker tiny" href="#periodFormContainer">
+                    <button type="button" class="btn btn-info"> <span style="color: #f0f0f0">{% trans %}label.add{% endtrans %}</span></button>
+                </a>
+            </div>
+            </div>
             <div class="clear"></div>
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row">
+                &nbsp;
+            </div>
         </div>
 
         <!-- TABLA DE STUART CON DATATABLES-->

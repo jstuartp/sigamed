@@ -17,7 +17,6 @@
 
         <li class="dropdown{% if menuIndex is defined and menuIndex == 3%} current{% endif %}"><a href="#">{% trans %}label.programs{% endtrans %}</a>
           <ul class="dropdown">
-            <li><a href="{{ path('_expediente_sysadmin_program_create') }}">{% trans %}label.createProgram{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_program_search') }}">{% trans %}label.listProgram{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_program_hsearch') }}">{% trans %}label.listProgramh{% endtrans %}</a></li>
           </ul>

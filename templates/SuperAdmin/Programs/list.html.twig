@@ -46,13 +46,19 @@
                 {% endif %}
                 {% if role == 1 %}
                     <!--<div class="right"><a href="{{ path('_expediente_sysadmin_program_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>-->
-                    <div class="col-4">
+                    <div class="col-4" align="right">
                         <a id="openProgramCreate" class="modalbox button success-darker tiny" href="#programFormContainerCreate">
-                            <button type="button" class="btn btn-info"> {% trans %}label.add{% endtrans %}</button>
+                            <button type="button" class="btn btn-info"> <span style="color: #f0f0f0"> {% trans %}label.add{% endtrans %}</span></button>
                         </a>
                     </div>
                 {% endif %}
                 <div class="clear"></div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
             </div>
 
 
@@ -64,11 +70,14 @@
                           <th>Nombre</th>
                           <th>Profesores</th>
                           <th>Estado</th>
+
+                        <th></th>
+                        {% if role != 4 %}
                         <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
+                        {% endif %}
 
                     </tr>
                     </thead>
@@ -99,7 +108,7 @@
                                 <div class="icon button editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar Datos"></i></div>
                         </td>
                             {% endif %}
-                            {% if role != 4 %}
+                            {% if role != 6 %}
                         <td class="nowrap">
                                 <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><i class="fas fa-edit" title="Editar Programa"></i></div>
                         </td>
