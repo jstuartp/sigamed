@@ -37,6 +37,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\DBAL\DriverManager;
 
+//blibiotecas para mailer
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+
 
 
 class ProgramController extends AbstractController
@@ -808,20 +814,20 @@ class ProgramController extends AbstractController
     /**
      * @Route("/student/programSendCheck", name="_expediente_sysadmin_send_check_program_data")
      */
-    public function sendCheckProgramFormAction(\Swift_Mailer $mailer){
-        $logger = $this->get('logger');
+    public function sendCheckProgramFormAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
+        //$logger = $this->get('logger');
         $name= "profesor";
 
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
-            $translator = $this->get("translator");
+           // $translator = $this->get("translator");
             try {
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $programId = $request->get('programId');
                 $userId = $request->get('programId');
 
-                $em = $this->getDoctrine()->getEntityManager();
+               // $em = $this->getDoctrine()->getEntityManager();
 
                 if( isset($programId) ){
                     $program = $em->getRepository("App:Programs")->find($programId);
@@ -845,8 +851,8 @@ class ProgramController extends AbstractController
                         . " WHERE pr.course_id = cc.course_id and cc.course_id = ".$courseId;
 
                     $stmt = $em->getConnection()->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetchAll();
+                    //cambios stuart para el envio del correo
+                    $result = $stmt->executeQuery()->fetchAllAssociative();
                     foreach($result as $row) {
                         $coordinatorId = $row['user_id'];
                     }
@@ -855,15 +861,41 @@ class ProgramController extends AbstractController
                     $coordinatorEmail = $coordinator->getEmail();
 
                     /// enviar por correo
+                    /*
                     $message = (new \Swift_Message('Solicitud de Revisión de Programa'))
                         ->setSubject('Solicitud de Revisión de Programa')
                         ->setFrom('ciencias.politicas@ucr.ac.cr')
                         ->setTo(['sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr', 'ciencias.politicas@ucr.ac.cr', $coordinatorEmail])
                         ->setBody(
                             'El usuario: '. $teacher->getFirstname(). ' '. $teacher->getLastname() . ' solicita la revisión del programa ' .$detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr'// .$coordinatorId.'id'
-                        );
+                        );*/
 
-                    $mailer->send($message);
+                    $email = (new Email())
+                        ->from('jorgestwart.perez@ucr.ac.cr')
+                        ->to('sistemas.ecp@ucr.ac.cr')
+                        ->addTo('erick.morajimenez@ucr.ac.cr')
+                        ->addTo('jorgestwart.perez@ucr.ac.cr')
+                        ->addTo('jstuartp@gmail.com')
+                        ->addTo($coordinatorEmail)
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        //->priority(Email::PRIORITY_HIGH)
+                        ->subject('Solicitud de Revisión de Programa')
+                        ->text('El usuario: '. $teacher->getFirstname(). ' '. $teacher->getLastname() . ' solicita la revisión del programa ' .$detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr/' .$coordinatorId.'id');
+                      //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+
+                 //   $mailer->send($email);
+
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                        // some error prevented the email sending; display an
+                        // error message or try to resend the message
+                        $info = $e->getTraceAsString();
+                        $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                    }
 
                     return new Response(json_encode(array('error' => false)));
 
@@ -872,8 +904,8 @@ class ProgramController extends AbstractController
                 }
             }
             catch (Exception $e) {
-                $info = toString($e);
-                $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+                $info = $e->getTraceAsString();
+                $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
