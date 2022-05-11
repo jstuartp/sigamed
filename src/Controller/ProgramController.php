@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Snappy\GeneratorInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +43,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+//blibiotecas para la creacion de pdf
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Bundle\SnappyBundle\Snappy\Generator;
+use Knp\Snappy\Pdf;
 
 
 
@@ -871,7 +876,7 @@ class ProgramController extends AbstractController
                         );*/
 
                     $email = (new Email())
-                        ->from('jorgestwart.perez@ucr.ac.cr')
+                        ->from('nides.ti@ucr.ac.cr')
                         ->to('sistemas.ecp@ucr.ac.cr')
                         ->addTo('erick.morajimenez@ucr.ac.cr')
                         ->addTo('jorgestwart.perez@ucr.ac.cr')
@@ -917,18 +922,18 @@ class ProgramController extends AbstractController
     /**
      * @Route("/student/programSendReCheck", name="_expediente_sysadmin_send_recheck_program_data")
      */
-    public function sendReCheckProgramFormAction(\Swift_Mailer $mailer){
-        $logger = $this->get('logger');
+    public function sendReCheckProgramFormAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
+       // $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
-            $translator = $this->get("translator");
+        //    $translator = $this->get("translator");
             try {
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $programId = $request->get('programId');
                 $userId = $request->get('userId');
 
-                $em = $this->getDoctrine()->getEntityManager();
+               // $em = $this->getDoctrine()->getEntityManager();
 
                 if( isset($programId) ){
                     $program = $em->getRepository("App:Programs")->find($programId);
@@ -948,6 +953,7 @@ class ProgramController extends AbstractController
                     $teacherEmail = $teacher->getEmail();
 
                     /// enviar por correo
+                    /*
                     $message = (new \Swift_Message('Solicitud de Revisión de Programa'))
                         ->setSubject('Solicitud de Revisión de Programa')
                         ->setFrom('ciencias.politicas@ucr.ac.cr')
@@ -957,7 +963,29 @@ class ProgramController extends AbstractController
                         );
 
                     $mailer->send($message);
-
+                    */
+                    $email = (new Email())
+                        ->from('nides.ti@ucr.ac.cr')
+                        ->to('sistemas.ecp@ucr.ac.cr')
+                        ->addTo('erick.morajimenez@ucr.ac.cr')
+                        ->addTo('jorgestwart.perez@ucr.ac.cr')
+                        ->addTo('jstuartp@gmail.com')
+                        ->addTo($teacherEmail)
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        //->priority(Email::PRIORITY_HIGH)
+                        ->subject('Solicitud de Revisión de Programa')
+                        ->text('El coordinador '.$user->getFirstname(). ' '. $user->getLastname() .'  ha realizado la revisión de su programa de '. $detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr');
+                    //  ->html('<p>See Twig integration for better HTML integration!</p>');
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                        // some error prevented the email sending; display an
+                        // error message or try to resend the message
+                        $info = $e->getTraceAsString();
+                        $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                    }
 
 
                     return new Response(json_encode(array('error' => false)));
@@ -967,8 +995,8 @@ class ProgramController extends AbstractController
                 }
             }
             catch (Exception $e) {
-                $info = toString($e);
-                $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+                $info = $e->getTraceAsString();
+                $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request
@@ -981,18 +1009,18 @@ class ProgramController extends AbstractController
     /**
      * @Route("/student/programSendPdfCheck", name="_expediente_sysadmin_send_pdfcheck_program_data")
      */
-    public function sendCheckPdfProgramFormAction(\Swift_Mailer $mailer){
-        $logger = $this->get('logger');
+    public function sendCheckPdfProgramFormAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
+      //  $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
-        $translator = $this->get("translator");
+       // $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $programId = $request->get('programId');
             $userId = $request->get('userId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+          //  $em = $this->getDoctrine()->getEntityManager();
 
             if( isset($programId) ){
                 $program = $em->getRepository("App:Programs")->find($programId);
@@ -1008,6 +1036,7 @@ class ProgramController extends AbstractController
                 $teacherEmail = $teacher->getEmail();
 
                 /// enviar por correo
+                /*
                 $message = (new \Swift_Message('Programa completado'))
                     ->setSubject('Programa completado')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
@@ -1017,7 +1046,30 @@ class ProgramController extends AbstractController
                     );
 
                 $mailer->send($message);
+*/
+                $email = (new Email())
+                    ->from('nides.ti@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo('jorgestwart.perez@ucr.ac.cr')
+                    ->addTo('jstuartp@gmail.com')
+                    ->addTo($teacherEmail)
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Programa completado')
+                    ->text('El coordinador '.$user->getFirstname(). ' '. $user->getLastname() .'  ha concluido la revisión de su programa de '. $detail . ' accese el sitio del sistema programas.ecp.ucr.ac.cr para descargar el archivo');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
                 return new Response(json_encode(array('error' => false)));
 
             } else {
@@ -1025,8 +1077,8 @@ class ProgramController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -1039,19 +1091,20 @@ class ProgramController extends AbstractController
     /**
      * @Route("/student/programSendPdfCreateCheck", name="_expediente_sysadmin_send_pdfcreatecheck_program_data")
      * @Method({"GET", "POST"})
+     *  @var Knp\Snappy\Pdf
      */
-    public function sendCheckPdfCreateProgramFormAction(){
-        $logger = $this->get('logger');
+    public function sendCheckPdfCreateProgramFormAction(Pdf $knpSnappyPdf, LoggerInterface $logger, TranslatorInterface $translator, EntityManagerInterface $em){
+       // $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
-            $translator = $this->get("translator");
+         //   $translator = $this->get("translator");
             try {
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $programId = $request->get('programId');
                 $userId = $request->get('userId');
 
-                $em = $this->getDoctrine()->getEntityManager();
+              //  $em = $this->getDoctrine()->getEntityManager();
 
                 if( isset($programId) ){
                     $program = $em->getRepository("App:Programs")->find($programId);
@@ -1565,12 +1618,13 @@ class ProgramController extends AbstractController
                     $html .= '</html>';
 
 
-                    $this->get('knp_snappy.pdf')->generateFromHtml(
+                 //   $this->get('knp_snappy.pdf')->generateFromHtml(
+                    $knpSnappyPdf->generateFromHtml(
                         $this->renderView(
                             'SuperAdmin/Programs/programaview.html.twig',array('html' => $html,'page-size' => "Letter"), true
 
                         ),
-                        '../web/images/programas/'.$programId.'.pdf'
+                        '../public/pdfs/'.$programId.'.pdf'
                         //'../web/images/programas/file4.pdf'
                     );
 
@@ -1583,8 +1637,8 @@ class ProgramController extends AbstractController
                 }
             }
             catch (Exception $e) {
-                $info = toString($e);
-                $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+                $info =  $e->getTraceAsString();
+                $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
                 return new Response(json_encode(array('error' => true, 'message' => $info)));
             }
         /*}// endif this is an ajax request

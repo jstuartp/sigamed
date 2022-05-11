@@ -27,6 +27,9 @@ use App\Form\PeriodFormType;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -55,6 +58,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 class SuperAdminController extends AbstractController
@@ -3742,7 +3746,7 @@ class SuperAdminController extends AbstractController
      * @Route("/charge/sendEmailChargeYes", name="_expediente_sysadmin_send_email_charge_yes")
      * @Method({"GET", "POST"})
      */
-    public function sendEmailChargeYesAction(\Swift_Mailer $mailer){ //2018-18-06
+    public function sendEmailChargeYesAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){ //2018-18-06
         //$logger = $this->get('logger');
         //$translator = $this->get("translator");
         try {
@@ -3751,7 +3755,7 @@ class SuperAdminController extends AbstractController
             $chargeId = $request->get('chargeId');
             $detailout = $request->get('detailout');
 
-            $em = $this->getDoctrine()->getEntityManager();
+           // $em = $this->getDoctrine()->getEntityManager();
 
             if( isset($chargeId) ){
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3764,6 +3768,7 @@ class SuperAdminController extends AbstractController
                 $teacher = $charge->getUser();
 
                 /// enviar por correo
+                /*
                 $message = (new \Swift_Message('Aviso de aprobación de carga académica'))
                     ->setSubject('Aviso de aprobación de carga académica')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
@@ -3772,8 +3777,31 @@ class SuperAdminController extends AbstractController
                         'Se informa que la carga académica del profesor: '. $teacher->getUsername() . ', '. $chargeId . ', ha sido aprobada.'
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
 
+                $email = (new Email())
+                    ->from('nides.ti@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo('jorgestwart.perez@ucr.ac.cr')
+                    ->addTo('jstuartp@gmail.com')
+
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Aviso de aprobación de carga académica')
+                    ->text('Se informa que la carga académica del profesor: '. $teacher->getUsername() . ', '. $chargeId . ', ha sido aprobada.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
                 return new Response(json_encode(array('error' => false)));
 
             } else {
@@ -3781,8 +3809,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -3791,16 +3819,16 @@ class SuperAdminController extends AbstractController
      * @Route("/charge/sendEmailChargeNo", name="_expediente_sysadmin_send_email_charge_no")
      * @Method({"GET", "POST"})
      */
-    public function sendEmailChargeNoAction(\Swift_Mailer $mailer){ //2018-18-06
-        $logger = $this->get('logger');
-        $translator = $this->get("translator");
+    public function sendEmailChargeNoAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){ //2018-18-06
+      //  $logger = $this->get('logger');
+      //  $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $chargeId = $request->get('chargeId');
             $detailout = $request->get('detailout');
 
-            $em = $this->getDoctrine()->getEntityManager();
+          //  $em = $this->getDoctrine()->getEntityManager();
 
             if( isset($chargeId) ){
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3813,6 +3841,7 @@ class SuperAdminController extends AbstractController
                 $teacher = $charge->getUser();
 
                 /// enviar por correo
+                /*
                 $message = (new \Swift_Message('Aviso de rechazo de carga académica'))
                     ->setSubject('Aviso de rechazo de carga académica')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
@@ -3821,7 +3850,30 @@ class SuperAdminController extends AbstractController
                         'Se informa que la carga académica del profesor: '. $teacher->getUsername() . ', '. $detailout . ', ha sido rechazada.'
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
+                $email = (new Email())
+                    ->from('nides.ti@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo('jorgestwart.perez@ucr.ac.cr')
+                    ->addTo('jstuartp@gmail.com')
+
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Aviso de rechazo de carga académica')
+                    ->text('Se informa que la carga académica del profesor: '. $teacher->getUsername() . ', '. $chargeId . ', ha sido rechazada.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
 
                 return new Response(json_encode(array('error' => false)));
 
@@ -3830,8 +3882,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
