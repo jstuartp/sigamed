@@ -7,13 +7,13 @@
 {% block extracss %}
     <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css') }}" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('fancybox/fancybox_style.css') }}" type="text/css" media="all" />
-    <link rel="stylesheet" href="{{ asset('css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui-timepicker-addon.css') }}" type="text/css" media="all" />
 
 {% endblock %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?p=1') }}"></script>
-    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?p=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
         Tecnotek.module = "commissionList";
         Tecnotek.assetsURL = "{{ path('homepage')}}";
@@ -32,47 +32,67 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container_24">
-        <div class="grid_24">
-            <div class="titleRow">
-                <div class="left"><h3>{% trans %}label.commission.listar{% endtrans %}</h3></div>
-
-                <div class="right"><a id="openCommissionForm" class="modalbox button success-darker tiny" href="#commissionFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+    <div class="container">
+        <div class="grid">
+            <div class="row">
+                <div class="col-8"><h3>{% trans %}label.commission.listar{% endtrans %}</h3></div>
+                <div class="col-4" align="right">
+                    <a id="openCommissionForm" class="modalbox button success-darker tiny" href="#commissionFormContainer">
+                        <button type="button" class="btn btn-info"> <span style="color: #f0f0f0">{% trans %}label.add{% endtrans %}</span></button>
+                    </a> </div>
                 <div class="clear"></div>
-            </div>
-
-            <div class="table">
-                <div class="row tableHeader">
-                    <div class="option_width sort_header" style="float: left; width: 100px; margin-left: -6px;"
-                         field-name="code" order="asc">
-                        <span class="header-title asc" title="Code">{% trans %}label.code{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 450px; margin-left: -6px;"
-                         field-name="name" order="asc">
-                        <span class="header-title sortable" title="Name">{% trans %}label.name{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
-                         field-name="type" order="asc">
-                        <span class="header-title sortable" title="Type">{% trans %}label.type{% endtrans %}</span>
-                    </div>
-                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
-                    <div class="right" style="width: 5px; height: 26px"></div>
-                    <div class="option_width right">
-                        <input id="searchText" name="searchText" value="{{ text }}">
-                    </div>
+                <div class="row">
+                    &nbsp;
                 </div>
-
-                <div id="students-container">
-                </div>
-
-                <div id="exstudents-container">
+                <div class="row">
+                    &nbsp;
                 </div>
             </div>
 
-            <div style="margin-bottom:75px;" id="pagination-container">
-            </div>
+            <!-- TABLA DE STUART CON DATATABLES-->
+            <div class="bs-example" data-example-id="contextual-table">
+                <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
+                    <thead>
+                    <tr>
+                        <th  hidden>id</th>
+                        <th>Nombre Comisión</th>
+                        <th>Dedicación</th>
+                        <th>Tipo</th>
+                        <th></th>
+                        <th></th>
 
-        </div>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arregloDato in commissions %}
+                        <tr class="info">
+                            <td hidden>{{ arregloDato.id }}</td>
+                            <td>{{ arregloDato.name }}</td>
+                            <td>{{ arregloDato.code }}</td>
+                            <td>{{ arregloDato.type }}</td>
+
+                            <!-- Columna para poner los botones en la tabla -->
+                            <td class="nowrap">
+                                {% if role != 4 %}
+                                    <div class="button editButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
+                                        <a href=""> <div class="icon"><i class="fas fa-gear" title="Editar"></i></div></a></div>
+
+                                {% endif %}
+                            </td>
+                            <td class="nowrap">
+                                {% if role != 4 %}
+                                    <div class="button viewButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
+                                        <a href=""> <div class="icon"><i class="fas fa-eye" title="Ver"></i></div></a></div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- FIN DE TABLA DE STUART -->
+
+
         <div class="clear"></div>
 
 

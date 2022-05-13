@@ -474,8 +474,7 @@
   <script type="text/javascript" charset="utf8" src="{{ asset('assets/datatables/DataTables-1.11.5/js/dataTables.bootstrap5.js') }}" > </script>
 
 
-  <!--tablas personalisadas -->
-  <script type="text/javascript" src="{{ asset('assets/js/mytable.js?a=7')}}"></script>
+
 
 {% endblock %}
 {% if is_granted('ROLE_PROFESOR') %}
@@ -504,6 +503,8 @@
   })();
 
 </script>
+  <!--tablas personalisadas -->
+   <script type="text/javascript" src="{{ asset('assets/js/mytable.js?a=7')}}"></script>
 {% endblock %}
 
 </body>

@@ -168,32 +168,24 @@ class ProgramController extends AbstractController
                     }
                 }
 
-
+/*
                 foreach ($words as $word) {
                     $where .= $where == "" ? "" : " AND ";
                     $where .= "(pr.detail like '%" . $word . "%' OR pr.date like '%" . $word . "%')";
                 }
                 $sql = "SELECT SUM($where) as filtered,"
                     . " COUNT(*) as total FROM tek_programs pr  where pr.period_id = " . $currentPeriod . ";";
-
-
+*/
+                $sql="";
                 $em->clear();
                 $em->getRepository(Programs::class);
 
-                $stmt = $em->getConnection()->prepare($sql);
-                $result = $stmt->executeQuery();
-                $filtered = 0;
-                $total = 0;
-                //$result = $stmt->fetchAll();
-                foreach ($result->fetchAllAssociative() as $row) {
-                    $filtered = $row['filtered'];
-                    $total = $row['total'];
-                }
+
 
                 $sql = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.period_id" .
                     " FROM tek_programs pr, tek_users u" . $from2 .
-                    " WHERE u.id = pr.user_id and" . $where . " " .
-                    " and pr.period_id = " . $currentPeriod . " " . $where2 .
+                    " WHERE u.id = pr.user_id and"  .
+                    "  pr.period_id = " . $currentPeriod . " " . $where2 .
                     " ORDER BY pr.period_id";
                 $stmt2 = $em->getConnection()->prepare($sql);
                 $programs = $stmt2->executeQuery();
@@ -202,13 +194,13 @@ class ProgramController extends AbstractController
                 $exprogramsM = "";
 
                 if ($role == 3) {
-                    $sql2 = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.$sortBy"
-                        . " FROM tek_programs pr, tek_users u"
-                        . " WHERE u.id = pr.user_id and $where"
-                        . " and pr.period_id = $currentPeriod"
-                        . " $where3"
-                        . " ORDER BY pr.$sortBy $order"
-                        . " LIMIT $rowsPerPage OFFSET $offset";
+                    $em->clear();
+                    $em->getRepository(Programs::class);
+                    $sql2 = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.period_id"
+                        . " FROM tek_programs pr, tek_users u ". $from2
+                        . " WHERE u.id = pr.user_id ". $where
+                        . " and pr.period_id = ". $currentPeriod. " "
+                        .  $where3;
                     $stmt3 = $em->getConnection()->prepare($sql2);
                     $exprograms = $stmt3->executeQuery();
                     $exprogramsM = $exprograms->fetchAllAssociative();
@@ -228,9 +220,9 @@ class ProgramController extends AbstractController
             //        'exprograms' => $exprogramsM
             )));*/
             } catch (Exception $e) {
-                $info = toString($e);
-                //$logger->err('Program::searchProgramsAction [' . $info . "]");
-                return new Response(json_encode(array('error' => true, 'message' => $info)));
+                $info = $e->getTraceAsString();
+                $logger->alert('Program::searchProgramsAction [' . $info . "]");
+                return new Response(json_encode(array('error' => true, 'message' => $sql2)));
             }/*
         }
         // endif this is an ajax request
