@@ -1129,7 +1129,7 @@ class ProgramController extends AbstractController
                     $html .= '<!DOCTYPE html>';
                     $html .= '<html lang="es" xml:lang="es">';
                     $html .= '<div class=WordSection1>';
-                    $html .= '<div><img src="/public/assets/images/banner1OLD.jpg"  width="960" height="200" align="center"></div>';
+                    //$html .= '<div><img src="../sigamed/public/assets/images/banner1OLD.jpg"  width="960" height="200" align="center"></div>';
                     $html .= '<table align="center">';
                     $html .= '<tr>';
 
@@ -1312,7 +1312,7 @@ class ProgramController extends AbstractController
 
                             if($question->getId() == 29){    ///Cronograma
                                 $html .= '</br>';
-                                    $html .= '<label style="width: 100%">7. ' . $question->getMainText() . '</label><div
+                                    $html .= '<label style="font-family:Arial; width: 100%">7. ' . $question->getMainText() . '</label><div
                             class="clear"></div>';
                                     $texts = explode('-',$question->getSecondText());
                                     $html .= '<table width="910"  border="1" style="font-family:Arial; table-layout: fixed; width: 100%"><tr>' .
@@ -1367,7 +1367,7 @@ class ProgramController extends AbstractController
                             if($question->getId() == 46){    ///Evaluacion
 
                                 $html .= '</br>';
-                                $html .= '<label style="width: 100%">6.' . $question->getMainText() . '</label><div
+                                $html .= '<label style="font-family:Arial; width: 100%">6.' . $question->getMainText() . '</label><div
                             class="clear"></div>';
                                 $texts = explode('-',$question->getSecondText());
                                 $html .= '<table width="910" style="font-family:Arial; table-layout: fixed; width: 100%" border="1">';
