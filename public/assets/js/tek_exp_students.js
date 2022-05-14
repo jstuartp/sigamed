@@ -2252,6 +2252,7 @@ Tecnotek.Charges = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
+                    location.reload(true);
                     Tecnotek.Charges.searchCharges();
                 }
             },

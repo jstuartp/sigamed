@@ -66,7 +66,8 @@
                         <th>Profesores</th>
                         <th>Dedicación</th>
                         <th>Estado</th>
-                        <th>Acción</th>
+                        <th></th>
+                        <th></th>
 
                     </tr>
                     </thead>
@@ -87,13 +88,16 @@
                             <!-- Columna para poner los botones en la tabla -->
                             <td class="nowrap">
                                 {% if role != 4 %}
-                                    <div class="button checkButton" title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID">
-                                        <a href=""> <div class="icon"><i class="fas fa-file" title="Archivo"></i></div></a></div>
-                                    &nbsp;&nbsp;&nbsp;
+                                    <div class="button editButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
+                                        <a href=""> <div class="icon"><i class="fas fa-gear" title="Editar"></i></div></a></div>
+
                                 {% endif %}
-
-
-
+                            </td>
+                            <td class="nowrap">
+                                {% if role != 4 %}
+                                    <div class="button viewButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
+                                        <a href=""> <div class="icon"><i class="fas fa-eye" title="Ver"></i></div></a></div>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -102,36 +106,6 @@
             </div>
             <!-- FIN DE TABLA DE STUART -->
 
-            <div class="table">
-                <div class="row tableHeader">
-                    <div class="option_width sort_header" style="float: left; width: 200px; margin-left: -6px;"
-                         field-name="user_id" order="asc">
-                        <span class="header-title asc" title="Code">{% trans %}label.teacher{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 350px; margin-left: -6px;"
-                         field-name="detailin" order="asc">
-                        <span class="header-title sortable" title="Name">{% trans %}label.detailin{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
-                         field-name="status" order="asc">
-                        <span class="header-title sortable" title="Type">{% trans %}label.status{% endtrans %}</span>
-                    </div>
-                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
-                    <div class="right" style="width: 5px; height: 26px"></div>
-                    <div class="option_width right">
-                        <input id="searchText" name="searchText" value="{{ text }}">
-                    </div>
-                </div>
-
-                <div id="students-container">
-                </div>
-
-                <div id="exstudents-container">
-                </div>
-            </div>
-
-            <div style="margin-bottom:75px;" id="pagination-container">
-            </div>
 
         </div>
         <div class="clear"></div>

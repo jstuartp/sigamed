@@ -2040,9 +2040,12 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
-
-    public function searchCommissionsAction($rowsPerPage = 30) {
-        $logger = $this->get('logger');
+    /**
+     * @Route("/commission/search", name="_expediente_sysadmin_commission_search")
+     * @Method({"GET", "POST"})
+     */
+    public function searchCommissionsAction($rowsPerPage = 30, EntityManagerInterface $em, LoggerInterface $logger) {
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -2053,22 +2056,23 @@ class SuperAdminController extends AbstractController
             $order = $request->get('order');
             $page = $request->get('page');
             $offset = ($page-1) * $rowsPerPage;
-            $em = $this->getDoctrine()->getEntityManager();
+          //  $em = $this->getDoctrine()->getEntityManager();
             $words = explode(" ", trim($text));
             $where = "";
             $where2 = "";
             $where3 = "";
             $from2 = "";
 
+            //Codigo de Stuart
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $roles = $user->getIdRoles();
+            $role = $roles[0];
 
-
-            ///filtrar por usuario y tipo
-            //$user = $this->container->get('security.context')->getToken()->getUser();
-            /* $user = $this->container->get('security.token_storage')->getToken()->getUser();
-             $roles = $user->getRoles();
-             $role = $roles[0]->getId();
- */
-
+            $dql = "SELECT users FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR' ORDER BY users.firstname";
+            $query = $em->createQuery($dql);
+            $teachers = $query->getResult();
+            //fin codigo de stuart
+/*
             foreach ($words as $word) {
                 $where .= $where == ""? "":" AND ";
                 $where .= "(c.name like '%" . $word . "%' OR c.code like '%" . $word . "%')";
@@ -2083,27 +2087,26 @@ class SuperAdminController extends AbstractController
             foreach($result as $row) {
                 $filtered = $row['filtered'];
                 $total = $row['total'];
-            }
+            }*/
 
             $sql = "SELECT c.id, c.name, c.code, c.type"
-                . " FROM tek_commissions c"
-                . " WHERE $where"
-                . " ORDER BY c.$sortBy $order"
-                . " LIMIT $rowsPerPage OFFSET $offset";
+                . " FROM tek_commissions c" ;
+
+
             $stmt2 = $em->getConnection()->prepare($sql);
-            $stmt2->execute();
-            $commissions = $stmt2->fetchAll();
+            $comm1=$stmt2->executeQuery();
+            $commissions = $comm1->fetchAllAssociative();
 
-
-
-            return new Response(json_encode(array('error' => false,
-                'filtered' => $filtered,
-                'total' => $total,
-                'commissions' => $commissions)));
+            return $this->render('SuperAdmin/Commission/list.html.twig', array(
+                'menuIndex' => 3, 'text' => $text, 'user' => $user, 'role' => $role, 'teachers' => $teachers , 'commissions' => $commissions
+            ));
+/*
+            return new Response(json_encode(array('error' => false, 'menuIndex' => 3, 'text' => $text, 'user' => $user,
+                'role' => $role, 'teachers' => $teachers, 'commissions' => $commissions)));*/
         } catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Program::searchCommissionsAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::searchCommissionsAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $sql)));
         }
 
         /*}// endif this is an ajax request
@@ -2112,7 +2115,10 @@ class SuperAdminController extends AbstractController
             return new Response("<b>Not an ajax call!!!" . "</b>");
         }*/
     }
-
+    /**
+     * @Route("/commission/createCommission/", name="_expediente_sysadmin_create_commission")
+     * @Method({"GET", "POST"})
+     */
     public function createCommissionAction(){ //2018-13-03
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2159,7 +2165,10 @@ class SuperAdminController extends AbstractController
             return new Response("<b>Not an ajax call!!!" . "</b>");
         }*/
     }
-
+    /**
+     * @Route("/commission/updateCommission/", name="_expediente_sysadmin_update_commission")
+     * @Method({"GET", "POST"})
+     */
     public function updateCommissionAction(){ //2018-13-03
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2209,7 +2218,10 @@ class SuperAdminController extends AbstractController
             return new Response("<b>Not an ajax call!!!" . "</b>");
         }*/
     }
-
+    /**
+     * @Route("/commission/getInfoCommissionFull", name="_expediente_sysadmin_get_info_commission_full")
+     * @Method({"GET", "POST"})
+     */
     public function getInfoCommissionFullAction(){
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2268,7 +2280,10 @@ class SuperAdminController extends AbstractController
             return new Response("<b>Not an ajax call!!!" . "</b>");
         }*/
     }
-
+    /**
+     * @Route("/commission/getInfoCommissionDetail", name="_expediente_sysadmin_get_info_commission_detail")
+     * @Method({"GET", "POST"})
+     */
     public function getInfoCommissionDetailAction(){
         $logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2314,9 +2329,9 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/commission", name="_expediente_sysadmin_commission")
      */
-    public function commissionListAction($rowsPerPage = 30)
+    public function commissionListAction($rowsPerPage = 30, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        //$em = $this->getDoctrine()->getEntityManager();
         //$text = $this->get('request')->query->get('text');
         $request = $this->get('request_stack')->getCurrentRequest();
         $text = $request->get('text');
@@ -2339,7 +2354,7 @@ class SuperAdminController extends AbstractController
      * @Route("/commissions/removeassigned/", name="_expediente_sysadmin_commission_assigned_remove")
      * @Method({"GET", "POST"})
      */
-    public function removeCommissionAssignedAction(Request $request, EntityManagerInterface $em){    /// 2016 - 4
+    public function removeCommissionAssignedAction(Request $request, EntityManagerInterface $em, LoggerInterface $logger){    /// 2016 - 4
 
         //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
@@ -2363,8 +2378,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            //$logger->err('SuperAdmin::removeCommissionAssignedAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('SuperAdmin::removeCommissionAssignedAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
