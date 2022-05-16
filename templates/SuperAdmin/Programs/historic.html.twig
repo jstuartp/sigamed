@@ -28,7 +28,7 @@
 
     <div class="container">
         <div class="grid">
-            <div class="titleRow">
+            <div class="row">
                 <div class="left"><h3>{% trans %}label.programs.list.previous{% endtrans %}</h3></div>
                 {% if role == 4 %}
                     <div class="right"><a href="{{ path('_expediente_sysadmin_program_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div>
@@ -116,8 +116,7 @@
             <br/>
 
             {% if role != 3 and role != 4 %}
-                <div style="margin-bottom:75px;" id="pagination-container">
-                </div>
+
             {% endif %}
             <div class="clear"></div>
         </div>

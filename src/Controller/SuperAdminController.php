@@ -3909,8 +3909,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/record/search", name="_expediente_sysadmin_record_search")
      */
-    public function searchRecordsAction($rowsPerPage = 30) {
-        $logger = $this->get('logger');
+    public function searchRecordsAction($rowsPerPage = 30, EntityManagerInterface $em, LoggerInterface $logger) {
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3921,14 +3921,12 @@ class SuperAdminController extends AbstractController
             $order = $request->get('order');
             $page = $request->get('page');
             $offset = ($page-1) * $rowsPerPage;
-            $em = $this->getDoctrine()->getEntityManager();
+           // $em = $this->getDoctrine()->getEntityManager();
             $words = explode(" ", trim($text));
             $where = "";
             $where2 = "";
             $where3 = "";
             $from2 = "";
-
-
 
             //$user = $this->container->get('security.context')->getToken()->getUser();
             $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -3946,7 +3944,7 @@ class SuperAdminController extends AbstractController
                 }
             }
 
-
+/*
             foreach ($words as $word) {
                 $where .= $where == ""? "":" AND ";
                 $where .= "(c.name like '%" . $word . "%' OR c.summary like '%" . $word . "%')";
@@ -3961,28 +3959,34 @@ class SuperAdminController extends AbstractController
             foreach($result as $row) {
                 $filtered = $row['filtered'];
                 $total = $row['total'];
-            }
+            }*/
+
+            $dql = "SELECT users FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR' or r.role = 'ROLE_COORDINADOR' ORDER BY users.firstname";
+            $query = $em->createQuery($dql);
+            $teachers = $query->getResult();
+            $em->clear();
 
             $sql = "SELECT c.id, c.name, c.date, c.summary, c.status"
                 . " FROM tek_record c"
                 . " $from2"
                 . " WHERE c.type = 1 and $where"
-                . " $where2"
-                . " ORDER BY c.$sortBy $order"
-                . " LIMIT $rowsPerPage OFFSET $offset";
+                . " $where2";
             $stmt2 = $em->getConnection()->prepare($sql);
-            $stmt2->execute();
-            $records = $stmt2->fetchAll();
+
+            $records = $stmt2->executeQuery()->fetchAllAssociative();
 
 
 
+            return $this->render('SuperAdmin/Documents/record.html.twig', array(
+                'menuIndex' => 3, 'text' => $text, 'user' => $user, 'role' => $role, 'teachers' => $teachers, "records"=>$records
+            ));/*
             return new Response(json_encode(array('error' => false,
                 'filtered' => $filtered,
                 'total' => $total,
-                'records' => $records)));
+                'records' => $records)));*/
         } catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Program::searchRecordsAction [' . $info . "]");
+            $info =$e->getTraceAsString();
+            $logger->alert('Program::searchRecordsAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
 

@@ -281,30 +281,13 @@ class ProgramController extends AbstractController
                 }
             }
 
-/*
-            foreach ($words as $word) {
-                $where .= $where == ""? "":" AND ";
-                $where .= "(pr.detail like '%" . $word . "%' OR pr.date like '%" . $word . "%')";
-            }
-            $sql = "SELECT SUM($where) as filtered,"
-                . " COUNT(*) as total FROM tek_programs pr  where pr.status = 6 ;"; //and pr.period_id != ".$currentPeriod.";";
-            $stmt = $em->getConnection()->prepare($sql);
-
-            $filtered = 0;
-            $total = 0;
-            $result = $stmt->executeQuery();
-            foreach($result->fetchAllAssociative()  as $row) {
-                $filtered = $row['filtered'];
-                $total = $row['total'];
-            }
-*/
             $sql = "SELECT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status"
                 . " FROM tek_programs pr, tek_users u"
                 . " $from2"
                 . " WHERE u.id = pr.user_id "
-                . " and pr.status = 6";
+                . " and pr.status = 6"
                 //. " and pr.period_id != $currentPeriod"
-               // . " $where2"
+                . " $where2";
                // . " ORDER BY pr.$sortBy $order"
                // . " LIMIT $rowsPerPage OFFSET $offset";
             $stmt2 = $em->getConnection()->prepare($sql);

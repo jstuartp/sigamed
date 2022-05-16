@@ -34,44 +34,65 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container_24">
-        <div class="grid_24">
-            <div class="titleRow">
-                <div class="left"><h3>{% trans %}label.record.listar{% endtrans %}</h3></div>
+    <div class="container">
+        <div class="grid">
+            <div class="row">
+                <div class="col-8"><h3>{% trans %}label.record.listar{% endtrans %}</h3></div>
             {% if role == 1 %}
-                <!-- <div class="right"><a href="{{ path('_expediente_sysadmin_course_create') }}" class="button success-darker tiny"><span></span>{% trans %}label.add{% endtrans %}</a></div> -->
-                 <div class="right"><a id="openRecordForm" class="modalbox button success-darker tiny" href="#recordFormContainer">{% trans %}label.add{% endtrans %}</a> </div>
+                <div class="col-4" align="right"><a id="openRecordForm" class="modalbox button success-darker tiny" href="#recordFormContainer">
+                        <button type="button" class="btn btn-info"> <span style="color: #f0f0f0">{% trans %}label.add{% endtrans %}</span></button>
+                    </a> </div>
             {% endif %}
                 <div class="clear"></div>
-            </div>
-
-            <div class="table">
-                <div class="row tableHeader">
-                    <div class="option_width sort_header" style="float: left; width: 150px; margin-left: -6px;"
-                         field-name="code" order="asc">
-                        <span class="header-title asc" title="Code">{% trans %}label.date{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 400px; margin-left: -6px;"
-                         field-name="name" order="asc">
-                        <span class="header-title sortable" title="Name">{% trans %}label.name{% endtrans %}</span>
-                    </div>
-                    <div class="option_width sort_header" style="float: left; width: 125px; margin-left: -6px;"
-                         field-name="type" order="asc">
-                        <span class="header-title sortable" title="Type">{% trans %}label.status{% endtrans %}</span>
-                    </div>
-                    <div class="right" style="margin-top: -2px;"><a style="margin: 4px 0px 0px 0px;" href="#" class="button success-darker tiny" id="btnSearch" name="btnSearch"><span></span>{% trans %}label.search{% endtrans %}</a></div>
-                    <div class="right" style="width: 5px; height: 26px"></div>
-                    <div class="option_width right">
-                        <input id="searchText" name="searchText" value="{{ text }}">
-                    </div>
+                <div class="row">
+                    &nbsp;
                 </div>
-
-                <div id="students-container">
-                </div>
-
-                <div id="exstudents-container">
+                <div class="row">
+                    &nbsp;
                 </div>
             </div>
+
+            <div class="" data-example-id="">
+                <table class="table table-bordered table-hover   table-striped nowrap" id="example2" style="font-size: 14px">
+                    <thead>
+                    <tr>
+                        <th hidden> id</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+
+                        <th></th>
+                        {% if role != 4 %}
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        {% endif %}
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arregloDato in records %}
+                        <tr class="info">
+
+                            <td hidden >{{ arregloDato.id }}</td>
+                            <td class="nowrap">{{ arregloDato.date }}</td>
+                            <td class="nowrap">{{ arregloDato.name }}</td>
+                            <td class="nowrap">{{  arregloDato.status }}</td>
+
+                            <!-- Columna para poner los botones en la tabla -->
+                            {% if role != 1 %}
+                                <td class="nowrap">
+                                    <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: green" title="Ver"></i></a></div>
+                                </td>
+                            {% endif %}
+                                <td class="nowrap">
+                                    <div class="icon button editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar Datos"></i></div>
+                                </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
 
             <div style="margin-bottom:75px;" id="pagination-container">
             </div>
@@ -80,20 +101,6 @@
         <div class="clear"></div>
 
 
-        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="RECORD_ID" style="display: none;">
-            <div class="option_width" style="float: left; width: 150px; margin-left: -6px;">RECORD_DATE</div>
-            <div class="option_width" style="float: left; width: 400px; margin-left: -6px;">RECORD_NAME</div>
-            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">RECORD_STATUS</div>
-
-    {% if role == 1 %}
-            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="RECORD_ID"></div>
-    {% endif %}
-            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="RECORD_ID"></div>
-            <div class="clear"></div>
-        </div>
-
-
-        <br/>
 
         <div style="display: none;">
             <a id="openRecordView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
