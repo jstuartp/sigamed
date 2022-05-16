@@ -1,3 +1,8 @@
+{% block extrajs %}
+<script type="text/javascript">
+    Tecnotek.assetsURL = "{{ path('homepage')}}";
+</script>
+{% endblock %}
 <html lang="es" xml:lang="es">
 <head>
     <meta charset="utf-8"/>
@@ -13,7 +18,9 @@
 
     <div lang="es">
         <span lang="es">
-            <div><img src="{{ asset('/var/www/html/ucr/web/images/programas/banner2019-2.png') }}"  width="960" height="200" align="center"></div>
+            <div><img src="{{ asset('https://siga.ecp.ucr.ac.cr/default/assets/images/banner1.jpg') }}"  width="960" height="200" align="center"></div>
+
+
             {{ html | raw }}
 
         </span>

@@ -1129,6 +1129,7 @@ class ProgramController extends AbstractController
                     $html .= '<!DOCTYPE html>';
                     $html .= '<html lang="es" xml:lang="es">';
                     $html .= '<div class=WordSection1>';
+                    //$html .= '<div><img src="../sigamed/public/assets/images/banner1OLD.jpg"  width="960" height="200" align="center"></div>';
                     $html .= '<table align="center">';
                     $html .= '<tr>';
 
@@ -1235,86 +1236,86 @@ class ProgramController extends AbstractController
 
                             if($question->getId() == 2){ ///Horario de atención
                                 if($value1 != ''){
-                                    $html .= '<div style="width: 910px"><p align="justify"><span style="  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= nl2br($string) . '</p></div>';
+                                    $html .= '<span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'. nl2br($string) . '</span></p></div>';
                                 }
                             }
                             if($question->getId() == 3){ ///Correo
                                 if($value1 != ''){
-                                    $html .= '<div style="width: 910px"><p align="justify"><span style="  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><p align="justify"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= nl2br($string) . '</p></div>';
+                                    $html .= '<span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 4){ ///Informacion adicional
                                 if($value1 != ''){
-                                    $html .= '<div style="width: 910px"><p align="justify"><span style="  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><p align="justify"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= nl2br($string) . '</p></div>';
+                                    $html .= '<span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 5){    ///Descripcion
                                 if($value1 != ''){
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">1.' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">1.' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 6){    ///objetivo general
                                 if($value1 != ''){
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">2.' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">2.' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 7){    ///Objetivos especificos
                                 if($value1 != ''){
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">3.' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">3.' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 8){    ///Descripcion de
                                 if($value1 != ''){
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">4.' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">4.' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 9){    ///Metodologia
                                 if($value1 != ''){
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">5.' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">5.' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 28){    ///Observaciones
                                 if($value1 != ''){
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 29){    ///Cronograma
                                 $html .= '</br>';
-                                    $html .= '<label style="width: 100%">7. ' . $question->getMainText() . '</label><div
+                                    $html .= '<label style="font-family:Arial; width: 100%">7. ' . $question->getMainText() . '</label><div
                             class="clear"></div>';
                                     $texts = explode('-',$question->getSecondText());
-                                    $html .= '<table width="910"  border="1" style="table-layout: fixed; width: 100%"><tr>' .
+                                    $html .= '<table width="910"  border="1" style="font-family:Arial; table-layout: fixed; width: 100%"><tr>' .
                                         '<td width="75"> ' . $texts[0] . '</td>' .
                                         '<td width="75"> ' . $texts[1] . '</td>' .
                                         '<td width="100"> ' . $texts[2] . '</td>' .
@@ -1349,27 +1350,27 @@ class ProgramController extends AbstractController
                                 if($value1 != ''){
 
                                     $html .= '</br>';
-                                    $html .= '<div style="width: 910px"><span style=" word-wrap: break-word; margin-left: 10px; margin-right: 10px;">8. ' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; word-wrap: break-word; margin-left: 10px; margin-right: 10px;">8. ' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 54){    ///info adicional a bibliografia
                                 if($value1 != ''){
-                                    $html .= '<div style="width: 910px"><span style="  margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; word-wrap: break-word; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
-                                    $html .= '<p align="justify">'.nl2br($string) . '</p></div>';
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
                             }
 
                             if($question->getId() == 46){    ///Evaluacion
 
                                 $html .= '</br>';
-                                $html .= '<label style="width: 100%">6.' . $question->getMainText() . '</label><div
+                                $html .= '<label style="font-family:Arial; width: 100%">6.' . $question->getMainText() . '</label><div
                             class="clear"></div>';
                                 $texts = explode('-',$question->getSecondText());
-                                $html .= '<table width="910" style="table-layout: fixed; width: 100%">';
+                                $html .= '<table width="910" style="font-family:Arial; table-layout: fixed; width: 100%" border="1">';
                                 $html .= '<div class="questions-group">';
                                 foreach ( $question->getChildren() as $q) {
                                     $value1 = "";
@@ -1380,13 +1381,14 @@ class ProgramController extends AbstractController
                                         $value2 = array("","","","");
                                     }
                                     $html .= '<input type="hidden" >';
+                                    if( $value2[0] != '' ||  $value2[1] != '' ||  $value2[2] != '' ||  $value2[3] != ''){
                                     $html .= '<tr>' .
                                         '<td width="50" align="center"> ' . $value2[0] . '</td>' .
                                         '<td width="150" align="left">' . $value2[1] . '</td>' .
                                         '<td width="50" align="center" > ' . $value2[2] . '</td>' .
                                         '<td width="660"  align="left" style="word-wrap: break-word"> '. $value2[3] . '</td></tr>' ;
-                                    if($value2[0] != ''){$html .= '<td><td colspan="2"> <hr size="2px" color="gray" /></td><td> </td></tr>';}
-
+                                    //if($value2[0] != ''){$html .= '<td><td colspan="2"> <hr size="2px" color="gray" /></td><td> </td></tr>';}
+                                    }
                                 }
                                 $html .= '</table>';
                             }
@@ -1399,167 +1401,6 @@ class ProgramController extends AbstractController
                                 }
                             }
 
-
-
-/*
-
-                            $labelStyle = ' style="  float: left; width: 350px;" ';
-                            $formnumber ++;
-                            $html .= '</br><p>'.$formnumber . '. ' . $question->getMainText().'</p>';
-                            $html .= "<div class='questionnaireQuestion'>";
-
-                            switch($question->getType()){
-                                case 1: //Simple Input
-                                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                                    $html .= '<p> ' . $value1 . '</p>';
-                                    $html .= '<div class="clear"></div>';
-                                    break;
-                                case 2://YesNoSelectionSimple
-                                    $html .= 'Tipo desconocido: ' . $question->getType();
-                                    break;
-                                case 3: //YesNoSelectionWithExplain
-                                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                                    $html .= '<select class="short" style="max-width: 50px; "><option value="0"' .
-                                        (($value1 == "0")? " selected":"") .
-                                        '>No</option><option value="1"' .
-                                        (($value1 == "1")? " selected":"") .
-                                        '>Si</option></select>';
-                                    $html .= '<span style="  margin-left: 10px; margin-right: 10px;">' . $question->getSecondText() .
-                                        '</span>';
-                                    $html .= '<textarea style="height: 80px;" rows="5" id="qaux-' . $question->getId() . '" name="qaux-' .
-                                        $question->getId() . '">' . $value2 . '</textarea>';
-                                    $html .= "<div class='clear'></div>";
-                                    break;
-                                case 4://Group Of Questions
-                                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . '</label><div class="clear"></div>';
-                                    $texts = explode('-',$question->getSecondText());
-                                    $html .= '<div>' .
-                                        '<div class="left" style="padding-left: 10px; width: 373px;"> ' . $texts[0] . '</div>' .
-                                        '<div class="left"> ' . $texts[1] . '</div>' .
-                                        '<div class="clear"></div>' .
-                                        '</div>';
-                                    $html .= '<div class="questions-group">';
-                                    foreach ( $question->getChildren() as $q) {
-                                        $value1 = "";
-                                        $value2 = "";
-                                        if(array_key_exists($q->getId(), $answers)){
-                                            $value1 = $answers[$q->getId()]->getMainText();
-                                            $value2 = $answers[$q->getId()]->getSecondText();
-                                        }
-                                        $html .= "<label" . $labelStyle . ">" . $q->getMainText() . "</label>";
-                                        $html .= '<input type="text" value="' . $value1 . '">';
-                                        $html .= '<div class="clear"></div>';
-                                    }
-                                    $html .= '</div>';
-                                    break;
-                                case 5://Date Input
-                                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                                    //$html .= '<input class="date-input along-input" ' . $this->getFieldId($question) . ' type="text" value="'
-                                    //    . $value1 . '">';
-                                    break;
-                                case 6: // TextArea Input
-                                    //$html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                                    $string = htmlspecialchars($value1);
-
-
-                                    $html .= '<p align="justify">' . nl2br($string) . '</p>';
-                                    break;
-
-
-                                case 7: // 3 Columns Question
-                                    $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div class="clear"></div>';
-                                    $texts = explode('-',$question->getSecondText());
-                                    $html .= '<table width="700">';
-                                    $html .= '<div class="questions-group">';
-                                    foreach ( $question->getChildren() as $q) {
-                                        $value1 = "";
-                                        if(array_key_exists($q->getId(), $answers)){
-                                            $value1 = $answers[$q->getId()]->getMainText();
-                                            $value2 = explode('-*-', $value1);
-                                        }else {
-                                            $value2 = array("","","","");
-                                        }
-                                        $html .= '<input type="hidden" >';
-                                        $html .= '<tr>' .
-                                            '<td width="75" align="center"> ' . $value2[0] . '</td>' .
-                                            '<td width="150" align="left">' . $value2[1] . '</td>' .
-                                            '<td width="75" align="center"> ' . $value2[2] . '</td>' .
-                                            '<td width="300" align="left"> '. $value2[3] . '</td></tr>' ;
-
-                                    }
-                                    $html .= '</table>';
-                                    break;
-                                case 9:
-                                    $texts = explode('-',$question->getSecondText());
-                                    $html .= '<table class="form-type-9">';
-                                    $html .= "<thead>";
-                                    $html .= "<tr><th>" . $question->getMainText() . "</th><th>" . $texts[0] . "</th><th>" . $texts[1] .
-                                        "</th><th>" . $texts[2] . "</th></tr>";
-                                    $html .= "</thead>";
-                                    $html .= "<tbody>";
-                                    foreach ( $question->getChildren() as $q) {
-                                        $html .= '<tr>';
-                                        $html .= '';
-                                        $value = 0;
-                                        if(array_key_exists($q->getId(), $answers)){
-                                            $value = $answers[$q->getId()]->getMainText();
-                                        }
-                                        $html .= '<td>' . $q->getMainText(). '</td>';
-                                        $html .= '<td><input type="radio"  value="1" ' .
-                                            (($value == 1)? 'checked="checked"':"") . '></td>';
-                                        $html .= '<td><input type="radio"  value="2" ' .
-                                            (($value == 2)? 'checked="checked"':"") . '></td>';
-                                        $html .= '<td><input type="radio"  value="3" ' .
-                                            (($value == 3)? 'checked="checked"':"") . '></td>';
-                                        $html .= '</tr>';
-                                        $html .= '';
-
-                                    }
-
-                                    $html .= "</tbody>";
-                                    $html .= "</table>";
-
-                                    break;
-                                case 10: // 5 Columns Question
-                                    $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
-                            class="clear"></div>';
-                                    $texts = explode('-',$question->getSecondText());
-                                    $html .= '<table width="700"><tr>' .
-                                        '<td width="75"> ' . $texts[0] . '</td>' .
-                                        '<td width="100"> ' . $texts[1] . '</td>' .
-                                        '<td width="75"> ' . $texts[2] . '</td>' .
-                                        '<td width="250"> ' . $texts[3] . '</td>' .
-                                        '<td width="250"> ' . $texts[4] . '</td>' .
-                                        '</tr>';
-                                    $html .= '<div class="questions-group">';
-                                    foreach ( $question->getChildren() as $q) {
-                                        $value1 = "";
-                                        if(array_key_exists($q->getId(), $answers)){
-                                            $value1 = $answers[$q->getId()]->getMainText();
-                                            $value2 = explode('-*-', $value1);
-                                        }else {
-                                            $value2 = array("","","","","");
-                                        }
-                                        $html .= '<input type="hidden" >';
-                                        $html .= '<tr>' .
-                                            '<td width="75" align="center"> ' . $value2[0] . '</td>' .
-                                            '<td width="100"> ' . $value2[1] . '</td>' .
-                                            '<td width="75" align="center"> '. $value2[2] . '</td>' .
-                                            '<td width="250"> '. $value2[3] . '</td>' .
-                                            '<td width="250"> '. $value2[4] . '</td>' .
-                                            '</tr>';
-                                    }
-                                    $html .= '</table>';
-                                    break;
-                                default:
-                                    //$html .= 'Tipo desconocido: ' . $question->getType();
-                                    break;
-                            }
-                            $html .= "</div>";
-
-
-
-                     */       //finaliza el ciclo
                         }
                     }
 
@@ -1568,7 +1409,7 @@ class ProgramController extends AbstractController
                     $html .= '';
                     $html .= '    </div><br><br><br><br><br>';
                     $html .= '    <hr size="2px" color="black" />
-                                   <div class="clear">
+                                   <div class="clear" style="font-family:Arial;">
                                    
                                    <strong>SOBRE EL PLAGIO </strong>
 <p>De acuerdo con el REGLAMENTO DE ORDEN Y DISCIPLINA DE LOS ESTUDIANTES DE LA UNIVERSIDAD DE COSTA RICA (Reforma Integral aprobada en la sesión 4207-05, 21/08/1996, publicado en La Gaceta Universitaria 22-96 del 18/09/1996), la acción del PLAGIO es estipulada como falta muy grave según el  CAPÍTULO II DE LAS FALTAS ARTÍCULO 4, inciso j, el cual dice:  Plagiar, en todo o en parte, obras intelectuales de cualquier tipo.</p>
