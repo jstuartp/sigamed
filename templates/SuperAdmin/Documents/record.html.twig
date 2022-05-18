@@ -62,12 +62,8 @@
                         <th>Estado</th>
 
                         <th></th>
-                        {% if role != 4 %}
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        {% endif %}
+
+                        <th></th>
 
                     </tr>
                     </thead>
@@ -81,20 +77,20 @@
                             <td class="nowrap">{{  arregloDato.status }}</td>
 
                             <!-- Columna para poner los botones en la tabla -->
-                            {% if role != 1 %}
+
                                 <td class="nowrap">
                                     <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: green" title="Ver"></i></a></div>
                                 </td>
-                            {% endif %}
+
                                 <td class="nowrap">
-                                    <div class="icon button editButton" rel="{{ arregloDato.id }}"><i class="fas fa-file" title="Editar Datos"></i></div>
+                                    <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-gear" style="color: green" title="Editar Datos"></i></a></div>
                                 </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
 
-            <div style="margin-bottom:75px;" id="pagination-container">
+
             </div>
 
         </div>
