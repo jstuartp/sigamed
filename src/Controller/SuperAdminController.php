@@ -3969,7 +3969,7 @@ class SuperAdminController extends AbstractController
             $sql = "SELECT c.id, c.name, c.date, c.summary, c.status"
                 . " FROM tek_record c"
                 . " $from2"
-                . " WHERE c.type = 1 and $where"
+                . " WHERE c.type = 1  " . $where
                 . " $where2";
             $stmt2 = $em->getConnection()->prepare($sql);
 
@@ -3987,7 +3987,7 @@ class SuperAdminController extends AbstractController
         } catch (Exception $e) {
             $info =$e->getTraceAsString();
             $logger->alert('Program::searchRecordsAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            return new Response(json_encode(array('error' => true, 'message' => $sql)));
         }
 
         /*}// endif this is an ajax request
