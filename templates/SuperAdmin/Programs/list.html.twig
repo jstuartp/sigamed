@@ -61,120 +61,119 @@
                 </div>
             </div>
 
+            <div class="row-cols-auto">
+                    <table class="table table-bordered table-hover   table-striped " id="example2" style="font-size: 14px">
+                        <thead>
+                        <tr>
+                            <th hidden> id</th>
+                              <th>Nombre</th>
+                              <th>Profesores</th>
+                              <th>Estado</th>
 
-            <div class="" data-example-id="">
-                <table class="table table-bordered table-hover   table-striped nowrap" id="example2" style="font-size: 14px">
-                    <thead>
-                    <tr>
-                        <th hidden> id</th>
-                          <th>Nombre</th>
-                          <th>Profesores</th>
-                          <th>Estado</th>
-
-                        <th>Ver</th>
-                        {% if role != 4 %}
-                        <th>Datos</th>
-                        <th>Editar</th>
-                        <th>Revisar</th>
-                        <th>PDF</th>
-                        {% endif %}
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for arregloDato in programsM %}
-                    <tr class="info">
-
-                        <td hidden >{{ arregloDato.id }}</td>
-                        <td class="nowrap">{{ arregloDato.detail }}</td>
-                        <td class="nowrap">{{ arregloDato.name }}</td>
-                        <td class="nowrap">{% if arregloDato.status == 1 %}  Creado {% endif %}
-                            {% if arregloDato.status == 2 %} Modificado {% endif %}
-                            {% if arregloDato.status == 3 %} Modificado en espera de Revisión {% endif %}
-                            {% if arregloDato.status == 4 %} Revisado correcciones pendientes {% endif %}
-                            {% if arregloDato.status == 5 %} Revisado y Aprobado {% endif %}
-                            {% if arregloDato.status == 6 %} Finalizado {% endif %}
-
-                        </td>
-
-                            <!-- Columna para poner los botones en la tabla -->
+                            <th>Ver</th>
                             {% if role != 4 %}
-                        <td class="nowrap">
-                                <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: #80a9ba" title="Ver"></i> </a> </div>
-                        </td>
+                            <th>Datos</th>
+                            <th>Editar</th>
+                            <th>Revisar</th>
+                            <th>PDF</th>
                             {% endif %}
-                            {% if role != 4 %}
-                        <td class="nowrap">
-                                <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file" style="color: #80a9ba" title="Datos"></i></a></div>
-                        </td>
-                            {% endif %}
-                            {% if role != 6 %}
-                        <td class="nowrap">
-                                <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-edit" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
-                        </td>
-                            {% endif %}
-                            {% if role != 4 %}
-                        <td class="nowrap">
-                                <div class="icon button checkButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-search" style="color: #80a9ba" title="Revisar"></i></a></div>
-                        </td>
-                            {% endif %}
-                            {% if role != 4 %}
-                        <td class="nowrap">
-                                <div class="icon button pdfButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file-pdf" style="color: #80a9ba" title="PDF"></i></a></div>
-                        </td>
-                            {% endif %}
-                    </tr>
-                    {% endfor %}
-                    {% for arregloDato2 in exprogramsM %}
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arregloDato in programsM %}
                         <tr class="info">
 
-                            <td hidden >{{ arregloDato2.id }}</td>
-                            <td class="nowrap">{{ arregloDato2.detail }}</td>
-                            <td class="nowrap">{{ arregloDato2.name }}</td>
-                            <td class="nowrap">{% if arregloDato2.status == 1 %}  Creado {% endif %}
-                                {% if arregloDato2.status == 2 %} Modificado {% endif %}
-                                {% if arregloDato2.status == 3 %} Modificado en espera de Revisión {% endif %}
-                                {% if arregloDato2.status == 4 %} Revisado correcciones pendientes {% endif %}
-                                {% if arregloDato2.status == 5 %} Revisado y Aprobado {% endif %}
-                                {% if arregloDato2.status == 6 %} Finalizado {% endif %}
+                            <td hidden >{{ arregloDato.id }}</td>
+                            <td class="nowrap">{{ arregloDato.detail }}</td>
+                            <td class="nowrap">{{ arregloDato.name }}</td>
+                            <td class="nowrap">{% if arregloDato.status == 1 %}  Creado {% endif %}
+                                {% if arregloDato.status == 2 %} Modificado {% endif %}
+                                {% if arregloDato.status == 3 %} Modificado en espera de Revisión {% endif %}
+                                {% if arregloDato.status == 4 %} Revisado correcciones pendientes {% endif %}
+                                {% if arregloDato.status == 5 %} Revisado y Aprobado {% endif %}
+                                {% if arregloDato.status == 6 %} Finalizado {% endif %}
 
                             </td>
 
-                            <!-- Columna para poner los botones en la tabla -->
-                            {% if role != 4 %}
-                                <td class="nowrap">
-                                    <div class="icon button viewButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-eye" title="Ver"></i></a></div>
-                                </td>
-                            {% endif %}
-                            {% if role != 4 %}
-                                <td class="nowrap">
-                                    <div class="icon button editButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-file" title="Editar Datos"></i></a></div>
-                                </td>
-                            {% endif %}
-                            {% if role != 6 %}
-                                <td class="nowrap">
-                                    <div class="icon button questionsButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-edit" title="Editar Programa"></i></a></div>
-                                </td>
-                            {% endif %}
-                            {% if role != 4 %}
-                                <td class="nowrap">
-                                    <div class="icon button checkButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-search" title="Ver"></i></a></div>
-                                </td>
-                            {% endif %}
-                            {% if role != 4 %}
-                                <td class="nowrap">
-                                    <div class="icon button pdfButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-file-pdf" title="PDF"></i></a></div>
-                                </td>
-                            {% endif %}
+                                <!-- Columna para poner los botones en la tabla -->
+                                {% if role != 4 %}
+                            <td class="nowrap">
+                                    <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: #80a9ba" title="Ver"></i> </a> </div>
+                            </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                            <td class="nowrap">
+                                    <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file" style="color: #80a9ba" title="Datos"></i></a></div>
+                            </td>
+                                {% endif %}
+                                {% if role != 6 %}
+                            <td class="nowrap">
+                                    <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-edit" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
+                            </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                            <td class="nowrap">
+                                    <div class="icon button checkButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-search" style="color: #80a9ba" title="Revisar"></i></a></div>
+                            </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                            <td class="nowrap">
+                                    <div class="icon button pdfButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file-pdf" style="color: #80a9ba" title="PDF"></i></a></div>
+                            </td>
+                                {% endif %}
                         </tr>
-                    {% endfor %}
+                        {% endfor %}
+                        {% for arregloDato2 in exprogramsM %}
+                            <tr class="info">
 
-                    </tbody>
-                </table>
+                                <td hidden >{{ arregloDato2.id }}</td>
+                                <td class="nowrap">{{ arregloDato2.detail }}</td>
+                                <td class="nowrap">{{ arregloDato2.name }}</td>
+                                <td class="nowrap">{% if arregloDato2.status == 1 %}  Creado {% endif %}
+                                    {% if arregloDato2.status == 2 %} Modificado {% endif %}
+                                    {% if arregloDato2.status == 3 %} Modificado en espera de Revisión {% endif %}
+                                    {% if arregloDato2.status == 4 %} Revisado correcciones pendientes {% endif %}
+                                    {% if arregloDato2.status == 5 %} Revisado y Aprobado {% endif %}
+                                    {% if arregloDato2.status == 6 %} Finalizado {% endif %}
+
+                                </td>
+
+                                <!-- Columna para poner los botones en la tabla -->
+                                {% if role != 4 %}
+                                    <td class="nowrap">
+                                        <div class="icon button viewButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-eye" title="Ver"></i></a></div>
+                                    </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                                    <td class="nowrap">
+                                        <div class="icon button editButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-file" title="Editar Datos"></i></a></div>
+                                    </td>
+                                {% endif %}
+                                {% if role != 6 %}
+                                    <td class="nowrap">
+                                        <div class="icon button questionsButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-edit" title="Editar Programa"></i></a></div>
+                                    </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                                    <td class="nowrap">
+                                        <div class="icon button checkButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-search" title="Ver"></i></a></div>
+                                    </td>
+                                {% endif %}
+                                {% if role != 4 %}
+                                    <td class="nowrap">
+                                        <div class="icon button pdfButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-file-pdf" title="PDF"></i></a></div>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
             </div>
         </div>
+
         <div class="clear"></div>
-    </div>
+        </div>
 
     <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="PROGRAM_ID" style="display: none;">
         <div class="option_width" title="TITLE_PROGR_DETAIL" style="float: left; width: 400px; margin-left: -6px;">PROGRAM_DETAIL</div>
