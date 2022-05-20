@@ -2042,7 +2042,6 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/commission/search", name="_expediente_sysadmin_commission_search")
-     * @Method({"GET", "POST"})
      */
     public function searchCommissionsAction($rowsPerPage = 30, EntityManagerInterface $em, LoggerInterface $logger) {
         //$logger = $this->get('logger');
@@ -2115,6 +2114,8 @@ class SuperAdminController extends AbstractController
             return new Response("<b>Not an ajax call!!!" . "</b>");
         }*/
     }
+
+
     /**
      * @Route("/commission/createCommission/", name="_expediente_sysadmin_create_commission")
      * @Method({"GET", "POST"})

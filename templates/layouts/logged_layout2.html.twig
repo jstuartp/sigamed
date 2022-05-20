@@ -4,13 +4,13 @@
 {% block header %} {# reescribirlo #}
   <!-- ======= Header ======= -->
   <header id="header" class="top">
-    <div class="container d-flex align-items-lg-center">
+    <div class="container d-flex align-items-center ">
 
       <h1 class="logo me-auto"><a href="{{ path('homepage') }}">{% trans %}system.title{% endtrans %}</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="{{ path('homepage') }}" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
+      <nav id="navbar" class="navbar  order-last order-lg-0">
         <!-- Menu -->
         {% if is_granted('ROLE_SUPERADMIN') %}
         <ul>
@@ -21,7 +21,7 @@
             <li><a href="{{ path('_expediente_sysadmin_program_hsearch') }}">{% trans %}label.listProgramh{% endtrans %}</a></li>
           </ul>
         </li>
-
+<!--
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 4%} current{% endif %}"><a href="#">{% trans %}label.documents{% endtrans %}</a>
           <ul class="dropdown">
@@ -29,12 +29,12 @@
             <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.record{% endtrans %}</a></li>
           </ul>
         </li>
-
+-->
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.mantenimientos{% endtrans %}</a>
           <ul class="dropdown">
             <li><a href="{{ path('_expediente_sysadmin_course_search') }}">{% trans %}label.course{% endtrans %}</a></li>
-            <li><a href="{{ path('_expediente_sysadmin_commission') }}">{% trans %}label.commission{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_commission_search') }}">{% trans %}label.commission{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_period') }}">{% trans %}label.period{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.charges{% endtrans %}</a></li>
             <li class="divider"></li>
@@ -55,14 +55,14 @@
             <li><a href="{{ path('_expediente_sysadmin_curriculum') }}">{% trans %}label.mycurriculum{% endtrans %}</a></li>
 
           </ul>
-        </li>-->
+        </li>--><!--
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.equipment{% endtrans %}</a>
           <ul class="dropdown">
             <li><a href="{{ path('_expediente_sysadmin_ticket') }}">{% trans %}label.ticketllist{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_item') }}">{% trans %}label.itemlist{% endtrans %}</a></li>
           </ul>
-        </li>
+        </li>-->
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.reports{% endtrans %}</a>
           <ul class="dropdown">
