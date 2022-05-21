@@ -283,7 +283,7 @@
 
 {% block extrajs %}
     <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_period_admin.js?q=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_period_admin.js?r=1') }}"></script>
     <script type="text/javascript">
         Tecnotek.UI.urls["deleteURL"] = "{{ path("_delete_period", {id: entity.id}) }}";
         Tecnotek.UI.translates["confirmDelete"] = "{% trans %}messages.confirmation.period.delete{% endtrans %}";
@@ -766,7 +766,7 @@
         <div id="showContactInfoDuplicateLink" style="display: none; width: 650px; height: 500px">
 
             <h3>Informaci&oacute;n del profesor</h3>
-            <div id="chargeContainerViewDuplicate" name="chargeContainerViewDuplicate" class="contactInfo">
+            <div id="chargeContainerViewDuplicate" name="chargeContainerViewDuplicate" class="contactInfo" style="display: block;">
 
             </div>
         </div>

@@ -562,6 +562,8 @@ label.projects: Proyectos
 label.project: Proyecto
 label.weight: "Cargas:"
 
+label.project.listar: Proyectos
+
 label.charge.listar: Lista de Cargas Académicas
 label.detailin: Detalles
 

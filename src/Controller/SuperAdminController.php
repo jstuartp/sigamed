@@ -8,6 +8,7 @@ use App\Entity\Period;
 use App\Entity\Course;
 use App\Entity\Charges;
 use App\Entity\Commission;
+use App\Entity\Project;
 use App\Entity\CourseClass;
 use App\Entity\Record;
 use App\Entity\Ticket;
@@ -2119,8 +2120,8 @@ class SuperAdminController extends AbstractController
      * @Route("/commission/createCommission/", name="_expediente_sysadmin_create_commission")
      * @Method({"GET", "POST"})
      */
-    public function createCommissionAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function createCommissionAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -2138,7 +2139,7 @@ class SuperAdminController extends AbstractController
             //$translator = $this->get("translator");
 
             if( isset($userId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $commission = new Commission();
                 $commission->setName($name);
@@ -2156,7 +2157,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Commission::createCommissionAction [' . $info . "]");
+           // $logger->err('Commission::createCommissionAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2169,8 +2170,8 @@ class SuperAdminController extends AbstractController
      * @Route("/commission/updateCommission/", name="_expediente_sysadmin_update_commission")
      * @Method({"GET", "POST"})
      */
-    public function updateCommissionAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateCommissionAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -2186,10 +2187,10 @@ class SuperAdminController extends AbstractController
             $type = $request->get('type');
             $status = $request->get('status');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $commissionId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+               // $em = $this->getDoctrine()->getEntityManager();
 
                 $commission = new Commission();
                 $commission = $em->getRepository("App:Commission")->find($commissionId);
@@ -2204,12 +2205,12 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Commission::createCommissionAction [' . $info . "]");
+            //$logger->err('Commission::createCommissionAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2222,8 +2223,8 @@ class SuperAdminController extends AbstractController
      * @Route("/commission/getInfoCommissionFull", name="_expediente_sysadmin_get_info_commission_full")
      * @Method({"GET", "POST"})
      */
-    public function getInfoCommissionFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoCommissionFullAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -2231,7 +2232,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $commissionId = $request->get('commissionId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             $commission = $em->getRepository("App:Commission")->find($commissionId);
 
 
@@ -2271,7 +2272,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Commission::getInfoCommissionFullAction [' . $info . "]");
+            //$logger->err('Commission::getInfoCommissionFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -2284,8 +2285,8 @@ class SuperAdminController extends AbstractController
      * @Route("/commission/getInfoCommissionDetail", name="_expediente_sysadmin_get_info_commission_detail")
      * @Method({"GET", "POST"})
      */
-    public function getInfoCommissionDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoCommissionDetailAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -2293,7 +2294,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $commissionId = $request->get('commissionId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $commission = $em->getRepository("App:Commission")->find($commissionId);
 
@@ -2317,7 +2318,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCommissionFullAction [' . $info . "]");
+            //$logger->err('Course::getInfoCommissionFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3075,8 +3076,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/charge/getInfoChargeDetail", name="_expediente_sysadmin_get_info_charge_detail")
      */
-    public function getInfoChargeDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoChargeDetailAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -3084,7 +3085,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $chargeId = $request->get('chargeId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $charge = $em->getRepository("App:Charges")->find($chargeId);
 
@@ -3116,7 +3117,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
+            //$logger->err('Charge::getInfoChargeFullAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3511,8 +3512,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/charge/createSendCharge/", name="_expediente_sysadmin_create_send_charge")
      */
-    public function createSendChargeAction(\Swift_Mailer $mailer){ //2018-13-03
-        $logger = $this->get('logger');
+    public function createSendChargeAction(MailerInterface $mailer){
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -3573,9 +3574,8 @@ class SuperAdminController extends AbstractController
                     $detailin = $charge->getDetailin();
                     $teacher = $charge->getUser();
 
-
                     /// enviar por correo
-                    $message = (new \Swift_Message('Solicitud de revisión de carga académica'))
+                    /*$message = (new \Swift_Message('Solicitud de revisión de carga académica'))
                         ->setSubject('Solicitud de revisión de carga académica')
                         ->setFrom('ciencias.politicas@ucr.ac.cr')
                         ->setTo('sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr',$teacher->getEmail())  ///$teacher->getEmail()
@@ -3583,7 +3583,32 @@ class SuperAdminController extends AbstractController
                             'La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.'
                         );
 
-                    $mailer->send($message);
+                    $mailer->send($message);*/
+
+                    $teacherEmail=$teacher->getEmail();
+
+                    $email = (new Email())
+                        ->from('ciencias.politicas@ucr.ac.cr')
+                        ->to('sistemas.ecp@ucr.ac.cr')
+                        ->addTo('erick.morajimenez@ucr.ac.cr')
+                        ->addTo('jorgestwart.perez@ucr.ac.cr')
+                        ->addTo($teacherEmail)
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        //->priority(Email::PRIORITY_HIGH)
+                        ->subject('Solicitud de revisión de carga académica')
+                        ->text('La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+                    //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                        // some error prevented the email sending; display an
+                        // error message or try to resend the message
+                        $info = $e->getTraceAsString();
+                        //$logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                    }
                 }
 
                 return new Response(json_encode(array('error' => false)));
@@ -3593,7 +3618,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Charge::createSendChargeAction [' . $info . "]");
+            //$logger->err('Charge::createSendChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3606,8 +3631,8 @@ class SuperAdminController extends AbstractController
      * @Route("/charge/sendEmailCharge", name="_expediente_sysadmin_send_email_charge")
      * @Method({"GET", "POST"})
      */
-    public function sendEmailChargeAction(\Swift_Mailer $mailer){ //2018-18-06
-        $logger = $this->get('logger');
+    public function sendEmailChargeAction(MailerInterface $mailer){
+        //$logger = $this->get('logger');
         $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
@@ -3628,7 +3653,7 @@ class SuperAdminController extends AbstractController
 
 
                 /// enviar por correo
-                $message = (new \Swift_Message('Solicitud de revisión de carga académica'))
+                /*$message = (new \Swift_Message('Solicitud de revisión de carga académica'))
                     ->setSubject('Solicitud de revisión de carga académica')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
                     ->setTo('sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr',$teacher->getEmail())  ///$teacher->getEmail()
@@ -3636,7 +3661,32 @@ class SuperAdminController extends AbstractController
                         'La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.'
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
+
+                $teacherEmail=$teacher->getEmail();
+
+                $email = (new Email())
+                    ->from('ciencias.politicas@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo('jorgestwart.perez@ucr.ac.cr')
+                    ->addTo($teacherEmail)
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Solicitud de revisión de carga académica')
+                    ->text('La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    //$logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
 
                 return new Response(json_encode(array('error' => false)));
 
@@ -3646,7 +3696,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -3654,8 +3704,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/charge/sendEmailCloseCharge", name="_expediente_sysadmin_send_email_close_charge")
      */
-    public function sendEmailCloseChargeAction(\Swift_Mailer $mailer){ //2018-18-06
-        $logger = $this->get('logger');
+    public function sendEmailCloseChargeAction(MailerInterface $mailer){
+        //$logger = $this->get('logger');
         $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
@@ -3676,7 +3726,7 @@ class SuperAdminController extends AbstractController
 
 
                 /// enviar por correo
-                $message = (new \Swift_Message('Aviso de comprobación de carga académica'))
+                /*$message = (new \Swift_Message('Aviso de comprobación de carga académica'))
                     ->setSubject('Aviso de comprobación de carga académica')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
                     ->setTo('sistemas.ecp@ucr.ac.cr', 'erick.morajimenez@ucr.ac.cr',$teacher->getEmail())  ///$teacher->getEmail()
@@ -3684,7 +3734,31 @@ class SuperAdminController extends AbstractController
                         'La escuela de Ciencias Polítcas comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.'
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
+                $teacherEmail=$teacher->getEmail();
+
+                $email = (new Email())
+                    ->from('ciencias.politicas@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo('jorgestwart.perez@ucr.ac.cr')
+                    ->addTo($teacherEmail)
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Aviso de comprobación de carga académica')
+                    ->text('La escuela de Ciencias Polítcas comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    //$logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
 
                 return new Response(json_encode(array('error' => false)));
 
@@ -3694,7 +3768,7 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -6080,4 +6154,299 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
+
+    //////Mantenimiento Proyectos
+
+    /**
+     * @Route("/project", name="_expediente_sysadmin_project")
+     */
+    public function projectListAction($rowsPerPage = 30, EntityManagerInterface $em)
+    {
+        //$em = $this->getDoctrine()->getEntityManager();
+        //$text = $this->get('request')->query->get('text');
+        $request = $this->get('request_stack')->getCurrentRequest();
+        $text = $request->get('text');
+
+        //$user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $roles = $user->getIdRoles();
+        $role = $roles[0];
+
+        $dql = "SELECT users FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR' ORDER BY users.firstname";
+        $query = $em->createQuery($dql);
+        $teachers = $query->getResult();
+
+        return $this->render('SuperAdmin/Project/list.html.twig', array(
+            'menuIndex' => 3, 'text' => $text, 'user' => $user, 'role' => $role, 'teachers' => $teachers
+        ));
+    }
+
+    /**
+     * @Route("/project/search", name="_expediente_sysadmin_project_search")
+     * @Method({"GET", "POST"})
+     */
+    public function searchProjectsAction($rowsPerPage = 30, EntityManagerInterface $em, LoggerInterface $logger) {
+        //$logger = $this->get('logger');
+        //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
+        //{
+        try {
+            $request = $this->get('request_stack')->getCurrentRequest();
+
+            $text = $request->get('text');
+            $sortBy = $request->get('sortBy');
+            $order = $request->get('order');
+            $page = $request->get('page');
+            $offset = ($page-1) * $rowsPerPage;
+            //  $em = $this->getDoctrine()->getEntityManager();
+            $words = explode(" ", trim($text));
+            $where = "";
+            $where2 = "";
+            $where3 = "";
+            $from2 = "";
+
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $roles = $user->getIdRoles();
+            $role = $roles[0];
+
+            $dql = "SELECT users FROM App:User users JOIN users.roles r WHERE r.role = 'ROLE_PROFESOR' ORDER BY users.firstname";
+            $query = $em->createQuery($dql);
+            $teachers = $query->getResult();
+
+
+            $sql = "SELECT c.id, c.name, c.code, c.type"
+                . " FROM tek_projects c" ;
+
+
+            $stmt2 = $em->getConnection()->prepare($sql);
+            $comm1=$stmt2->executeQuery();
+            $projects = $comm1->fetchAllAssociative();
+
+            return $this->render('SuperAdmin/Project/list.html.twig', array(
+                'menuIndex' => 3, 'text' => $text, 'user' => $user, 'role' => $role, 'teachers' => $teachers , 'projects' => $projects
+            ));
+
+        } catch (Exception $e) {
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::searchProjectsAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $sql)));
+        }
+
+        /*}// endif this is an ajax request
+        else
+        {
+            return new Response("<b>Not an ajax call!!!" . "</b>");
+        }*/
+    }
+    /**
+     * @Route("/project/createProject/", name="_expediente_sysadmin_create_project")
+     * @Method({"GET", "POST"})
+     */
+    public function createProjectAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
+        //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
+        //{
+        try {
+            $request = $this->get('request_stack')->getCurrentRequest();
+
+            //$teacherId = $request->get('teacherId');
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $userId = $user->getId();
+
+            $name = $request->get('name');
+            $code = $request->get('code');
+            $type = $request->get('type');
+            $status = $request->get('status');
+
+            //$translator = $this->get("translator");
+
+            if( isset($userId)) {
+                //$em = $this->getDoctrine()->getEntityManager();
+
+                $project = new Project();
+                $project->setName($name);
+                $project->setCode($code);
+                $project->setType($type);
+                $project->setStatus($status);
+
+                $em->persist($project);
+                $em->flush();
+
+                return new Response(json_encode(array('error' => false)));
+            } else {
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
+            }
+        }
+        catch (Exception $e) {
+            $info = toString($e);
+            // $logger->err('Project::createProjectAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $info)));
+        }
+        /*}// endif this is an ajax request
+        else
+        {
+            return new Response("<b>Not an ajax call!!!" . "</b>");
+        }*/
+    }
+
+    /**
+     * @Route("/project/updateProject/", name="_expediente_sysadmin_update_project")
+     * @Method({"GET", "POST"})
+     */
+    public function updateProjectAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
+        //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
+        //{
+        try {
+            $request = $this->get('request_stack')->getCurrentRequest();
+
+            //$teacherId = $request->get('teacherId');
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $userId = $user->getId();
+
+            $projectId = $request->get('projectId');
+            $name = $request->get('name');
+            $code = $request->get('code');
+            $type = $request->get('type');
+            $status = $request->get('status');
+
+            //$translator = $this->get("translator");
+
+            if( $projectId != '') {
+                // $em = $this->getDoctrine()->getEntityManager();
+
+                $project = new Project();
+                $project = $em->getRepository("App:Project")->find($projectId);
+
+                $project->setName($name);
+                $project->setCode($code);
+                $project->setType($type);
+                $project->setStatus($status);
+
+                $em->persist($project);
+                $em->flush();
+
+                return new Response(json_encode(array('error' => false)));
+            } else {
+                return new Response(json_encode(array('error' => true, 'message' =>"error.paramateres.missing")));
+            }
+        }
+        catch (Exception $e) {
+            $info = toString($e);
+            //$logger->err('Project::createProjectAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $info)));
+        }
+        /*}// endif this is an ajax request
+        else
+        {
+            return new Response("<b>Not an ajax call!!!" . "</b>");
+        }*/
+    }
+    /**
+     * @Route("/project/getInfoProjectFull", name="_expediente_sysadmin_get_info_project_full")
+     * @Method({"GET", "POST"})
+     */
+    public function getInfoProjectFullAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
+        /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
+        {*/
+        try {
+            $request = $this->get('request_stack')->getCurrentRequest();
+            //$request = $this->get('request')->request;
+            $projectId = $request->get('projectId');
+
+            //$em = $this->getDoctrine()->getEntityManager();
+            $project = $em->getRepository("App:Project")->find($projectId);
+
+
+
+
+
+            if ( isset($project) ) {
+                $html  = '<div class="fieldRow"><label>Nombre:</label><span>' . $project->getName() . '</span></div><div style="float: right;"><p></div>';
+                $html .= '<div class="fieldRow"><label>Codigo:</label><span></span>' . $project->getCode() . '</div>';
+                switch ($project->getType()){
+                    case 1:     $html .= '<div class="fieldRow"><label>Tipo:</label><span>Normal</span></div>';
+                        break;
+                    case 2:     $html .= '<div class="fieldRow"><label>Tipo:</label><span>Otro</span></div>';
+                        break;
+                    default:     $html .= '<div class="fieldRow"><label>Tipo:</label><span>Normal</span></div>';
+                        break;
+
+                }
+
+
+                switch ($project->getStatus()){
+                    case 1:     $html .= '<div class="fieldRow"><label>Estado:</label><span>Activo</span></div>';
+                        break;
+                    case 2:     $html .= '<div class="fieldRow"><label>Estado:</label><span>Inactivo</span></div>';
+                        break;
+                    default:     $html .= '<div class="fieldRow"><label>Estado:</label><span>Activo</span></div>';
+                        break;
+
+                }
+
+                return new Response(json_encode(array('error' => false, 'html' => $html)));
+            } else {
+                return new Response(json_encode(array('error' => true, 'message' => "No se encontro información.")));
+            }
+
+
+        }
+        catch (Exception $e) {
+            $info = toString($e);
+            //$logger->err('Project::getInfoProjectFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $info)));
+        }
+        /*}// endif this is an ajax request
+        else
+        {
+            return new Response("<b>Not an ajax call!!!" . "</b>");
+        }*/
+    }
+    /**
+     * @Route("/project/getInfoProjectDetail", name="_expediente_sysadmin_get_info_project_detail")
+     * @Method({"GET", "POST"})
+     */
+    public function getInfoProjectDetailAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
+        /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
+        {*/
+        try {
+            $request = $this->get('request_stack')->getCurrentRequest();
+            //$request = $this->get('request')->request;
+            $projectId = $request->get('projectId');
+
+            //$em = $this->getDoctrine()->getEntityManager();
+            //$student = new Student();
+            $project = $em->getRepository("App:Project")->find($projectId);
+
+
+
+
+
+            if ( isset($project) ) {
+                $idCourse = $project->getId();
+                $name = $project->getName();
+                $code = $project->getCode();
+                $type = $project->getType();
+                $status = $project->getStatus();
+
+                return new Response(json_encode(array('error' => false, 'id' => $idCourse, 'name' => $name, 'code' => $code, 'status' => $status, 'type' => $type)));
+            } else {
+                return new Response(json_encode(array('error' => true, 'message' => "No se encontro información.")));
+            }
+
+
+        }
+        catch (Exception $e) {
+            $info = toString($e);
+            //$logger->err('Course::getInfoProjectFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => $info)));
+        }
+        /*}// endif this is an ajax request
+        else
+        {
+            return new Response("<b>Not an ajax call!!!" . "</b>");
+        }*/
+    }
 }

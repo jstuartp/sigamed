@@ -2005,6 +2005,8 @@ Tecnotek.Charges = {
         Tecnotek.UI.vars["page"] = 1;
         Tecnotek.Charges.searchCharges();
 
+        Tecnotek.Charges.initButtons();
+
     },
     initButtons: function() {
         console.debug("ChargeList :: initButtons");
@@ -2404,6 +2406,9 @@ Tecnotek.Commissions = {
         Tecnotek.UI.vars["page"] = 1;
         Tecnotek.Commissions.searchCommissions();
 
+
+        Tecnotek.Commissions.initButtons();
+
     },
     initButtons: function() {
         console.debug("CommissionList :: initButtons");
@@ -2429,6 +2434,7 @@ Tecnotek.Commissions = {
                         true, "", false);
                 }, true);
         });
+
 
         $('.editButton').unbind();
         $('.editButton').click(function(event){
@@ -3353,3 +3359,221 @@ Tecnotek.Tickets = {
 };
 
 
+Tecnotek.Projects = {
+    translates : {},
+    init : function() {
+        $('#searchText').keyup(function(event){
+            Tecnotek.UI.vars["page"] = 1;
+            Tecnotek.Projects.searchProjects();
+        });
+        $('#btnSearch').unbind().click(function(event){
+            Tecnotek.Projects.searchProjects();
+        });
+        $(".sort_header").click(function() {
+            Tecnotek.UI.vars["sortBy"] = $(this).attr("field-name");
+            Tecnotek.UI.vars["order"] = $(this).attr("order");
+            console.debug("Order by " + Tecnotek.UI.vars["sortBy"] + " " + Tecnotek.UI.vars["order"]);
+            $(this).attr("order", Tecnotek.UI.vars["order"] == "asc"? "desc":"asc");
+            $(".header-title").removeClass("asc").removeClass("desc").addClass("sortable");
+            $(this).children().addClass(Tecnotek.UI.vars["order"]);
+            Tecnotek.Projects.searchProjects();
+        });
+
+        $("#openProjectForm").fancybox({
+            'beforeLoad' : function(){
+
+            }
+        });
+
+        $("#openProjectView").fancybox({
+            'beforeLoad' : function(){
+
+            }
+        });
+
+        $("#openProjectEdit").fancybox({
+            'beforeLoad' : function(){
+
+            }
+        });
+
+        $('#projectForm').submit(function(event){
+            event.preventDefault();
+            Tecnotek.Projects.createProject();
+        });
+
+        $('#projectFormEdit').submit(function(event){
+            event.preventDefault();
+            Tecnotek.Projects.updateProject();
+        });
+
+        Tecnotek.UI.vars["order"] = "asc";
+        Tecnotek.UI.vars["sortBy"] = "id";
+        Tecnotek.UI.vars["page"] = 1;
+        Tecnotek.Projects.searchProjects();
+
+
+        Tecnotek.Projects.initButtons();
+
+    },
+    initButtons: function() {
+        console.debug("ProjectList :: initButtons");
+        $('.viewButton').unbind();
+        $('.viewButton').click(function(event){
+            console.debug("Click en view button: " + Tecnotek.UI.urls["getInfoProjectFullURL"]);
+            event.preventDefault();
+            //Tecnotek.UI.vars["relativeId"] = $(this).attr("rel");
+            Tecnotek.ajaxCall(Tecnotek.UI.urls["getInfoProjectFullURL"],
+                {projectId: $(this).attr("rel")},
+                function(data){
+                    if(data.error === true) {
+                        Tecnotek.showErrorMessage(data.message,true, "", false);
+                    } else {
+                        //Tecnotek.showInfoMessage(data.html, true, "", false);
+                        $("#projectContainerView").html(data.html);
+                        $("#openProjectView").trigger("click");
+                        //alert("llega");
+                    }
+                },
+                function(jqXHR, textStatus){
+                    Tecnotek.showErrorMessage("Error in request: " + textStatus + ".",
+                        true, "", false);
+                }, true);
+        });
+
+
+        $('.editButton').unbind();
+        $('.editButton').click(function(event){
+            event.preventDefault();
+
+            var projectId = $(this).attr("rel");
+            Tecnotek.UI.vars["idProjectEdit"]  = projectId;
+            Tecnotek.ajaxCall(Tecnotek.UI.urls["getInfoProjectURL"],
+                {projectId: $(this).attr("rel")},
+                function(data){
+                    if(data.error === true) {
+                        Tecnotek.showErrorMessage(data.message,true, "", false);
+                    } else {
+                        //Tecnotek.showInfoMessage(data.html, true, "", false);
+
+                        $("#idProjectEdit").val(data.id);
+                        $("#nameProjectEdit").val(data.name);
+                        $("#codeProjectEdit").val(data.code);
+                        $("#statusProjectEdit").val(data.status);
+                        $("#typeProject").val(data.type);
+
+                        $("#projectContainerEdit").html(data.html);
+                        $("#openProjectEdit").trigger("click");
+                        //alert("llega");
+                    }
+                },
+                function(jqXHR, textStatus){
+                    Tecnotek.showErrorMessage("Error in request: " + textStatus + ".",
+                        true, "", false);
+                }, true);
+
+        });
+
+
+    },
+    searchProjects: function() {
+        $("#students-container").html("");
+        $("#pagination-container").html("");
+        Tecnotek.showWaiting();
+        Tecnotek.uniqueAjaxCall(Tecnotek.UI.urls["searchProjects"],
+            {
+                text: $("#searchText").val(),
+                sortBy: Tecnotek.UI.vars["sortBy"],
+                order: Tecnotek.UI.vars["order"],
+                page: Tecnotek.UI.vars["page"]
+            },
+            function(data){
+                if(data.error === true) {
+                    Tecnotek.hideWaiting();
+                    Tecnotek.showErrorMessage(data.message,true, "", false);
+                } else {
+
+
+                    var baseHtml = $("#contactRowTemplate").html();
+                    for(i=0; i<data.projects.length; i++) {
+                        var typeLabel = "Normal"
+                        if(data.projects[i].type == 1){
+                            var typeLabel = "Normal";
+                        }
+                        if(data.projects[i].type == 2){
+                            var typeLabel = "Otro";
+                        }
+
+                        var row = '<div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="PROJECT_ID">' +
+                            baseHtml +  '</div>';
+                        row = row.replaceAll('ROW_CLASS', (i % 2 == 0? 'tableRowOdd':'tableRow'));
+                        row = row.replaceAll('PROJECT_ID', data.projects[i].id);
+                        row = row.replaceAll('PROJECT_CODE', data.projects[i].code);
+                        row = row.replaceAll('PROJECT_NAME', data.projects[i].name);
+                        row = row.replaceAll('PROJECT_TYPE', typeLabel);
+
+                        $("#students-container").append(row);
+                    }
+
+
+
+                    Tecnotek.Projects.initButtons();
+                    Tecnotek.UI.printPagination(data.total, data.filtered, Tecnotek.UI.vars["page"], 30, "pagination-container");
+                    $(".paginationButton").unbind().click(function() {
+                        Tecnotek.UI.vars["page"] = $(this).attr("page");
+                        Tecnotek.Projects.searchProjects();
+                    });
+                    Tecnotek.hideWaiting();
+
+                }
+            },
+            function(jqXHR, textStatus){
+                if (textStatus != "abort") {
+                    Tecnotek.hideWaiting();
+                    console.debug("Error getting data Projects: " + textStatus);
+                }
+            }, true, 'searchProjects');
+    },
+    createProject: function() {
+
+        Tecnotek.ajaxCall(Tecnotek.UI.urls["createProjectURL"],
+            {   name: $('#nameProject').val(),
+                code: $('#codeProject').val(),
+                type: $('#typeProject').val(),
+                status: $('#statusProject').val()
+            },
+            function(data){
+                if(data.error === true) {
+                    Tecnotek.showErrorMessage(data.message,true, "", false);
+                } else {
+                    $.fancybox.close();
+                    Tecnotek.Projects.searchProjects();
+                }
+            },
+            function(jqXHR, textStatus){
+                Tecnotek.showErrorMessage("Error getting data: " + textStatus + ".", true, "", false);
+                $(this).val("");
+            }, true);
+    },
+    updateProject: function() {
+        Tecnotek.ajaxCall(Tecnotek.UI.urls["updateProjectURL"],
+            {   projectId: $('#idProjectEdit').val(),
+                name: $('#nameProjectEdit').val(),
+                code: $('#codeProjectEdit').val(),
+                type: $('#typeProjectEdit').val(),
+                status: $('#statusProjectEdit').val()
+            },
+            function(data){
+                if(data.error === true) {
+                    Tecnotek.showErrorMessage(data.message,true, "", false);
+                } else {
+                    $.fancybox.close();
+                    Tecnotek.Projects.searchProjects();
+                }
+            },
+            function(jqXHR, textStatus){
+                Tecnotek.showErrorMessage("Error getting data: " + textStatus + ".", true, "", false);
+                $(this).val("");
+            }, true);
+    }
+};
