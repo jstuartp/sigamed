@@ -1,5 +1,6 @@
 var Tecnotek = Tecnotek || {};
 
+
 Tecnotek.Absences = {
     init : function() {
         $( "#from" ).datepicker({
