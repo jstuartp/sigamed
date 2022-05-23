@@ -34,7 +34,12 @@
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.mantenimientos{% endtrans %}</a>
           <ul class="dropdown">
             <li><a href="{{ path('_expediente_sysadmin_course_search') }}">{% trans %}label.course{% endtrans %}</a></li>
+
+            <li><a href="{{ path('_expediente_sysadmin_commission_search') }}">{% trans %}label.commission{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_project_search') }}">{% trans %}label.project{% endtrans %}</a></li>
+
             <li><a href="{{ path('_expediente_sysadmin_commission') }}">{% trans %}label.commission{% endtrans %}</a></li>
+
             <li><a href="{{ path('_expediente_sysadmin_period') }}">{% trans %}label.period{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.charges{% endtrans %}</a></li>
             <li class="divider"></li>

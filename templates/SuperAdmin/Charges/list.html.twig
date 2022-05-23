@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?a=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?b=1') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
         Tecnotek.module = "chargeList";
@@ -77,12 +77,11 @@
                             <td hidden>{{ arregloDato.id }}</td>
                             <td>{{ arregloDato.user }}</td>
                             <td>{{ arregloDato.detailin }}</td>
-                            <td>{% if arregloDato.status == 1 %}  Creado {% endif %}
-                                {% if arregloDato.status == 2 %} Modificado {% endif %}
-                                {% if arregloDato.status == 3 %} Modificado en espera de Revisión {% endif %}
-                                {% if arregloDato.status == 4 %} Revisado correcciones pendientes {% endif %}
-                                {% if arregloDato.status == 5 %} Revisado y Aprobado {% endif %}
-                                {% if arregloDato.status == 6 %} Finalizado {% endif %}
+                            <td>{% if arregloDato.status == 1 %} Creado {% endif %}
+                                {% if arregloDato.status == 2 %} Solicitud de revisión enviada {% endif %}
+                                {% if arregloDato.status == 3 %} Aprobada {% endif %}
+                                {% if arregloDato.status == 4 %} Rechazada {% endif %}
+                                {% if arregloDato.status == 5 %} Cerrada {% endif %}
 
                             </td>
                             <!-- Columna para poner los botones en la tabla -->

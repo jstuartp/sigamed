@@ -16,17 +16,17 @@
     <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?f=4') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
-        Tecnotek.module = "commissionList";
+        Tecnotek.module = "projectList";
         Tecnotek.assetsURL = "{{ path('homepage')}}";
 
-        Tecnotek.UI.urls["searchCommissions"] = "{{ path('_expediente_sysadmin_commission_search')}}";
+        Tecnotek.UI.urls["searchProjects"] = "{{ path('_expediente_sysadmin_project_search')}}";
 
 
-        Tecnotek.UI.urls["createCommissionURL"] = "{{ path("_expediente_sysadmin_create_commission") }}";
-        Tecnotek.UI.urls["updateCommissionURL"] = "{{ path("_expediente_sysadmin_update_commission") }}";
+        Tecnotek.UI.urls["createProjectURL"] = "{{ path("_expediente_sysadmin_create_project") }}";
+        Tecnotek.UI.urls["updateProjectURL"] = "{{ path("_expediente_sysadmin_update_project") }}";
 
-        Tecnotek.UI.urls["getInfoCommissionFullURL"] = "{{ path("_expediente_sysadmin_get_info_commission_full") }}";
-        Tecnotek.UI.urls["getInfoCommissionURL"] = "{{ path("_expediente_sysadmin_get_info_commission_detail") }}";
+        Tecnotek.UI.urls["getInfoProjectFullURL"] = "{{ path("_expediente_sysadmin_get_info_project_full") }}";
+        Tecnotek.UI.urls["getInfoProjectURL"] = "{{ path("_expediente_sysadmin_get_info_project_detail") }}";
 
 
     </script>
@@ -36,9 +36,9 @@
     <div class="container">
         <div class="grid">
             <div class="row">
-                <div class="col-8"><h3>{% trans %}label.commission.listar{% endtrans %}</h3></div>
+                <div class="col-8"><h3>{% trans %}label.project.listar{% endtrans %}</h3></div>
                 <div class="col-4" align="right">
-                    <a id="openCommissionForm" class="modalbox button success-darker tiny" href="#commissionFormContainer">
+                    <a id="openProjectForm" class="modalbox button success-darker tiny" href="#projectFormContainer">
                         <button type="button" class="btn btn-info"> <span style="color: #f0f0f0">{% trans %}label.add{% endtrans %}</span></button>
                     </a> </div>
                 <div class="clear"></div>
@@ -65,7 +65,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for arregloDato in commissions %}
+                    {% for arregloDato in projects %}
                         <tr class="info">
                             <td hidden>{{ arregloDato.id }}</td>
                             <td>{{ arregloDato.name }}</td>
@@ -76,23 +76,13 @@
                             <td class="nowrap">
                                 {% if role != 4 %}
 
-
                                     <div class="icon editButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-gear" title="Editar"></i></a></div>
-
-
-                                    <div class="button viewButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
-                                        <a href=""> <div class="icon"><i class="fas fa-eye" title="Ver"></i></div></a></div>
 
                                 {% endif %}
                             </td>
                             <td class="nowrap">
                                 {% if role != 4 %}
-
                                     <div class="icon viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" title="Ver"></i></a></div>
-
-                                    <div class="button editButton" title="{% trans %}label.check.program{% endtrans %}" rel="{{ arregloDato.id }}">
-                                        <a href=""> <div class="icon"><i class="fas fa-gear" title="Editar"></i></div></a></div>
-
                                 {% endif %}
                             </td>
                         </tr>
@@ -106,16 +96,16 @@
         <div class="clear"></div>
 
 
-        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="COMMISSION_ID" style="display: none;">
-            <div class="option_width" style="float: left; width: 100px; margin-left: -6px;">COMMISSION_CODE</div>
-            <div class="option_width" style="float: left; width: 450px; margin-left: -6px;">COMMISSION_NAME</div>
-            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">COMMISSION_TYPE</div>
+        <div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="PROJECT_ID" style="display: none;">
+            <div class="option_width" style="float: left; width: 100px; margin-left: -6px;">PROJECT_CODE</div>
+            <div class="option_width" style="float: left; width: 450px; margin-left: -6px;">PROJECT_NAME</div>
+            <div class="option_width" style="float: left; width: 200px; margin-left: -6px;">PROJECT_TYPE</div>
 
             <!--<div class="right imageButton pdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>
         <div class="right imageButton nopdfButton"  title="{% trans %}label.check.program{% endtrans %}" rel="PROGRAM_ID"></div>-->
 
-            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="COMMISSION_ID"></div>
-            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="COMMISSION_ID"></div>
+            <div class="right imageButton editButton"  title="{% trans %}label.edit{% endtrans %}"  rel="PROJECT_ID"></div>
+            <div class="right imageButton viewButton"  title="{% trans %}label.view{% endtrans %}"  rel="PROJECT_ID"></div>
             <div class="clear"></div>
         </div>
 
@@ -123,14 +113,14 @@
         <br/>
 
         <div style="display: none;">
-            <a id="openCommissionView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
-            <a id="openCommissionEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#commissionFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
+            <a id="openProjectView" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#showContactInfoLink">{% trans %}label.open{% endtrans %}</a>
+            <a id="openProjectEdit" class="right button success-darker tiny modalbox" style="margin: 4px 0px 0 0;" href="#projectFormContainerEdit">{% trans %}label.open{% endtrans %}</a>
         </div>
         <!-- hidden showContactInfoLink form -->
         <div id="showContactInfoLink" style="display: none; width: 650px; height: 500px">
 
             <h3>Informaci&oacute;n del curso</h3>
-            <div id="commissionContainerView" name="commissionContainerView" class="contactInfo">
+            <div id="projectContainerView" name="projectContainerView" class="contactInfo">
 
             </div>
         </div>
@@ -138,24 +128,24 @@
 
 
         <!-- hidden teacherAssignedFormContainer form -->
-        <div id="commissionFormContainer" style="display: none;">
+        <div id="projectFormContainer" style="display: none;">
             <h3 style="margin-bottom: 0px;">Agregar Curso</h3>
 
-            <form class="customForm" id="commissionForm" name="commissionForm">
+            <form class="customForm" id="projectForm" name="projectForm">
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
-                    <input type="text" id="nameCommission" name="nameCommission" style="width: 250px">
+                    <input type="text" id="nameProject" name="nameProject" style="width: 250px">
                 </div>
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
-                    <input type="text" id="codeCommission" name="codeCommission" style="width: 250px">
+                    <input type="text" id="codeProject" name="codeProject" style="width: 250px">
                 </div>
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
-                    <select id="typeCommission" name="typeCommission" style="width: 120px;">
+                    <select id="typeProject" name="typeProject" style="width: 120px;">
                         <option value="1">Normal</option>
                         <option value="2">Otro</option>
                     </select>
@@ -163,43 +153,43 @@
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.status{% endtrans %}</label>
-                    <select id="statusCommission" name="statusCommission" style="width: 120px;">
+                    <select id="statusProject" name="statusProject" style="width: 120px;">
                         <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
                 </div>
 
 
-                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="commissionCancel" id="commissionCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="projectCancel" id="projectCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
                 <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.include{% endtrans %}"/></div>
                 <div class="clear"></div>
             </form>
         </div>
 
         <!-- hidden teacherAssignedFormContainer form -->
-        <div id="commissionFormContainerEdit" style="display: none;">
+        <div id="projectFormContainerEdit" style="display: none;">
             <h3 style="margin-bottom: 0px;">Editar Curso</h3>
 
-            <form class="customForm" id="commissionFormEdit" name="commissionFormEdit">
+            <form class="customForm" id="projectFormEdit" name="projectFormEdit">
 
                 <div style="margin-bottom: 5px; display: none;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.id{% endtrans %}</label>
-                    <input type="text" id="idCommissionEdit" name="idCommissionEdit" style="width: 250px">
+                    <input type="text" id="idProjectEdit" name="idProjectEdit" style="width: 250px">
                 </div>
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.name{% endtrans %}</label>
-                    <input type="text" id="nameCommissionEdit" name="nameCommissionEdit" style="width: 250px">
+                    <input type="text" id="nameProjectEdit" name="nameProjectEdit" style="width: 250px">
                 </div>
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.code{% endtrans %}</label>
-                    <input type="text" id="codeCommissionEdit" name="codeCommissionEdit" style="width: 250px">
+                    <input type="text" id="codeProjectEdit" name="codeProjectEdit" style="width: 250px">
                 </div>
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.type{% endtrans %}</label>
-                    <select id="typeCommissionEdit" name="typeCommissionEdit" style="width: 120px;">
+                    <select id="typeProjectEdit" name="typeProjectEdit" style="width: 120px;">
                         <option value="1">Normal</option>
                         <option value="2">Otro</option>
                     </select>
@@ -207,14 +197,14 @@
 
                 <div style="margin-bottom: 5px;">
                     <label style="display: inline-block; width: 165px">{% trans %}label.status{% endtrans %}</label>
-                    <select id="statusCommissionEdit" name="statusCommissionEdit" style="width: 120px;">
+                    <select id="statusProjectEdit" name="statusProjectEdit" style="width: 120px;">
                         <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
                 </div>
 
 
-                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="commissionCancel" id="commissionCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
+                <div class="left"><input class="button success-darker tiny" style="margin-top: 0px;" type="button" name="projectCancel" id="projectCancel" value="{% trans %}label.cancelar{% endtrans %}"/></div>
                 <div class="left"><input class="button success-darker tiny" style="margin-top: 0px; margin-left: 25px;" type="submit" name="save" value="{% trans %}label.save{% endtrans %}"/></div>
                 <div class="clear"></div>
             </form>

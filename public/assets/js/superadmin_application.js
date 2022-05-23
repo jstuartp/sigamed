@@ -221,7 +221,11 @@ var Tecnotek = {
                 case "commissionList":
                     Tecnotek.Commissions.init();
                     break;
-                    //Tecnotek.AdministratorList.initBtnSearch(); break;
+
+                case "projectList":
+                    Tecnotek.Projects.init();
+                    break;
+                        //Tecnotek.AdministratorList.initBtnSearch(); break;
                 default:
 					break;
 				}
