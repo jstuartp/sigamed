@@ -1111,8 +1111,9 @@ class ProgramController extends AbstractController
                     $html = '</br>';
                     $html .= '<!DOCTYPE html>';
                     $html .= '<html lang="es" xml:lang="es">';
+
                     $html .= '<div class=WordSection1>';
-                    //$html .= '<div><img src="../sigamed/public/assets/images/banner1OLD.jpg"  width="960" height="200" align="center"></div>';
+                   // $html .= '<div><img src="medilab/assets/img/logo.png"  width="960" height="200" align="center"></div>';
                     $html .= '<table align="center">';
                     $html .= '<tr>';
 
