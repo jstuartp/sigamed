@@ -153,19 +153,19 @@ class QuestionnaireExtension extends AbstractExtension
                         . $value1 . '">';
                     break;
                 case 6: // TextArea Input
-                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                    $html .= '<textarea maxlength="10000"' .
-                        'style="height: 195px; margin: 0px 0px 7px; width: 781px;"' .
+                    $html .= '<label" . $labelStyle . ">' . $question->getMainText() . '</label>';
+                    $html .= '<div align="right"><textarea maxlength="10000"' .
+                        'style="height: 195px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="12" ' . $this->getFieldId($question) . '>' .
                         $value1 .
-                        '</textarea>';
+                        '</textarea></div>';
                     $html .= '<div class="hiddenOnScreen" ' . $this->getRelatedFieldId($question, "printarea")
                         . ' style="font-size: 16px; color:#646464; margin-bottom:15px;">' . $value1 . '</div>';
-                    $html .= '<textarea disabled ' .
-                        'style="height: 105px; margin: 0px 0px 7px; width: 781px;"' .
+                    $html .= '<div align="right"><textarea disabled ' .
+                        'style="height: 105px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="6">' .
                         $value3 .
-                        '</textarea>';
+                        '</textarea></div>';
                     break;
                 case 7: // 3 Columns Question
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
