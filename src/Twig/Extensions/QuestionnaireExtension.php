@@ -153,19 +153,19 @@ class QuestionnaireExtension extends AbstractExtension
                         . $value1 . '">';
                     break;
                 case 6: // TextArea Input
-                    $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                    $html .= '<textarea maxlength="10000"' .
-                        'style="height: 195px; margin: 0px 0px 7px; width: 781px;"' .
+                    $html .= '<label" . $labelStyle . ">' . $question->getMainText() . '</label>';
+                    $html .= '<div align="right"><textarea maxlength="10000"' .
+                        'style="height: 195px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="12" ' . $this->getFieldId($question) . '>' .
                         $value1 .
-                        '</textarea>';
+                        '</textarea></div>';
                     $html .= '<div class="hiddenOnScreen" ' . $this->getRelatedFieldId($question, "printarea")
                         . ' style="font-size: 16px; color:#646464; margin-bottom:15px;">' . $value1 . '</div>';
-                    $html .= '<textarea disabled ' .
-                        'style="height: 105px; margin: 0px 0px 7px; width: 781px;"' .
+                    $html .= '<div align="right"><textarea disabled ' .
+                        'style="height: 105px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="6">' .
                         $value3 .
-                        '</textarea>';
+                        '</textarea></div>';
                     break;
                 case 7: // 3 Columns Question
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
@@ -175,9 +175,9 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<table>';
                     $html .= '<tr>' .
                         '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 350px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 400px;"> ' . $texts[3] . '</td>' .
                         '<td class="clear"></td>' .
                         '</tr>';
                     //$html .= '<div class="questions-group">';
@@ -192,19 +192,19 @@ class QuestionnaireExtension extends AbstractExtension
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
                         $html .= '<tr>' .
                             '<td class="left" style="width: 150px;"> '
-                            . '<input type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
+                            . '<input size="5" type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
                             '" value="' . $value2[0] . '">'
                             . '</td>' .
-                            '<td class="left" style="width: 300px;"> '
-                            . '<input type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
+                            '<td class="left" style="width: 350px;"> '
+                            . '<input size="50" type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
                             . '" value="' . $value2[1] . '"></td>' .
 
-                            '<td class="left" style="width: 75px;"> '
-                            . '<input style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
+                            '<td class="left" align="center" style="width: 75px;"> '
+                            . '<input size="5" style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
                             . '</td>' .
                             '<td class="left" style="width: 50px;"> '
-                            . '<textarea style="width: 300px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
+                            . '<textarea style="width: 400px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
                             . '</td>' .
                             '<td class="clear"></td>' .
@@ -268,8 +268,8 @@ class QuestionnaireExtension extends AbstractExtension
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</td>' .
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</td>' .
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 425px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 425px;"> ' . $texts[4] . '</td>' .
                         '<td class="clear"></td>' .
                         '</tr>';
                     //$html .= '<div class="questions-group">';
@@ -295,12 +295,12 @@ class QuestionnaireExtension extends AbstractExtension
                             . '<input style="width: 100px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
                             . '</td>' .
-                            '<td class="left" style="width: 250px;"> '
-                            . '<textarea style="width: 250px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
+                            '<td class="left" style="width: 425px;"> '
+                            . '<textarea style="width: 425px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
                             . '</td>' .
-                            '<td class="left" style="width: 250px;"> '
-                            . '<textarea style="width: 250px;" type="text" id="qaux5-' . $q->getId() . '" name="qaux5-' .
+                            '<td class="left" style="width: 425px;"> '
+                            . '<textarea style="width: 425px;" type="text" id="qaux5-' . $q->getId() . '" name="qaux5-' .
                             $q->getId() . '">' . $value2[4] . '</textarea>'
                             . '</td>' .
                             '<td class="clear"></td>' .
