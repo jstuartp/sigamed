@@ -329,7 +329,7 @@ class QuestionnaireExtension extends AbstractExtension
                 $value3 = $answerscheck[$question->getId()]->getMainText();
             }
 
-            $labelStyle = ' style="  float: left; width: 350px;" ';
+            $labelStyle = ' style="  float: left; width: 200px;" ';
             $html = "";
             $html .= "<div class='questionnaireQuestion'>";
             switch($question->getType()){
@@ -385,16 +385,16 @@ class QuestionnaireExtension extends AbstractExtension
                     break;
                 case 6: // TextArea Input
                     $html .= "<label" . $labelStyle . ">" . $question->getMainText() . "</label>";
-                    $html .= '<textarea disabled ' .
-                        'style="height: 195px; margin: 0px 0px 7px; width: 781px;"' .
+                    $html .= '<div align="right"><textarea disabled ' .
+                        'style="height: 195px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="12">' .
                         $value1 .
-                        '</textarea>';
-                    $html .= '<textarea ' .
-                        'style="height: 105px; margin: 0px 0px 7px; width: 781px;"' .
+                        '</textarea></div>';
+                    $html .= '<div align="right"><textarea ' .
+                        'style="height: 105px; margin: 0px 0px 7px; width: 960px;"' .
                         ' class="along-input questionnaire-textarea" rows="6" maxlength="5000" ' . $this->getFieldId($question) . '>' .
                         $value3 .
-                        '</textarea>';
+                        '</textarea></div>';
                     break;
                 case 7: // 3 Columns Question
                     $html .= '<label style="width: 100%">' . $question->getMainText() . '</label><div
@@ -403,9 +403,9 @@ class QuestionnaireExtension extends AbstractExtension
                     $html .= '<table>';
                     $html .= '<tr>' .
                         '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[0] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 300px;"> ' . $texts[1] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 150px;"> ' . $texts[2] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 200px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 380px;"> ' . $texts[1] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 400px;"> ' . $texts[3] . '</td>' .
                         '<td class="clear"></td>' .
                         '</tr>';
                     //$html .= '<div class="questions-group">';
@@ -420,19 +420,19 @@ class QuestionnaireExtension extends AbstractExtension
                         $html .= '<input type="hidden" ' . $this->getFieldId($q) . '>';
                         $html .= '<tr>' .
                             '<td class="left" style="width: 150px;"> '
-                            . '<input disabled type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
+                            . '<input disabled size="5" type="text" id="qaux1-' . $q->getId() . '" name="qaux1-' . $q->getId() .
                             '" value="' . $value2[0] . '">'
                             . '</td>' .
-                            '<td class="left" style="width: 300px;"> '
-                            . '<input disabled type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
+                            '<td class="left" style="width: 350px;"> '
+                            . '<input disabled size="50" type="text" id="qaux2-' . $q->getId() . '" name="qaux2-' . $q->getId()
                             . '" value="' . $value2[1] . '"></td>' .
 
-                            '<td class="left" style="width: 75px;"> '
-                            . '<input disabled style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
+                            '<td class="left" align="center" style="width: 75px;"> '
+                            . '<input disabled size="5" style="width: 50px;" type="text" id="qaux3-' . $q->getId() . '" name="qaux3-' .
                             $q->getId() . '" value="' . $value2[2] . '">'
                             . '</td>' .
                             '<td class="left" style="width: 50px;"> '
-                            . '<textarea maxlength="5000" disabled style="width: 300px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
+                            . '<textarea maxlength="5000" disabled style="width: 400px;" type="text" id="qaux4-' . $q->getId() . '" name="qaux4-' .
                             $q->getId() . '">' . $value2[3] . '</textarea>'
                             . '</td>' .
                             '<td class="clear"></td>' .
@@ -495,8 +495,8 @@ class QuestionnaireExtension extends AbstractExtension
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[0] . '</td>' .
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[1] . '</td>' .
                         '<td class="left" style="padding-left: 10px; width: 100px;"> ' . $texts[2] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[3] . '</td>' .
-                        '<td class="left" style="padding-left: 10px; width: 250px;"> ' . $texts[4] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 425px;"> ' . $texts[3] . '</td>' .
+                        '<td class="left" style="padding-left: 10px; width: 425px;"> ' . $texts[4] . '</td>' .
                         '<td class="clear"></div>' .
                         '</tr>';
                     //$html .= '<div class="questions-group">';
@@ -519,11 +519,11 @@ class QuestionnaireExtension extends AbstractExtension
                             '<td class="left" style="width: 100px;"> '
                             . '<input disabled style="width: 100px;" type="text" value="' . $value2[2] . '">'
                             . '</td>' .
-                            '<td class="left" style="width: 250px;"> '
-                            . '<textarea disabled style="width: 250px;" type="text" maxlength="5000" >' . $value2[3] . '</textarea>'
+                            '<td class="left" style="width: 425px;"> '
+                            . '<textarea disabled style="width: 425px;" type="text" maxlength="5000" >' . $value2[3] . '</textarea>'
                             . '</td>' .
-                            '<td class="left" style="width: 250px;"> '
-                            . '<textarea disabled style="width: 250px;" type="text" maxlength="5000" >' . $value2[4] . '</textarea>'
+                            '<td class="left" style="width: 425px;"> '
+                            . '<textarea disabled style="width: 425px;" type="text" maxlength="5000" >' . $value2[4] . '</textarea>'
                             . '</td>' .
                             '<td class="clear"></td>' .
                             '</tr>';
