@@ -107,9 +107,9 @@
                                     <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file" style="color: #80a9ba" title="Datos"></i></a></div>
                             </td>
                                 {% endif %}
-                                {% if role != 6 %}
+                                {% if role != 4 %}
                             <td class="nowrap">
-                                    <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-edit" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
+                                    <div class="icon button " rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-xmark" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
                             </td>
                                 {% endif %}
                                 {% if role != 4 %}
@@ -150,14 +150,14 @@
                                         <div class="icon button editButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-file" style="color: #80a9ba" title="Editar Datos"></i></a></div>
                                     </td>
                                 {% endif %}
-                                {% if role != 6 %}
+                                {% if role != 4 %}
                                     <td class="nowrap">
                                         <div class="icon button questionsButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-edit" style="color: #80a9ba" title="Editar Programa"></i></a></div>
                                     </td>
                                 {% endif %}
                                 {% if role != 4 %}
                                     <td class="nowrap">
-                                        <div class="icon button checkButton" rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-search" style="color: #80a9ba" title="Ver"></i></a></div>
+                                        <div class="icon button " rel="{{ arregloDato2.id }}"><a href=""><i class="fas fa-xmark" style="color: #80a9ba" title="Revisar"></i></a></div>
                                     </td>
                                 {% endif %}
                                 {% if role != 4 %}

@@ -77,8 +77,8 @@
                 <th>Nombre Curso</th>
                 <th>Sigla</th>
                 <th>Tipo</th>
-                <th> </th>
-                <th> </th>
+                <th>Editar</th>
+                <th>Ver</th>
 
             </tr>
             </thead>
@@ -99,7 +99,7 @@
                     <!-- Columna para poner los botones en la tabla -->
                     <td class="nowrap">
                         {% if role != 4 %}
-                                <div class="icon editButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-gear" style="color: #80a9ba" title="Editar"></i></a></div>
+                                <div class="icon editButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-gear" style="color: #80a9ba"  title="Editar"></i></a></div>
                         {% endif %}
                     </td>
                     <td class="nowrap">

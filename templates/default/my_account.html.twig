@@ -53,20 +53,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container_24" style="width: 800px;">
-        <div class="grid_24" style="width: 100%;">
+    <div class="container" style="width: 800px;">
+        <div class="grid" style="width: 100%;">
 
             <div>
-                <div class="left"><label style="display: inline-block;">Administraci&oacute;n de Cuenta: </label>&nbsp;{{ app.user.username }}</div>
-                <div class="right button success-darker tiny" id="btnCambiarPass" style="margin-left: 25px;">{% trans %}label.password.cambiar{% endtrans %}</div>
+                <div class="left"><h3><label style="display: inline-block;">Administraci&oacute;n de Cuenta: </label>&nbsp;{{ app.user.username }}</h3></div>
+                <button type="button" class="btn btn-info" id="btnCambiarPass"> <span style="color: #f0f0f0">{% trans %}label.password.cambiar{% endtrans %}</span></button>
+                <!--<div class="right button success-darker tiny" id="btnCambiarPass" style="margin-left: 25px;">{% trans %}label.password.cambiar{% endtrans %}</div>-->
                 <div class="clear"></div>
             </div>
 
             <div id="changePasswordContainer" style="margin-top: 25px; display: none; line-height: 30px; height: 30px; vertical-align: middle; border-top: solid 1px; padding-top: 5px;">
                 <div class="left" style="font-weight: bold; width: 300px;">{%trans%}label.new.password{%endtrans%}: <input type="password" style="width: 185px;" id="newPassword" name="newPassword" value=""/></div>
                 <div class="left" style="font-weight: bold; width: 300px;">{%trans%}label.confirm.password{%endtrans%}: <input type="password" style="width: 185px;" id="confirmPassword" name="confirmPassword" value=""/></div>
-                <div class="left button success-darker tiny" id="btnCancelarPassword" style="margin-left: 25px;">{% trans %}label.cancelar{% endtrans %}</div>
-                <div class="left button success-darker tiny" id="btnActualizarPassword" style="margin-left: 25px;">{% trans %}label.actualizar{% endtrans %}</div>
+                <!--<div class="left button success-darker tiny" id="" style="margin-left: 25px;">{% trans %}label.cancelar{% endtrans %}</div> -->
+                <div class="row">
+                    &nbsp;
+                </div>
+                <button type="button" class="btn btn-info" id="btnCancelarPassword"> <span style="color: #f0f0f0">{% trans %}label.cancelar{% endtrans %}</span></button>
+               <!-- <div class="left button success-darker tiny" id="btnActualizarPassword" style="margin-left: 25px;">{% trans %}label.actualizar{% endtrans %}</div>-->
+                <button type="button" class="btn btn-info" id="btnActualizarPassword"> <span style="color: #f0f0f0">{% trans %}label.actualizar{% endtrans %}</span></button>
                 <div class="clear"></div>
             </div>
         </div>
