@@ -71,9 +71,9 @@
                               <th>Estado</th>
 
                             <th>Ver</th>
-                            {% if role != 4 %}
                             <th>Datos</th>
                             <th>Editar</th>
+                            {% if role != 4 %}
                             <th>Revisar</th>
                             <th>PDF</th>
                             {% endif %}
@@ -97,20 +97,24 @@
                             </td>
 
                                 <!-- Columna para poner los botones en la tabla -->
-                                {% if role != 4 %}
+
                             <td class="nowrap">
                                     <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: #80a9ba" title="Ver"></i> </a> </div>
                             </td>
-                                {% endif %}
-                                {% if role != 4 %}
+
+
                             <td class="nowrap">
                                     <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-file" style="color: #80a9ba" title="Datos"></i></a></div>
                             </td>
-                                {% endif %}
-                                {% if role != 4 %}
+
+                            {% if role == 3 %}
                             <td class="nowrap">
                                     <div class="icon button " rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-xmark" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
                             </td>
+                            {% else %}
+                                <td class="nowrap">
+                                    <div class="icon button questionsButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-edit" style="color: #80a9ba" title="Editar Programa"></i></a> </div>
+                                </td>
                                 {% endif %}
                                 {% if role != 4 %}
                             <td class="nowrap">
