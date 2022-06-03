@@ -3513,7 +3513,7 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/charge/createSendCharge/", name="_expediente_sysadmin_create_send_charge")
      */
-    public function createSendChargeAction(MailerInterface $mailer){
+    public function createSendChargeAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
         //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -3530,10 +3530,10 @@ class SuperAdminController extends AbstractController
 
 
 
-            $translator = $this->get("translator");
+           // $translator = $this->get("translator");
 
             if( isset($userId)) {
-                $em = $this->getDoctrine()->getEntityManager();
+               // $em = $this->getDoctrine()->getEntityManager();
 
                 $charge = new Charges();
                 $charge->setDetailin($detailin);
@@ -3589,8 +3589,8 @@ class SuperAdminController extends AbstractController
                     $teacherEmail=$teacher->getEmail();
 
                     $email = (new Email())
-                        ->from('ciencias.politicas@ucr.ac.cr')
-                        ->to('sistemas.ecp@ucr.ac.cr')
+                        ->from('nides.ti@ucr.ac.cr')   /*Modificar para poner el corro de SALUD Publica*/
+                        ->to('nides.ti@ucr.ac.cr')
                         ->addTo('erick.morajimenez@ucr.ac.cr')
                         ->addTo('jorgestwart.perez@ucr.ac.cr')
                         ->addTo($teacherEmail)
@@ -3599,7 +3599,7 @@ class SuperAdminController extends AbstractController
                         //->replyTo('fabien@example.com')
                         //->priority(Email::PRIORITY_HIGH)
                         ->subject('Solicitud de revisión de carga académica')
-                        ->text('La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+                        ->text('La escuela de Salud Pública solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
                     //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                     try {
@@ -3618,8 +3618,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            //$logger->err('Charge::createSendChargeAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Charge::createSendChargeAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
         /*}// endif this is an ajax request
@@ -3632,15 +3632,15 @@ class SuperAdminController extends AbstractController
      * @Route("/charge/sendEmailCharge", name="_expediente_sysadmin_send_email_charge")
      * @Method({"GET", "POST"})
      */
-    public function sendEmailChargeAction(MailerInterface $mailer){
+    public function sendEmailChargeAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
         //$logger = $this->get('logger');
-        $translator = $this->get("translator");
+       // $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $chargeId = $request->get('chargeId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+          //  $em = $this->getDoctrine()->getEntityManager();
 
             if( isset($chargeId) ){
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3667,8 +3667,8 @@ class SuperAdminController extends AbstractController
                 $teacherEmail=$teacher->getEmail();
 
                 $email = (new Email())
-                    ->from('ciencias.politicas@ucr.ac.cr')
-                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->from('nides.ti@ucr.ac.cr')     /*Modificar para poner correo de la escuela*/
+                    ->to('nides.ti@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
                     ->addTo('jorgestwart.perez@ucr.ac.cr')
                     ->addTo($teacherEmail)
@@ -3677,7 +3677,7 @@ class SuperAdminController extends AbstractController
                     //->replyTo('fabien@example.com')
                     //->priority(Email::PRIORITY_HIGH)
                     ->subject('Solicitud de revisión de carga académica')
-                    ->text('La escuela de Ciencias Polítcas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+                    ->text('La escuela de Salud Pública solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
                 //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                 try {
@@ -3696,8 +3696,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -3705,15 +3705,15 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/charge/sendEmailCloseCharge", name="_expediente_sysadmin_send_email_close_charge")
      */
-    public function sendEmailCloseChargeAction(MailerInterface $mailer){
+    public function sendEmailCloseChargeAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
         //$logger = $this->get('logger');
-        $translator = $this->get("translator");
+      //  $translator = $this->get("translator");
         try {
             //$request = $this->get('request')->request;
             $request = $this->get('request_stack')->getCurrentRequest();
             $chargeId = $request->get('chargeId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+         //   $em = $this->getDoctrine()->getEntityManager();
 
             if( isset($chargeId) ){
                 $charge = $em->getRepository("App:Charges")->find($chargeId);
@@ -3739,8 +3739,8 @@ class SuperAdminController extends AbstractController
                 $teacherEmail=$teacher->getEmail();
 
                 $email = (new Email())
-                    ->from('ciencias.politicas@ucr.ac.cr')
-                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->from('nides.ti@ucr.ac.cr')
+                    ->to('nides.ti@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
                     ->addTo('jorgestwart.perez@ucr.ac.cr')
                     ->addTo($teacherEmail)
@@ -3749,7 +3749,7 @@ class SuperAdminController extends AbstractController
                     //->replyTo('fabien@example.com')
                     //->priority(Email::PRIORITY_HIGH)
                     ->subject('Aviso de comprobación de carga académica')
-                    ->text('La escuela de Ciencias Polítcas comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.');
+                    ->text('La escuela de Salud Pública comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.');
                 //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                 try {
@@ -3768,8 +3768,8 @@ class SuperAdminController extends AbstractController
             }
         }
         catch (Exception $e) {
-            $info = toString($e);
-            //$logger->err('Program::sendCheckProgramFormAction [' . $info . "]");
+            $info = $e->getTraceAsString();
+            $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'message' => $info)));
         }
     }
@@ -3943,10 +3943,10 @@ class SuperAdminController extends AbstractController
                 $mailer->send($message);*/
                 $email = (new Email())
                     ->from('nides.ti@ucr.ac.cr')
-                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->to('nides.ti@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
                     ->addTo('jorgestwart.perez@ucr.ac.cr')
-                    ->addTo('jstuartp@gmail.com')
+
 
                     //->cc('cc@example.com')
                     //->bcc('bcc@example.com')

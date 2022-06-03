@@ -852,10 +852,9 @@ class ProgramController extends AbstractController
 
                     $email = (new Email())
                         ->from('nides.ti@ucr.ac.cr')
-                        ->to('sistemas.ecp@ucr.ac.cr')
+                        ->to('nides.ti@ucr.ac.cr')
                         ->addTo('erick.morajimenez@ucr.ac.cr')
                         ->addTo('jorgestwart.perez@ucr.ac.cr')
-                        ->addTo('jstuartp@gmail.com')
                         ->addTo($coordinatorEmail)
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
