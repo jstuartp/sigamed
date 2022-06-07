@@ -2275,6 +2275,8 @@ Tecnotek.Charges = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
+                    alert("Se ha enviado la Carga al Profesor.");
+                    location.reload(true);
                     Tecnotek.Charges.searchCharges();
                 }
             },
