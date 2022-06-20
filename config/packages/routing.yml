@@ -778,10 +778,6 @@ _expediente_profesor:
 
 ###########      REPORTS      ###########
 
-_expediente_sysadmin_academic:
-   path:  /reports/Courses/
-   defaults: { _controller: AppBundle:Report:reportCoursesAcademic }
-
 _expediente_sysadmin_charges:
    path:  /reports/Academic/
    defaults: { _controller: AppBundle:Report:reportCoursesCharges }

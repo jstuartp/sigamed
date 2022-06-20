@@ -73,8 +73,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/changePassword", name="_change_admin_password")
      */
-    public function changeUserPasswordAction(){
-        $logger = $this->get('logger');
+    public function changeUserPasswordAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
 
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -84,27 +84,27 @@ class SuperAdminController extends AbstractController
             $newPassword = $request->get('newPassword');
             $confirmPassword = $request->get('confirmPassword');
             $userId = $request->get('userId');
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             $user = $em->getRepository("App:User")->find($userId);
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
             if ( isset($user) ) {
                 $defaultController = new DefaultController();
-                $error = $defaultController->validateUserPassword($newPassword, $confirmPassword, $translator);
+                $error = $defaultController->validateUserPassword($newPassword, $confirmPassword);
                 if ( isset($error) ) {
                     return new Response(json_encode(array('error' => true, 'message' => $error)));
                 } else {
                     $user->setPassword($newPassword);
                     $em->persist($user);
                     $em->flush();
-                    return new Response(json_encode(array('error' => false, 'message' =>$translator->trans("messages.confirmation.password.change"))));
+                    return new Response(json_encode(array('error' => false, 'message' =>"messages.confirmation.password.change")));
                 }
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.entity.not.found"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error datos")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::changeUserPasswordAction [' . $info . "]");
+            //$logger->err('SuperAdmin::changeUserPasswordAction [' . $info . "]");
             return new Response($info);
         }
         /*}// endif this is an ajax request
@@ -4074,8 +4074,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/course/updateRecord/", name="_expediente_sysadmin_update_record")
      */
-    public function updateRecordAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateRecordAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -4091,10 +4091,10 @@ class SuperAdminController extends AbstractController
             $type = $request->get('type');
             $status = $request->get('status');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $recordId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $record = new Record();
                 $record = $em->getRepository("App:Record")->find($recordId);
@@ -4109,13 +4109,13 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error parametros")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Commission::createSummaryAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$logger->err('Commission::createSummaryAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else
@@ -4148,19 +4148,19 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/record/getInfoRecordFull", name="_expediente_sysadmin_get_info_record_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoRecordFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoRecordFullAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $recordId = $request->get('recordId');
-
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
-            $record = $em->getRepository("App:Record")->find($recordId);
+
+            $record = $em->getRepository(Record::class)->find($recordId);
 
             $dateRecord = "";
             //$dateRecord = $record->getDate();
@@ -4196,7 +4196,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 1 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Documentos:</td>';
                     $count = 1;
@@ -4218,7 +4219,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 2 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Audios:</td>';
                     $count = 1;
@@ -4239,7 +4241,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 3 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Acta:</td>';
                     $count = 1;
@@ -4261,7 +4264,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 4 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Ejecución de acuerdos:</td>';
                     $count = 1;
@@ -4300,7 +4304,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 1 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Seguimiento al plan de estudios:</td>';
                     //$html .= '<td colspan="50"><a href="javascript:anzeigen(\'1\')"><div class="anzButton"><img width="25" height="25" src="./images/folder.png" id="pb1" /> Seguimiento al plan de estudios:</div></a></td>';
@@ -4331,7 +4336,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 2 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<hr>';
                     //$html .= '<td>Informes comisión práctica profesional:</td>';
@@ -4358,7 +4364,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 3 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Informes comisión de docencia:</td>';
                     //$html .= '<td colspan="50"><a href="javascript:anzeigen(\'3\')"><div class="anzButton"><img width="25" height="25" src="./images/folder.png" id="pb3" /> Informes comisión de docencia:</div></a></td>';
@@ -4384,7 +4391,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 4 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Seguimiento de contratación de docentes interinos:</td>';
                     //$html .= '<div class="anzButton"><a id="openRecTba" rel="p4" href="#p4"><img width="25" height="25" src="./images/folder.png" id="pb1" /> Seguimiento de contratación de docentes interinos:</a></div>';
@@ -4429,9 +4437,9 @@ class SuperAdminController extends AbstractController
 
         }
         catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Record::getInfoRecordFullAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$info = toString($e);
+            //$logger->err('Record::getInfoRecordFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else
@@ -4498,9 +4506,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/getInfoRecordDetail", name="_expediente_sysadmin_get_info_record_detail")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoRecordDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoRecordDetailAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -4508,7 +4517,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $recordId = $request->get('recordId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $record = $em->getRepository("App:Record")->find($recordId);
 
@@ -4531,8 +4540,8 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else

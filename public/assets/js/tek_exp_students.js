@@ -514,6 +514,9 @@ Tecnotek.Record = {
         Tecnotek.UI.vars["page"] = 1;
         Tecnotek.Record.searchRecords();
 
+
+        Tecnotek.Record.initButtons();
+
     },
     initOButtons: function() {
 
@@ -533,6 +536,7 @@ Tecnotek.Record = {
 
     },
     initButtons: function() {
+
         console.debug("RecordList :: initButtons");
         $('.viewButton').unbind();
         $('.viewButton').click(function(event){
@@ -3477,62 +3481,7 @@ Tecnotek.Projects = {
 
     },
     searchProjects: function() {
-        $("#students-container").html("");
-        $("#pagination-container").html("");
-        Tecnotek.showWaiting();
-        Tecnotek.uniqueAjaxCall(Tecnotek.UI.urls["searchProjects"],
-            {
-                text: $("#searchText").val(),
-                sortBy: Tecnotek.UI.vars["sortBy"],
-                order: Tecnotek.UI.vars["order"],
-                page: Tecnotek.UI.vars["page"]
-            },
-            function(data){
-                if(data.error === true) {
-                    Tecnotek.hideWaiting();
-                    Tecnotek.showErrorMessage(data.message,true, "", false);
-                } else {
 
-
-                    var baseHtml = $("#contactRowTemplate").html();
-                    for(i=0; i<data.projects.length; i++) {
-                        var typeLabel = "Normal"
-                        if(data.projects[i].type == 1){
-                            var typeLabel = "Normal";
-                        }
-                        if(data.projects[i].type == 2){
-                            var typeLabel = "Otro";
-                        }
-
-                        var row = '<div id="contactRowTemplate" class="row userRow ROW_CLASS" rel="PROJECT_ID">' +
-                            baseHtml +  '</div>';
-                        row = row.replaceAll('ROW_CLASS', (i % 2 == 0? 'tableRowOdd':'tableRow'));
-                        row = row.replaceAll('PROJECT_ID', data.projects[i].id);
-                        row = row.replaceAll('PROJECT_CODE', data.projects[i].code);
-                        row = row.replaceAll('PROJECT_NAME', data.projects[i].name);
-                        row = row.replaceAll('PROJECT_TYPE', typeLabel);
-
-                        $("#students-container").append(row);
-                    }
-
-
-
-                    Tecnotek.Projects.initButtons();
-                    Tecnotek.UI.printPagination(data.total, data.filtered, Tecnotek.UI.vars["page"], 30, "pagination-container");
-                    $(".paginationButton").unbind().click(function() {
-                        Tecnotek.UI.vars["page"] = $(this).attr("page");
-                        Tecnotek.Projects.searchProjects();
-                    });
-                    Tecnotek.hideWaiting();
-
-                }
-            },
-            function(jqXHR, textStatus){
-                if (textStatus != "abort") {
-                    Tecnotek.hideWaiting();
-                    console.debug("Error getting data Projects: " + textStatus);
-                }
-            }, true, 'searchProjects');
     },
     createProject: function() {
 
