@@ -2774,8 +2774,12 @@ Tecnotek.Programs = {
                     Tecnotek.showErrorMessage(data.message,true, "", false);
                 } else {
                     $.fancybox.close();
-                    alert("Se ha guardado la informacion DEL PROGRAMA.");
-                    location.reload(true); //Codigo agregado por Stuart 27/04
+                    location.reload(); //Codigo agregado por Stuart 27/04
+                    alertify.set('notifier','position','top-left');
+                    alertify.success("Se ha guardado la informacion del programa");
+
+                    //alert("Se ha guardado la informacion DEL PROGRAMA.");
+
                     Tecnotek.Programs.searchPrograms();
                 }
             },
