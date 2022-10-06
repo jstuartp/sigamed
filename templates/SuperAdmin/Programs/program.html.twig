@@ -339,7 +339,7 @@
                             <p class="form-title">Programa: {{ entity }}</p>
                             <p class="form-title">Formulario: {{ form.name }}</p>
                             <form id="form_{{ form.id }}">
-                                <div class="right imageButton infoButton"  title="{% trans %}label.info{% endtrans %}"  rel="{{ form.id }}"></div>
+                                <div align="right" class="icon button infoButton"  title="{% trans %}label.info{% endtrans %}" rel="{{ entity.id }}"><a href=""><i class="fas fa-question" title="Editar Programa"></i>Ayuda</a></div>
                                 <input type="hidden" id="programId" name="programId" value="{{ entity.id }}">
                                 {% for question in form.questions  %}
                                     {% if question.parent == null %}

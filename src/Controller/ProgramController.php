@@ -163,8 +163,8 @@ class ProgramController extends AbstractController
                     }
                     if ($role == 3) {
                         $from2 = ", tek_course_class cc";
-                        $where2 = "and (pr.course_id = cc.course_id and cc.user_id = " . $user->getId() . " and cc.period_id = " . $currentPeriod . ")";
-                        $where3 = "and pr.user_id = " . $user->getId();
+                        $where3 = "and (pr.course_id = cc.course_id and cc.user_id = " . $user->getId() . " and cc.period_id = " . $currentPeriod . ")";
+                        $where2 = "and pr.user_id = " . $user->getId();
                     }
                 }
 
@@ -196,11 +196,16 @@ class ProgramController extends AbstractController
                 if ($role == 3) {
                     $em->clear();
                     $em->getRepository(Programs::class);
-                    $sql2 = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.period_id"
-                        . " FROM tek_programs pr, tek_users u ". $from2
-                        . " WHERE u.id = pr.user_id ". $where
+                    /*$sql2 = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.period_id"
+                        . " FROM tek_programs pr, tek_users u "
+                        . " WHERE u.id = pr.user_id "
                         . " and pr.period_id = ". $currentPeriod. " "
-                        .  $where3;
+                        .  $where3;*/
+                    $sql2 = "SELECT DISTINCT pr.id, pr.detail, concat(u.lastname,' ',u.firstname) as name, pr.status, pr.period_id" .
+                        " FROM tek_programs pr, tek_users u" . $from2 .
+                        " WHERE u.id = pr.user_id and"  .
+                        "  pr.period_id = " . $currentPeriod . " " . $where3 .
+                        " ORDER BY pr.period_id";
                     $stmt3 = $em->getConnection()->prepare($sql2);
                     $exprograms = $stmt3->executeQuery();
                     $exprogramsM = $exprograms->fetchAllAssociative();
@@ -851,10 +856,9 @@ class ProgramController extends AbstractController
                         );*/
 
                     $email = (new Email())
-                        ->from('nides.ti@ucr.ac.cr')
-                        ->to('nides.ti@ucr.ac.cr')
+                        ->from('sistemas.ecp@ucr.ac.cr')
+                        ->to('sistemas.ecp@ucr.ac.cr')
                         ->addTo('erick.morajimenez@ucr.ac.cr')
-                        ->addTo('jorgestwart.perez@ucr.ac.cr')
                         ->addTo($coordinatorEmail)
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
@@ -939,11 +943,9 @@ class ProgramController extends AbstractController
                     $mailer->send($message);
                     */
                     $email = (new Email())
-                        ->from('nides.ti@ucr.ac.cr')
+                        ->from('sistemas.ecp@ucr.ac.cr')
                         ->to('sistemas.ecp@ucr.ac.cr')
                         ->addTo('erick.morajimenez@ucr.ac.cr')
-                        ->addTo('jorgestwart.perez@ucr.ac.cr')
-                        ->addTo('jstuartp@gmail.com')
                         ->addTo($teacherEmail)
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
@@ -1022,11 +1024,9 @@ class ProgramController extends AbstractController
                 $mailer->send($message);
 */
                 $email = (new Email())
-                    ->from('nides.ti@ucr.ac.cr')
+                    ->from('sistemas.ecp@ucr.ac.cr')
                     ->to('sistemas.ecp@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
-                    ->addTo('jorgestwart.perez@ucr.ac.cr')
-                    ->addTo('jstuartp@gmail.com')
                     ->addTo($teacherEmail)
                     //->cc('cc@example.com')
                     //->bcc('bcc@example.com')
@@ -1076,7 +1076,9 @@ class ProgramController extends AbstractController
                 //$request = $this->get('request')->request;
                 $request = $this->get('request_stack')->getCurrentRequest();
                 $programId = $request->get('programId');
+                //$programId = 1330;
                 $userId = $request->get('userId');
+                //$userId = 1;
 
               //  $em = $this->getDoctrine()->getEntityManager();
 
@@ -1088,8 +1090,15 @@ class ProgramController extends AbstractController
                     $em->persist($program);
                     $em->flush();
 
+                    /*$versionpt = $program->getVersionp();
+                    $versionpt = $versionpt +1;
+                    $program->setVersionp($versionpt);
+                    $em->persist($program);
+                    $em->flush();*/
+
                     $detail = $program->getDetail();
                     $teacher = $program->getTeacher();
+                    $versionp = $program->getVersionp();
                     $couseProgram = $program->getCourse();
                     $couserId = $couseProgram->getId();
 
@@ -1165,7 +1174,7 @@ class ProgramController extends AbstractController
                     $html .= ' <tr style="height: 16px"><td valign=top style=\'width:450pt;mso-border-alt:solid black .25pt;
                                   background:white;padding:0cm 2.7pt 0cm 2.7pt\'>
                                   <p class=Standard><span style=\'font-family:"Arial",sans-serif;mso-fareast-font-family:
-                                  Arial\'>Ciclo Lectivo:  I  -  2020<o:p></o:p></span></p>   
+                                  Arial\'>Ciclo Lectivo:  II  -  2022<o:p></o:p></span></p>   
                                 </td>';
                     $html .= '<td colspan=2 width=443 valign=top style=\'width:332.4pt;background:white;padding:0cm 2.7pt 0cm 2.7pt\'>
                                   <p class=Standard><span style=\'font-family:"Arial",sans-serif;mso-fareast-font-family:
@@ -1232,6 +1241,14 @@ class ProgramController extends AbstractController
                                 }
                             }
 
+                            if($question->getId() == 1079){ ///Correo Alternativo
+                                if($value1 != ''){
+                                    $html .= '<div style="width: 910px"><p align="justify"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $string = htmlspecialchars($value1);
+                                    $html .= '<span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
+                                }
+                            }
+
                             if($question->getId() == 4){ ///Informacion adicional
                                 if($value1 != ''){
                                     $html .= '<div style="width: 910px"><p align="justify"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
@@ -1280,6 +1297,15 @@ class ProgramController extends AbstractController
                                 if($value1 != ''){
                                     $html .= '</br>';
                                     $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;">5.' . $question->getMainText() . ': </span>';
+                                    $string = htmlspecialchars($value1);
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
+                                }
+                            }
+
+                            if($question->getId() == 1077){    ///Metodologia adicional
+                                if($value1 != ''){
+                                    $html .= '</br>';
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; margin-left: 10px; margin-right: 10px;"></span>';
                                     $string = htmlspecialchars($value1);
                                     $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
                                 }
@@ -1340,6 +1366,14 @@ class ProgramController extends AbstractController
                             }
 
                             if($question->getId() == 54){    ///info adicional a bibliografia
+                                if($value1 != ''){
+                                    $html .= '<div style="width: 910px"><span style=" font-family:Arial; word-wrap: break-word; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
+                                    $string = htmlspecialchars($value1);
+                                    $html .= '<p align="justify"><span style="font-family:Arial;  margin-left: 10px; margin-right: 10px;">'.nl2br($string) . '</span></p></div>';
+                                }
+                            }
+
+                            if($question->getId() == 1078){    ///info adicional a bibliografia complementaria
                                 if($value1 != ''){
                                     $html .= '<div style="width: 910px"><span style=" font-family:Arial; word-wrap: break-word; margin-left: 10px; margin-right: 10px;">' . $question->getMainText() . ': </span>';
                                     $string = htmlspecialchars($value1);
@@ -1420,6 +1454,21 @@ class ProgramController extends AbstractController
 <p>e. Estado general de bienestar personal: son todas aquellas acciones que afectan negativamente el estado general necesario para afrontar las actividades de la vida diaria.</p>
 
 <p>SI UD SE ENCUENTRA EN UNA SITUACIÓN SIMILAR, PUEDE COMUNICARSE AL 25114898. </p>
+
+<strong>SOBRE LA DISCRIMINACIÓN</strong>
+<p>REGLAMENTO DE LA UNIVERSIDAD DE COSTA RICA EN CONTRA DE LA DISCRIMINACIÓN https://www.cea.ucr.ac.cr/images/asuntosadm/discriminacion.pdf </p>
+<p>"ARTÍCULO 3.- Definiciones</p>
+<p>Discriminación: Para efectos del presente reglamento, se entenderá por discriminación un acto u omisión que afecte, lesione o interrumpa, negativamente, las oportunidades o el ejercicio de derechos humanos, así como cualquier tratamiento injusto que afecte el estado general de bienestar de un grupo o una persona, origen étnico, nacionalidad, condición de salud, discapacidad, embarazo, estado civil, ciudadanía, cultura, condición migratoria, sexo, género o identidad de género, características genéticas, parentesco, razones de edad, religión, orientación sexual, opinión o participación política, afiliación gremial, origen social y situación económica, al igual que cualquier otra que socave el carácter y los propósitos de la Universidad de Costa Rica.”</p>
+ <br><br>
+
+<strong>SOBRE JUSTIFICACIONES DE ENTREGAS</strong>
+<p>La Comisión de Orientación y Evaluación (COE) de la Escuela de Ciencias Políticas, comunica que como parte del mejoramiento de los procesos de enseñanza-aprendizaje-evaluación de la unidad académica, ante las consultas recibidas de algunas personas docentes en relación con justificaciones presentadas por el estudiantado cuya fundamentación es salud mental u otra condición de salud, la Comisión de Orientación y Evaluación les recuerda que para toda petición de parte del estudiantado:  </p>
+<p>a) la persona estudiante debe seguir el debido proceso estipulado en el Reglamento de Régimen Estudiantil, </p>
+<p>b) solo se admitirá como válida aquella justificación que se presente por escrito - una carta firmada-, debidamente acompañada de documentos probatorios tales como: diagnóstico médico, emitido por un centro de salud de la CCSS, un consultorio privado, constancia de apoyo psicológico del CASE de Ciencias Sociales, del CASED, de la Oficina de Bienestar y Salud, o del Programa Mishka de la UCR.</p>
+<p>Cualquier otra comunicación personal no acompañada de un diagnóstico médico, psicológico o psiquiátrico no podrá tomarse como válido para justificar la no realización de actividades evaluativas en sus respectivos cursos. La Comisión de Orientación y Evaluación, sigue a su disposición para apoyarles en la evacuación de dudas y acompañamiento de procesos que estén dentro de las funciones que a ella le corresponden.</p>
+ <br><br>
+
+ 
  </br></div>';
 
                     $html .= '    <div class="clear"></div>';
@@ -1440,7 +1489,7 @@ class ProgramController extends AbstractController
                             'SuperAdmin/Programs/programaview.html.twig',array('html' => $html,'page-size' => "Letter"), true
 
                         ),
-                        '../public/pdfs/'.$programId.'.pdf'
+                        '../public/assets/images/programas/'.$programId.'v'.$versionp.'.pdf'
                         //'../web/images/programas/file4.pdf'
                     );
 
@@ -1531,9 +1580,10 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/students/getInfoQuestionnaireFull", name="_expediente_sysadmin_get_info_questionnaire_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoQuestionnaireFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoQuestionnaireFullAction(EntityManagerInterface $em, LoggerInterface $logger){
+        //$logger = $this->get('logger');
         /*if ($this->get('request_stack')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -1541,14 +1591,25 @@ class ProgramController extends AbstractController
             $request = $this->get('request_stack')->getCurrentRequest();
 
             //$request = $this->get('request')->request;
-            $questionnaireId = $request->get('questionnaireId');
+            //$questionnaireId = $request->get('questionnaireId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $programId = $request->get('questionnaireId');
 
-            $questionnaire = $em->getRepository("App:Questionnaire")->find($questionnaireId);
+            //$em = $this->getDoctrine()->getEntityManager();
 
-            if ( isset($questionnaire) ) {
-                $html  = '<div class="fieldRow"><label>Ayuda:</label><span>' . $questionnaire->getInfo() . '</span></div><div style="float: right;"><p></div>';
+            //$questionnaire = $em->getRepository("App:Questionnaire")->find($questionnaireId);
+
+            $program = $em->getRepository("App:Programs")->find($programId);
+
+            if ( isset($program) ) {
+
+                $course = $program->getCourse();
+                $html  = '<div class="fieldRow"><label>Ayuda:</label><span>' . $program->getDetail() . '</span></div><div style="float: right;"><p></div>';
+                if ( isset($course) ) {
+                    $html  .= '<div class="fieldRow"><label>Guia de programa:</label><span><a target="_blank" href="../../../assets/images/programas/' . $course->getCode() . '.pdf">Aca</a></span></div><div style="float: right;"><p></div>';
+                }
+                $html .= '<div><b>Información sobre programas generados</b></div>';
+                $html .= '<div>- Se aclara que la plantilla del programa incluye de forma automática normativa sobre creditaje, plagio, hostigamiento sexual y discrimación.</div>';
 
                 return new Response(json_encode(array('error' => false, 'html' => $html)));
             } else {

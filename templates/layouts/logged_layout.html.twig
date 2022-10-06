@@ -44,7 +44,7 @@
             <li><a href="{{ path('_expediente_sysadmin_period') }}">{% trans %}label.period{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.charges{% endtrans %}</a></li>
             <li class="divider"></li>
-            <li class="dropdown{% if menuIndex is defined and menuIndex == 1%} current{% endif %}"><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios{% endtrans %}</a>
+            <li class="dropdown{% if menuIndex is defined and menuIndex == 1%} current{% endif %}"><a href="#">{% trans %}label.usuarios{% endtrans %}</a>
               <ul class="dropdown">
                 <li><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios.admin{% endtrans %}</a></li>
                 <li><a href="{{ path('_expediente_sysadmin_coordinador') }}">{% trans %}label.usuarios.coordinador{% endtrans %}</a></li>
