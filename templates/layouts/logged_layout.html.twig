@@ -26,8 +26,13 @@
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 4%} current{% endif %}"><a href="#">{% trans %}label.documents{% endtrans %}</a>
           <ul class="dropdown">
+
             <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.mycharge{% endtrans %}</a></li>
             <!--<li class="disabled"><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.record{% endtrans %}</a></li>-->
+
+            <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.mycharge{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_record_search') }}">{% trans %}label.record{% endtrans %}</a></li>
+
           </ul>
         </li>
 
@@ -44,7 +49,11 @@
             <li><a href="{{ path('_expediente_sysadmin_period') }}">{% trans %}label.period{% endtrans %}</a></li>
             <li><a href="{{ path('_expediente_sysadmin_charge_search') }}">{% trans %}label.charges{% endtrans %}</a></li>
             <li class="divider"></li>
+
             <!--<li class="dropdown{% if menuIndex is defined and menuIndex == 1%} current{% endif %}"><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios{% endtrans %}</a>
+
+            <li class="dropdown{% if menuIndex is defined and menuIndex == 1%} current{% endif %}"><a href="#">{% trans %}label.usuarios{% endtrans %}</a>
+
               <ul class="dropdown">
                 <li><a href="{{ path('_expediente_sysadmin_administrador') }}">{% trans %}label.usuarios.admin{% endtrans %}</a></li>
                 <li><a href="{{ path('_expediente_sysadmin_coordinador') }}">{% trans %}label.usuarios.coordinador{% endtrans %}</a></li>
@@ -73,8 +82,8 @@
         <li class="divider"></li>
         <li class="dropdown{% if menuIndex is defined and menuIndex == 5%} current{% endif %}"><a href="#">{% trans %}label.reports{% endtrans %}</a>
           <ul class="dropdown">
-            <li><a href="{{ path('_expediente_sysadmin_record') }}">{% trans %}label.academic{% endtrans %}</a></li>
-            <li><a href="{{ path('_expediente_sysadmin_mycharge') }}">{% trans %}label.charges{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_academic') }}">{% trans %}label.academic{% endtrans %}</a></li>
+            <li><a href="{{ path('_expediente_sysadmin_charges') }}">{% trans %}label.charges{% endtrans %}</a></li>
 
           </ul>
         </li>-->

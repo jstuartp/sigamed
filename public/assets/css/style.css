@@ -26,6 +26,10 @@ body:before {
 	margin-top:-32767px;/
 }
 
+.min-vh-100 {
+    min-height: calc(100vh - 20px) !important;
+}
+
 .titleRow{height: 56px; vertical-align: middle; line-height: 44px;}
 .services{ width:178px; height:210px; background:url(../images/bg-body2.jpg) 0 0 repeat;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease; margin:5px 9px 5px 5px; float:left;}
 .services.first{margin:5px 9px 5px 0px;}

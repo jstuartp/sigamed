@@ -15,11 +15,19 @@ use App\Entity\Student;
 
 use App\Entity\Course;
 
+use Doctrine\ORM\EntityManagerInterface;
+
+use Doctrine\DBAL\Statement;
+use Doctrine\DBAL\Types\Types;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 
 class ReportController extends AbstractController
@@ -27,10 +35,11 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/reports/Courses/", name="_expediente_sysadmin_academic")
+     * @Method({"GET", "POST"})
      */
-    public function reportCoursesAcademicAction(){
-        $logger = $this->get("logger");
-        $em = $this->getDoctrine()->getEntityManager();
+    public function reportCoursesAcademicAction(EntityManagerInterface $em){
+        //$logger = $this->get("logger");
+        //$em = $this->getDoctrine()->getEntityManager();
 
 
 
@@ -140,16 +149,25 @@ class ReportController extends AbstractController
                 $currentPeriod = $em->getRepository("App:Period")->findOneBy(array('isActual' => true));
                 $period = $currentPeriod->getId();
 
-                $stmt = $this->getDoctrine()->getEntityManager()
-                    ->getConnection()
+                //$stmt = $this->getDoctrine()->getEntityManager()
+                /*    $em->getConnection()
                     ->prepare('SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
                                     FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
                                     where t.user_id = u.id and t.course_id = c.id and t.course_id = "'.$course->getId() .'" and t.period_id = "'.$period.'"');
-                $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $em->execute();
+                $entity = $em->fetchAll();*/
+
+                $sql = "SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
+                                    where t.user_id = u.id and t.course_id = c.id and t.course_id = ".$course->getId() ." and t.period_id = ".$period;
+                $stmt2 = $em->getConnection()->prepare($sql);
+
+                $entity = $stmt2->executeQuery();
+                $entities = $entity->fetchAllAssociative();
+
 
                 $html .= "<td>";
-                foreach( $entity as $entry ){
+                foreach( $entities as $entry ){
                     $html .=  $entry['lastname'] .' '.$entry['firstname']  .' ';
                 }
                 $html .= "</td>";
@@ -172,14 +190,18 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/reports/Academic/", name="_expediente_sysadmin_charges")
+     * @Method({"GET", "POST"})
      */
-    public function reportCoursesChargesAction(){
-        $logger = $this->get("logger");
-        $em = $this->getDoctrine()->getEntityManager();
+    public function reportCoursesChargesAction(EntityManagerInterface $em){
+        //$logger = $this->get("logger");
+        //$em = $this->getDoctrine()->getEntityManager();
 
 
 
         $request = $this->get('request_stack')->getCurrentRequest();
+
+        $currentPeriod = $em->getRepository("App:Period")->findOneBy(array('isActual' => true));
+        $periodId  = $currentPeriod->getId();
 
         $groups = null;
         $grades = null;
@@ -209,72 +231,125 @@ class ReportController extends AbstractController
 
 
 
+        $html2 = "";
+        $token = false;
+
             foreach($users as $user){
 
 
 
                 $html .= "<div class='listContainerTeacher charge_" .$user->getId()."'>";
-                $html .= "<div>".$user->getFirstname()."-".$user->getLastName()."</div><br>";
+                $html .= "<div>".$user->getFirstname()." ".$user->getLastName()."</div><br>";
 
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
-                                    FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
+                                    FROM `tek_assigned_courses` t, tek_courses c, tek_users u
                                     where t.user_id = u.id and t.course_id = c.id and t.user_id = "'.$user->getId() .'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+
+                $sql = "SELECT t.id as id, c.id as course, c.name as name, c.groupnumber as groupnumber, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_courses` t, tek_courses c, tek_users u  
+                                    where t.user_id = u.id and t.course_id = c.id and t.user_id = ".$user->getId() ." and t.period_id = ".$periodId;
+                $stmt2 = $em->getConnection()->prepare($sql);
+
+                $entities = $stmt2->executeQuery();
+                $entity = $entities->fetchAllAssociative();
+
 
                 $html .= "<label>Cursos:</label>";
                 foreach( $entity as $entry ){
                     $html .=  '<label>'. $entry['name'] .' G-'.$entry['groupnumber']  .'</label><br> ';
+                    $token=1;
                 }
 
 
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, p.id as project, p.name as name, u.lastname as lastname, u.firstname as firstname
-                                    FROM `tek_assigned_projects` t, tek_projects p, tek_users u  
+                                    FROM `tek_assigned_projects` t, tek_projects p, tek_users u
                                     where t.user_id = u.id and t.project_id = p.id and t.user_id = "'.$user->getId() .'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+                $sql = "SELECT t.id as id, p.id as project, p.name as name, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_projects` t, tek_projects p, tek_users u  
+                                    where t.user_id = u.id and t.project_id = p.id and t.user_id = ".$user->getId()." and t.period_id = ".$periodId;
+                $stmt2 = $em->getConnection()->prepare($sql);
+
+                $entities = $stmt2->executeQuery();
+                $entity = $entities->fetchAllAssociative();
+
                 $html .= "<br>";
                 $html .= "<label>Proyectos:</label>";
                 foreach( $entity as $entry ){
                     $html .=  '<label>'. $entry['name'] .' I-'.$entry['project']  .'</label><br> ';
+                    $token=1;
                 }
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, c.id as commission, c.name as name, u.lastname as lastname, u.firstname as firstname
-                                    FROM `tek_assigned_commissions` t, tek_commissions c, tek_users u  
+                                    FROM `tek_assigned_commissions` t, tek_commissions c, tek_users u
                                     where t.user_id = u.id and t.commission_id = c.id and t.user_id = "'.$user->getId() .'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+
+                $sql = "SELECT t.id as id, c.id as commission, c.name as name, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_commissions` t, tek_commissions c, tek_users u  
+                                    where t.user_id = u.id and t.commission_id = c.id and t.user_id = ".$user->getId()." and t.period_id = ".$periodId;
+                $stmt2 = $em->getConnection()->prepare($sql);
+
+                $entities = $stmt2->executeQuery();
+                $entity = $entities->fetchAllAssociative();
+
+//                $count = $entities->get
+
                 $html .= "<br>";
-                $html .= "<label>Comisiones:</label>";
+  //              if($count != 0){
+                    $html .= "<label>Comisiones:</label>";
+    //            }
                 foreach( $entity as $entry ){
                     $html .=  '<label>'. $entry['name'] .' I-'.$entry['commission']  .'</label><br> ';
+                    $token=1;
                 }
 
 
-                $stmt = $this->getDoctrine()->getEntityManager()
+                /*$stmt = $this->getDoctrine()->getEntityManager()
                     ->getConnection()
                     ->prepare('SELECT t.id as id, t.name as name, t.weight as charge, u.lastname as lastname, u.firstname as firstname
-                                    FROM `tek_assigned_other` t, tek_users u  
+                                    FROM `tek_assigned_other` t, tek_users u
                                     where t.user_id = u.id and t.user_id = "'.$user->getId() .'"');
                 $stmt->execute();
-                $entity = $stmt->fetchAll();
+                $entity = $stmt->fetchAll();*/
+                $sql = "SELECT t.id as id, t.name as name, t.weight as charge, u.lastname as lastname, u.firstname as firstname
+                                    FROM `tek_assigned_other` t, tek_users u  
+                                    where t.user_id = u.id and t.user_id = ".$user->getId()." and t.period_id = ".$periodId;
+                $stmt2 = $em->getConnection()->prepare($sql);
+
+                $entities = $stmt2->executeQuery();
+                $entity = $entities->fetchAllAssociative();
+
                 $html .= "<br>";
                 $html .= "<label>Otros:</label>";
                 foreach( $entity as $entry ){
                     $html .=  '<label>'. $entry['name'] .' I-'.$entry['charge']  .'</label><br> ';
+                    $token=true;
                 }
                 $html .= "<hr></div>";
 
+
+                if($token == 1){
+                    $html2 .= $html;
+
+                }
+                $html = "";
+                $token = 0;
             }
 
 
@@ -288,7 +363,7 @@ class ReportController extends AbstractController
 
 
         return $this->render('SuperAdmin/Reports/charges.html.twig', array('menuIndex' => 4,
-            'hmtl' => $html, 'institutionsT' => $institutionsT,'gradesT' => $gradesT, 'teachers' => $teachers
+            'hmtl' => $html2, 'institutionsT' => $institutionsT,'gradesT' => $gradesT, 'teachers' => $teachers
         ));
     }
 }

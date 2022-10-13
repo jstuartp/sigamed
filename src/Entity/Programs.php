@@ -68,6 +68,11 @@ class Programs
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $versionp;
+
 
     /**
      * @ManyToOne(targetEntity="Period")
@@ -237,5 +242,25 @@ class Programs
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set versionp
+     *
+     * @param integer $versionp
+     */
+    public function setVersionp($versionp)
+    {
+        $this->versionp = $versionp;
+    }
+
+    /**
+     * Get versionp
+     *
+     * @return integer
+     */
+    public function getVersionp()
+    {
+        return $this->versionp;
     }
 }

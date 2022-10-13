@@ -11,9 +11,10 @@
 
 {% endblock %}
 
+
 {% block extrajs %}
-    <script type="text/javascript" src="{{ asset('js/tek_exp_students.js?u=1') }}"></script>
-    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/tek_exp_students.js?f=1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/fancybox/jquery.fancybox.js?v=2.0.6') }}"></script>
     <script type="text/javascript">
         Tecnotek.module = "recordList";
         Tecnotek.assetsURL = "{{ path('homepage')}}";
@@ -52,17 +53,15 @@
                 </div>
             </div>
 
-            <div class="" data-example-id="">
-                <table class="table table-bordered table-hover   table-striped nowrap" id="example2" style="font-size: 14px">
+            <div class="bs-example" data-example-id="contextual-table">
+                <table class="table table-bordered table-hover table-condensed table-striped" id="example2" style="font-size: 14px">
                     <thead>
                     <tr>
                         <th hidden> id</th>
                         <th>Fecha</th>
                         <th>Nombre</th>
                         <th>Estado</th>
-
                         <th></th>
-
                         <th></th>
 
                     </tr>
@@ -70,28 +69,25 @@
                     <tbody>
                     {% for arregloDato in records %}
                         <tr class="info">
-
-                            <td hidden >{{ arregloDato.id }}</td>
+                            <td hidden>{{ arregloDato.id }}</td>
                             <td class="nowrap">{{ arregloDato.date }}</td>
                             <td class="nowrap">{{ arregloDato.name }}</td>
-                            <td class="nowrap">{{  arregloDato.status }}</td>
+                            <td class="nowrap">{{ arregloDato.status }}</td>
 
                             <!-- Columna para poner los botones en la tabla -->
+                            <td class="nowrap">
+                                <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: dodgerblue" title="Ver"></i></a></div>
+                            </td>
 
-                                <td class="nowrap">
-                                    <div class="icon button viewButton" rel="{{ arregloDato.id }}"><a href=""> <i class="fas fa-eye" style="color: green" title="Ver"></i></a></div>
-                                </td>
-
-                                <td class="nowrap">
-                                    <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-gear" style="color: green" title="Editar Datos"></i></a></div>
-                                </td>
+                            <td class="nowrap">
+                                <div class="icon button editButton" rel="{{ arregloDato.id }}"><a href=""><i class="fas fa-gear" style="color: dodgerblue" title="Editar Datos"></i></a></div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-
-
             </div>
+            
 
         </div>
         <div class="clear"></div>

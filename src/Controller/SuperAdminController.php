@@ -72,9 +72,10 @@ class SuperAdminController extends AbstractController
 
     /**
      * @Route("/changePassword", name="_change_admin_password")
+     * @Method({"GET", "POST"})
      */
-    public function changeUserPasswordAction(){
-        $logger = $this->get('logger');
+    public function changeUserPasswordAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
 
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -83,28 +84,28 @@ class SuperAdminController extends AbstractController
             $request = $this->get('request_stack')->getCurrentRequest();
             $newPassword = $request->get('newPassword');
             $confirmPassword = $request->get('confirmPassword');
-            $userId = $request->get('userId');
-            $em = $this->getDoctrine()->getEntityManager();
+            $userId = $request->get('userId');;
+            //$em = $this->getDoctrine()->getEntityManager();
             $user = $em->getRepository("App:User")->find($userId);
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
             if ( isset($user) ) {
                 $defaultController = new DefaultController();
-                $error = $defaultController->validateUserPassword($newPassword, $confirmPassword, $translator);
+                $error = $defaultController->validateUserPassword($newPassword, $confirmPassword);
                 if ( isset($error) ) {
                     return new Response(json_encode(array('error' => true, 'message' => $error)));
                 } else {
                     $user->setPassword($newPassword);
                     $em->persist($user);
                     $em->flush();
-                    return new Response(json_encode(array('error' => false, 'message' =>$translator->trans("messages.confirmation.password.change"))));
+                    return new Response(json_encode(array('error' => false, 'message' =>"Contraseña cambiada correctamente")));
                 }
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.entity.not.found"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error datos")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('SuperAdmin::changeUserPasswordAction [' . $info . "]");
+            //$logger->err('SuperAdmin::changeUserPasswordAction [' . $info . "]");
             return new Response($info);
         }
         /*}// endif this is an ajax request
@@ -3589,17 +3590,25 @@ class SuperAdminController extends AbstractController
                     $teacherEmail=$teacher->getEmail();
 
                     $email = (new Email())
+
                         ->from('nides.ti@ucr.ac.cr')   /*Modificar para poner el corro de SALUD Publica*/
                         ->to('nides.ti@ucr.ac.cr')
+
+                        ->from('sistemas.ecp@ucr.ac.cr')
+                        ->to('sistemas.ecp@ucr.ac.cr')
+
                         ->addTo('erick.morajimenez@ucr.ac.cr')
-                        ->addTo('jorgestwart.perez@ucr.ac.cr')
                         ->addTo($teacherEmail)
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
                         //->replyTo('fabien@example.com')
                         //->priority(Email::PRIORITY_HIGH)
                         ->subject('Solicitud de revisión de carga académica')
+
                         ->text('La escuela de Salud Pública solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+
+                        ->text('La escuela de Ciencias Políticas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+
                     //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                     try {
@@ -3667,17 +3676,25 @@ class SuperAdminController extends AbstractController
                 $teacherEmail=$teacher->getEmail();
 
                 $email = (new Email())
+
                     ->from('nides.ti@ucr.ac.cr')     /*Modificar para poner correo de la escuela*/
                     ->to('nides.ti@ucr.ac.cr')
+
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+
                     ->addTo('erick.morajimenez@ucr.ac.cr')
-                    ->addTo('jorgestwart.perez@ucr.ac.cr')
                     ->addTo($teacherEmail)
                     //->cc('cc@example.com')
                     //->bcc('bcc@example.com')
                     //->replyTo('fabien@example.com')
                     //->priority(Email::PRIORITY_HIGH)
                     ->subject('Solicitud de revisión de carga académica')
+
                     ->text('La escuela de Salud Pública solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+
+                    ->text('La escuela de Ciencias Políticas solicita la revisión de las cargas académicas, '. $detailin . ', accese el sitio del sistema programas.ecp.ucr.ac.cr para verificarla.');
+
                 //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                 try {
@@ -3739,17 +3756,25 @@ class SuperAdminController extends AbstractController
                 $teacherEmail=$teacher->getEmail();
 
                 $email = (new Email())
+
                     ->from('nides.ti@ucr.ac.cr')
                     ->to('nides.ti@ucr.ac.cr')
+
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+
                     ->addTo('erick.morajimenez@ucr.ac.cr')
-                    ->addTo('jorgestwart.perez@ucr.ac.cr')
                     ->addTo($teacherEmail)
                     //->cc('cc@example.com')
                     //->bcc('bcc@example.com')
                     //->replyTo('fabien@example.com')
                     //->priority(Email::PRIORITY_HIGH)
                     ->subject('Aviso de comprobación de carga académica')
+
                     ->text('La escuela de Salud Pública comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.');
+
+                    ->text('La escuela de Ciencias Políticas comunica que las carga académica, '. $detailin . ', ha sido aprobada y cerrada.');
+
                 //  ->html('<p>See Twig integration for better HTML integration!</p>');
 
                 try {
@@ -3870,11 +3895,9 @@ class SuperAdminController extends AbstractController
                 $mailer->send($message);*/
 
                 $email = (new Email())
-                    ->from('nides.ti@ucr.ac.cr')
+                    ->from('sistemas.ecp@ucr.ac.cr')
                     ->to('sistemas.ecp@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
-                    ->addTo('jorgestwart.perez@ucr.ac.cr')
-                    ->addTo('jstuartp@gmail.com')
 
                     //->cc('cc@example.com')
                     //->bcc('bcc@example.com')
@@ -3942,10 +3965,16 @@ class SuperAdminController extends AbstractController
 
                 $mailer->send($message);*/
                 $email = (new Email())
+
                     ->from('nides.ti@ucr.ac.cr')
                     ->to('nides.ti@ucr.ac.cr')
                     ->addTo('erick.morajimenez@ucr.ac.cr')
                     ->addTo('jorgestwart.perez@ucr.ac.cr')
+
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+
 
 
                     //->cc('cc@example.com')
@@ -4074,8 +4103,8 @@ class SuperAdminController extends AbstractController
     /**
      * @Route("/course/updateRecord/", name="_expediente_sysadmin_update_record")
      */
-    public function updateRecordAction(){ //2018-13-03
-        $logger = $this->get('logger');
+    public function updateRecordAction(EntityManagerInterface $em){ //2018-13-03
+        //$logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
         try {
@@ -4091,10 +4120,10 @@ class SuperAdminController extends AbstractController
             $type = $request->get('type');
             $status = $request->get('status');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $recordId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $record = new Record();
                 $record = $em->getRepository("App:Record")->find($recordId);
@@ -4109,13 +4138,13 @@ class SuperAdminController extends AbstractController
 
                 return new Response(json_encode(array('error' => false)));
             } else {
-                return new Response(json_encode(array('error' => true, 'message' =>$translator->trans("error.paramateres.missing"))));
+                return new Response(json_encode(array('error' => true, 'message' =>"error parametros")));
             }
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Commission::createSummaryAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$logger->err('Commission::createSummaryAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else
@@ -4148,19 +4177,19 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/record/getInfoRecordFull", name="_expediente_sysadmin_get_info_record_full")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoRecordFullAction(){
-        $logger = $this->get('logger');
+    public function getInfoRecordFullAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
             $request = $this->get('request_stack')->getCurrentRequest();
-            //$request = $this->get('request')->request;
             $recordId = $request->get('recordId');
-
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
-            $record = $em->getRepository("App:Record")->find($recordId);
+
+            $record = $em->getRepository(Record::class)->find($recordId);
 
             $dateRecord = "";
             //$dateRecord = $record->getDate();
@@ -4196,14 +4225,15 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 1 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Documentos:</td>';
                     $count = 1;
                     foreach($records as $row) {
                         $filename = $row['filename'];
                         $name = $row['name'];
-                        $html .= '<td width="100"><a title="'.$name.'" target="_blank" href="/images/data/'.$filename.'">Doc_'.$count.'</a></br></td>&nbsp;';
+                        $html .= '<td width="100"><a title="'.$name.'" target="_blank" href="/assets/images/data/'.$filename.'">Doc_'.$count.'</a></br></td>&nbsp;';
                         $count++;
                     }
 
@@ -4218,14 +4248,15 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 2 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Audios:</td>';
                     $count = 1;
                     foreach($records as $row) {
                         $filename = $row['filename'];
                         $name = $row['name'];
-                        $html .= '<td width="100"><a target="_blank" href="/images/data/'.$filename.'">Audio'.$count.'</a></br></br></td>';
+                        $html .= '<td width="100"><a target="_blank" href="/assets/images/data/'.$filename.'">Audio'.$count.'</a></br></br></td>';
                         $count++;
                     }
 
@@ -4239,14 +4270,15 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 3 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Acta:</td>';
                     $count = 1;
                     foreach($records as $row) {
                         $filename = $row['filename'];
                         $name = $row['name'];
-                        $html .= '<td width="100"><a target="_blank" href="/images/data/'.$filename.'">Acta'.$count.'</a></br></br></td>';
+                        $html .= '<td width="100"><a target="_blank" href="/assets/images/data/'.$filename.'">Acta'.$count.'</a></br></br></td>';
                         $count++;
                     }
 
@@ -4261,7 +4293,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 4 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<td>Ejecución de acuerdos:</td>';
                     $count = 1;
@@ -4300,7 +4333,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 1 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Seguimiento al plan de estudios:</td>';
                     //$html .= '<td colspan="50"><a href="javascript:anzeigen(\'1\')"><div class="anzButton"><img width="25" height="25" src="./images/folder.png" id="pb1" /> Seguimiento al plan de estudios:</div></a></td>';
@@ -4331,7 +4365,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 2 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     $html .= '<hr>';
                     //$html .= '<td>Informes comisión práctica profesional:</td>';
@@ -4358,7 +4393,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 3 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Informes comisión de docencia:</td>';
                     //$html .= '<td colspan="50"><a href="javascript:anzeigen(\'3\')"><div class="anzButton"><img width="25" height="25" src="./images/folder.png" id="pb3" /> Informes comisión de docencia:</div></a></td>';
@@ -4384,7 +4420,8 @@ class SuperAdminController extends AbstractController
                         . " WHERE ra.type = 4 and ra.record_id = $recordId";
                     $stmt = $em->getConnection()->prepare($sql);
                     $stmt->execute();
-                    $records = $stmt->fetchAll();
+                    //$records = $stmt->fetchAll();
+                    $records = $stmt->executeQuery()->fetchAllAssociative();
 
                     //$html .= '<td>Seguimiento de contratación de docentes interinos:</td>';
                     //$html .= '<div class="anzButton"><a id="openRecTba" rel="p4" href="#p4"><img width="25" height="25" src="./images/folder.png" id="pb1" /> Seguimiento de contratación de docentes interinos:</a></div>';
@@ -4429,9 +4466,9 @@ class SuperAdminController extends AbstractController
 
         }
         catch (Exception $e) {
-            $info = toString($e);
-            $logger->err('Record::getInfoRecordFullAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$info = toString($e);
+            //$logger->err('Record::getInfoRecordFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else
@@ -4498,9 +4535,10 @@ class SuperAdminController extends AbstractController
     }
     /**
      * @Route("/course/getInfoRecordDetail", name="_expediente_sysadmin_get_info_record_detail")
+     * @Method({"GET", "POST"})
      */
-    public function getInfoRecordDetailAction(){
-        $logger = $this->get('logger');
+    public function getInfoRecordDetailAction(EntityManagerInterface $em){
+        //$logger = $this->get('logger');
         /*if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         {*/
         try {
@@ -4508,7 +4546,7 @@ class SuperAdminController extends AbstractController
             //$request = $this->get('request')->request;
             $recordId = $request->get('recordId');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             //$student = new Student();
             $record = $em->getRepository("App:Record")->find($recordId);
 
@@ -4531,8 +4569,8 @@ class SuperAdminController extends AbstractController
         }
         catch (Exception $e) {
             $info = toString($e);
-            $logger->err('Course::getInfoCourseFullAction [' . $info . "]");
-            return new Response(json_encode(array('error' => true, 'message' => $info)));
+            //$logger->err('Course::getInfoCourseFullAction [' . $info . "]");
+            return new Response(json_encode(array('error' => true, 'message' => "error")));
         }
         /*}// endif this is an ajax request
         else
@@ -5247,7 +5285,7 @@ class SuperAdminController extends AbstractController
 
 
 
-    public function createTicketAction(\Swift_Mailer $mailer){ //2016 - 4 temp
+    public function createTicketAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){ //2016 - 4 temp
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -5379,9 +5417,9 @@ class SuperAdminController extends AbstractController
                 $html .= '</div>';
 
                 /// enviar por correo
-                $message = (new \Swift_Message('Solicitud de revisión de carga académica'))
+                /*$message = (new \Swift_Message('Solicitud de revisión de carga académica'))
                     ->setSubject('Solicitud de equipo')
-                    ->setFrom('ciencias.politicas@ucr.ac.cr')
+                    ->setFrom('sistemas.ecp@ucr.ac.cr')
                     ->setTo(['erick.morajimenez@ucr.ac.cr','sistemas.ecp@ucr.ac.cr',$entityUser->getEmail()])  ///$teacher->getEmail()
                     ->setBody(
                         'El profesor: '. $entityUser->getFirstname(). ' '. $entityUser->getLastname() . ', ha solicitado equipo, solicitud número: '. $ticket->getId() .'.
@@ -5410,7 +5448,54 @@ class SuperAdminController extends AbstractController
                             del bien asignado, de conformidad con lo dispuesto por la Vicerrectoría de Administración.'
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
+
+                $email = (new Email())
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo($entityUser->getEmail())
+
+
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Aviso de aprobación de carga académica')
+                    ->text('El profesor: '. $entityUser->getFirstname(). ' '. $entityUser->getLastname() . ', ha solicitado equipo, solicitud número: '. $ticket->getId() .'.
+                        '.$html.'
+                        
+                        -----------------------------------------------------------------------------------------
+                        REGLAMENTO PARA LA ADMINISTRACIÓN Y CONTROL DE LOS BIENES INSTITUCIONALES DE LA UNIVERSIDAD DE COSTA RICA
+                        ARTÍCULO 4. DEFINICIONES 
+                        1. Bienes institucionales: Son todos  aquellos bienes relacionados con propiedad, planta y equipo, lo cual también incluye bienes intangibles, 
+                        recursos bibliográficos, documentos de valor administrativo, legal, histórico y cultural, sujetos de registro que la Universidad de Costa Rica 
+                        tiene para uso y funcionamiento en la operación normal y cuya vida útil supera un año.
+                        
+                        CAPÍTULO IV OBLIGACIONES DE LAS PERSONAS USUARIAS DE LOS BIENES INSTITUCIONALES
+                            ARTÍCULO 13. OBLIGACIONES Son obligaciones de las personas usuarias de los bienes institucionales, las siguientes: 
+                            a) Custodiar, conservar y utilizar adecuadamente los bienes que le son asignados para el cumplimiento de sus actividades institucionales. 
+                            b) Comunicar, de forma inmediata, a la persona encargada del control de bienes, lo siguiente:
+                                    i. Daños o desperfectos que sufra el bien, con el fin de que se hagan las gestiones correspondientes para su reparación, o cambio por garantía.
+                                    ii. La pérdida, robo o hurto del bien a su cargo, con el fin de que se hagan las denuncias pertinentes ante las instancias correspondientes, según
+                                        los procedimientos establecidos por la Vicerrectoría de Administración. 
+                            c) Utilizar los bienes únicamente para los fines e intereses institucionales. 
+                            d) Solicitar la autorización del superior jerárquico o de la superiora jerárquica para trasladar o prestar bienes bajo su cargo a terceras personas o a otra unidad.
+                            e) Cumplir con otras obligaciones que se establezcan en este Reglamento y la normativa sobre esta materia.
+                            
+                         ARTÍCULO 50. RESPONSABILIDAD ADMINISTRATIVA
+                            El personal docente o administrativo que incurra en alguna falta, según su gravedad, estarán obligados a reponer, en forma personal o solidaria, la pérdida o reparación
+                            del bien asignado, de conformidad con lo dispuesto por la Vicerrectoría de Administración.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
 
                 return new Response(json_encode(array('error' => false)));
             } else {
@@ -5927,7 +6012,7 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
-    public function updateTicketAction(\Swift_Mailer $mailer){ //2018-13-03
+    public function updateTicketAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){ //2018-13-03
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -5957,10 +6042,10 @@ class SuperAdminController extends AbstractController
             $presenter = $request->get('presenter');
             $user = $request->get('user');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $ticketId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $ticket = new Ticket();
                 $ticket = $em->getRepository("App:Ticket")->find($ticketId);
@@ -6039,7 +6124,7 @@ class SuperAdminController extends AbstractController
                 $html .= '</div>';
 
                 /// enviar por correo
-                $message = (new \Swift_Message('Solicitud de revisión de carga académica'))
+                /*$message = (new \Swift_Message('Solicitud de revisión de carga académica'))
                     ->setSubject('Solicitud de equipo (Actualización)')
                     ->setFrom('ciencias.politicas@ucr.ac.cr')
                     ->setTo(['erick.morajimenez@ucr.ac.cr','sistemas.ecp@ucr.ac.cr',$entityUser->getEmail()])  ///$teacher->getEmail()
@@ -6069,7 +6154,53 @@ class SuperAdminController extends AbstractController
 
                     );
 
-                $mailer->send($message);
+                $mailer->send($message);*/
+
+                $email = (new Email())
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo($entityUser->getEmail())
+
+
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Solicitud de equipo (Actualización)')
+                    ->text('Solicitud Actualizada, el profesor: '. $entityUser->getFirstname(). ' '. $entityUser->getLastname() . ', ha modificado la solicitud de equipo, se requiere revisar y procesar nuevamente.
+                        
+                        -----------------------------------------------------------------------------------------
+                        REGLAMENTO PARA LA ADMINISTRACIÓN Y CONTROL DE LOS BIENES INSTITUCIONALES DE LA UNIVERSIDAD DE COSTA RICA
+                        ARTÍCULO 4. DEFINICIONES 
+                        1. Bienes institucionales: Son todos  aquellos bienes relacionados con propiedad, planta y equipo, lo cual también incluye bienes intangibles, 
+                        recursos bibliográficos, documentos de valor administrativo, legal, histórico y cultural, sujetos de registro que la Universidad de Costa Rica 
+                        tiene para uso y funcionamiento en la operación normal y cuya vida útil supera un año.
+                        
+                        CAPÍTULO IV OBLIGACIONES DE LAS PERSONAS USUARIAS DE LOS BIENES INSTITUCIONALES
+                            ARTÍCULO 13. OBLIGACIONES Son obligaciones de las personas usuarias de los bienes institucionales, las siguientes: 
+                            a) Custodiar, conservar y utilizar adecuadamente los bienes que le son asignados para el cumplimiento de sus actividades institucionales. 
+                            b) Comunicar, de forma inmediata, a la persona encargada del control de bienes, lo siguiente:
+                                    i. Daños o desperfectos que sufra el bien, con el fin de que se hagan las gestiones correspondientes para su reparación, o cambio por garantía.
+                                    ii. La pérdida, robo o hurto del bien a su cargo, con el fin de que se hagan las denuncias pertinentes ante las instancias correspondientes, según
+                                        los procedimientos establecidos por la Vicerrectoría de Administración. 
+                            c) Utilizar los bienes únicamente para los fines e intereses institucionales. 
+                            d) Solicitar la autorización del superior jerárquico o de la superiora jerárquica para trasladar o prestar bienes bajo su cargo a terceras personas o a otra unidad.
+                            e) Cumplir con otras obligaciones que se establezcan en este Reglamento y la normativa sobre esta materia.
+                            
+                         ARTÍCULO 50. RESPONSABILIDAD ADMINISTRATIVA
+                            El personal docente o administrativo que incurra en alguna falta, según su gravedad, estarán obligados a reponer, en forma personal o solidaria, la pérdida o reparación
+                            del bien asignado, de conformidad con lo dispuesto por la Vicerrectoría de Administración.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
 
                 $em->persist($ticket);
                 $em->flush();
@@ -6091,7 +6222,7 @@ class SuperAdminController extends AbstractController
         }*/
     }
 
-    public function saveTicketMessageAction(\Swift_Mailer $mailer){
+    public function saveTicketMessageAction(MailerInterface $mailer, EntityManagerInterface $em, LoggerInterface $logger, TranslatorInterface $translator){
         $logger = $this->get('logger');
         //if ($this->get('request')->isXmlHttpRequest())// Is the request an ajax one?
         //{
@@ -6105,10 +6236,10 @@ class SuperAdminController extends AbstractController
             $ticketId = $request->get('ticketId');
             $details = $request->get('details');
 
-            $translator = $this->get("translator");
+            //$translator = $this->get("translator");
 
             if( $ticketId != '') {
-                $em = $this->getDoctrine()->getEntityManager();
+                //$em = $this->getDoctrine()->getEntityManager();
 
                 $ticket = new Ticket();
                 $ticket = $em->getRepository("App:Ticket")->find($ticketId);
@@ -6125,7 +6256,7 @@ class SuperAdminController extends AbstractController
 
 
                                 /// enviar por correo
-                                $message = (new \Swift_Message('Solicitud de revisión de carga académica'))
+                                /*$message = (new \Swift_Message('Solicitud de revisión de carga académica'))
                                     ->setSubject('Solicitud de equipo (Actualización)')
                                     ->setFrom('ciencias.politicas@ucr.ac.cr')
                                     ->setTo(['erick.morajimenez@ucr.ac.cr','sistemas.ecp@ucr.ac.cr',$entityUser->getEmail()])  ///$teacher->getEmail()
@@ -6133,7 +6264,32 @@ class SuperAdminController extends AbstractController
                                         'Solicitud Procesada, para el profesor: '. $entityUser->getFirstname(). ' '. $entityUser->getLastname() . ', '. $details .'.'
                                     );
 
-                                $mailer->send($message);
+                                $mailer->send($message);*/
+
+                $email = (new Email())
+                    ->from('sistemas.ecp@ucr.ac.cr')
+                    ->to('sistemas.ecp@ucr.ac.cr')
+                    ->addTo('erick.morajimenez@ucr.ac.cr')
+                    ->addTo($entityUser->getEmail())
+
+
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Solicitud de equipo (Actualización)')
+                    ->text('Solicitud Procesada, para el profesor: '. $entityUser->getFirstname(). ' '. $entityUser->getLastname() . ', '. $details .'.');
+                //  ->html('<p>See Twig integration for better HTML integration!</p>');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $info = $e->getTraceAsString();
+                    $logger->alert('Program::sendCheckProgramFormAction [' . $info . "]");
+                }
+
 
                 $em->persist($ticket);
                 $em->flush();
